@@ -1,0 +1,11 @@
+{
+    "root": true,
+    "extends": [
+        "custom/next"
+    ],
+    "parserOptions": {
+        "project": [
+            "./apps/web/tsconfig.json"
+        ]
+    }
+}
