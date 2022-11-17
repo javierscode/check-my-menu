@@ -1,0 +1,16 @@
+export enum Allergen {
+  NUTS,
+  CRUSTACEANS,
+  FISH,
+  MILK,
+  CEREALS,
+  EGGS,
+  MOLLUSCS,
+  PEANUTS,
+  SOYA,
+  CELERY,
+  MUSTARD,
+  SESAME,
+  LUPINE,
+  SULPUR,
+}
