@@ -6,10 +6,13 @@ module.exports = {
   },
   extends: [
     'turbo',
+    './base.js',
     'plugin:@typescript-eslint/recommended',
     'plugin:@typescript-eslint/recommended-requiring-type-checking',
     'plugin:import/typescript',
-    './base.js',
   ],
   plugins: ['@typescript-eslint'],
+  rules: {
+    'no-useless-constructor': 'off',
+  },
 }
