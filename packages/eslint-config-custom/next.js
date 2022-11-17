@@ -1,24 +1,23 @@
 module.exports = {
-    parserOptions: {
-      ecmaFeatures: {
-        jsx: true,
-      },
-      ecmaVersion: 12,
-      sourceType: 'module',
+  parserOptions: {
+    ecmaFeatures: {
+      jsx: true,
     },
-    settings: {
-      react: {
-        version: 'detect',
-      },
+    ecmaVersion: 12,
+    sourceType: 'module',
+  },
+  settings: {
+    react: {
+      version: 'detect',
     },
-    extends: [
-      'turbo',
-      'next',
-      'plugin:react/recommended',
-      'plugin:react/jsx-runtime',
-      'plugin:react-hooks/recommended',
-      './index.js',
-    ],
-    plugins: ['react'],
-  }
-  
+  },
+  extends: [
+    'turbo',
+    'next',
+    'plugin:react/recommended',
+    'plugin:react/jsx-runtime',
+    'plugin:react-hooks/recommended',
+    './index.js',
+  ],
+  plugins: ['react'],
+}

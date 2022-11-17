@@ -9,7 +9,7 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
     'plugin:@typescript-eslint/recommended-requiring-type-checking',
     'plugin:import/typescript',
-    './.eslintrc.js',
+    './base.js',
   ],
   plugins: ['@typescript-eslint'],
 }
