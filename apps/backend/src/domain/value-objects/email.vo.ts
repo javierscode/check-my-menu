@@ -1,6 +1,6 @@
-import { VOFormatException } from '@domain/exceptions/vo-format.exception.js'
+import { VOFormatException } from '@domain/exceptions/vo-format.exception'
 
-import { ValueObject } from './value-object.js'
+import { ValueObject } from './value-object'
 
 const EMAIL_REGEX =
   /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
