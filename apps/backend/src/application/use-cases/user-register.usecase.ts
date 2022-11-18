@@ -8,6 +8,8 @@ import { PasswordVO } from '@domain/value-objects/password.vo'
 import { PlainPasswordVO } from '@domain/value-objects/plain-password.vo'
 import { UuidVO } from '@domain/value-objects/uuid.vo'
 
+import { UseCase } from './usecase'
+
 export type UserRegisterRequest = {
   id: string
   name: string
@@ -16,7 +18,7 @@ export type UserRegisterRequest = {
   password: string
 }
 
-export class UserRegisterUseCase {
+export class UserRegisterUseCase implements UseCase {
   constructor(private userRepository: UserRepository) {}
   async run({ id, name, lastname, email, password }: UserRegisterRequest): Promise<void> {
     const userId = new UuidVO(id)
