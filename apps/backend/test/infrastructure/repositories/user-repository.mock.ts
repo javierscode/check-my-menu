@@ -5,29 +5,32 @@ import { UuidVO } from '@domain/value-objects/uuid.vo'
 import { UserMother } from '@test/domain/mothers/user.entity.mother'
 
 export class UserRepositoryMock implements UserRepository {
-  private findByIdMock: jest.Mock<Promise<User>, [id: UuidVO]>
-  private findByEmailMock: jest.Mock<Promise<User>, [email: EmailVO]>
+  private findByIdMock: jest.Mock<Promise<User> | null, [id: UuidVO]>
+  private findByEmailMock: jest.Mock<Promise<User> | null, [email: EmailVO]>
   private createMock: jest.Mock
   private updateMock: jest.Mock
+  private expectedUser?: User
 
   constructor() {
     this.findByIdMock = jest.fn((id: UuidVO) => {
-      return id && UserMother.random()
+      if (!id || this.createMock.mock.calls.length <= 0) return null
+      if (this.expectedUser) return Promise.resolve(this.expectedUser)
+      else return UserMother.random()
     })
     this.findByEmailMock = jest.fn((email: EmailVO) => {
-      return email && UserMother.random()
+      if (!email || this.createMock.mock.calls.length <= 0) return null
+      if (this.expectedUser) return Promise.resolve(this.expectedUser)
+      else return UserMother.random()
     })
     this.createMock = jest.fn()
     this.updateMock = jest.fn()
   }
 
   async findById(id: UuidVO): Promise<User | null> {
-    if (this.createMock.mock.calls.length <= 0) return null
     return await this.findByIdMock(id)
   }
 
   async findByEmail(email: EmailVO): Promise<User | null> {
-    if (this.createMock.mock.calls.length <= 0) return null
     return await this.findByEmailMock(email)
   }
 
@@ -53,5 +56,10 @@ export class UserRepositoryMock implements UserRepository {
 
   assertUpdateHaveBeenCalledWith(expected: User): void {
     expect(this.updateMock).toHaveBeenCalledWith(expected)
+  }
+
+  setExpectedUser(expectedUser: User) {
+    this.createMock(expectedUser)
+    this.expectedUser = expectedUser
   }
 }
