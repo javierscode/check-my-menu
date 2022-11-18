@@ -1,22 +1,26 @@
 {
     "extends": "tsconfig/base.json",
     "compilerOptions": {
-        "baseUrl": "src",
+        "baseUrl": ".",
         "paths": {
             "@application/*": [
-                "application/*"
+                "src/application/*"
             ],
             "@domain/*": [
-                "domain/*"
+                "src/domain/*"
             ],
             "@infrastructure/*": [
-                "infrastructure/*"
+                "src/infrastructure/*"
+            ],
+            "@test/*":[
+                "test/*"
             ]
         },
     },
     "include": [
         "**/*.ts",
-        "**/*.d.ts"
+        "**/*.d.ts",
+        "**/*.js"
     ],
     "exclude": [
         "node_modules"
