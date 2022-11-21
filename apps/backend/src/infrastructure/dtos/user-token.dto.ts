@@ -1,13 +1,13 @@
-import { FromSchema } from 'json-schema-to-ts'
+import type { JSONSchema7Object, JSONSchema7TypeName } from 'json-schema'
 
-export const UserTokenSchema = {
+export const UserTokenSchema: JSONSchema7Object = {
   $id: 'UserTokenDTO',
-  type: 'object',
+  type: 'object' as JSONSchema7TypeName,
   properties: {
-    id: { type: 'string' },
+    id: { type: 'string' as JSONSchema7TypeName },
   },
   required: ['id'],
   additionalProperties: false,
-} as const
+}
 
-export type UserTokenDTO = FromSchema<typeof UserTokenSchema>
+export type UserTokenDTO = { id: string }
