@@ -14,5 +14,6 @@ module.exports = {
   plugins: ['@typescript-eslint'],
   rules: {
     'no-useless-constructor': 'off',
+    '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
   },
 }

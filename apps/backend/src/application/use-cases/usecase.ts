@@ -1,3 +1,3 @@
-export interface UseCase {
+export interface Usecase {
   run(params: unknown): unknown
 }

@@ -7,8 +7,10 @@ import { NameVO } from '@domain/value-objects/name.vo'
 import { PasswordVO } from '@domain/value-objects/password.vo'
 import { PlainPasswordVO } from '@domain/value-objects/plain-password.vo'
 import { UuidVO } from '@domain/value-objects/uuid.vo'
+import { ContainerSymbols } from '@infrastructure/dependency-injection/symbols'
+import { inject, injectable } from 'inversify'
 
-import { UseCase } from './usecase'
+import { Usecase } from './usecase'
 
 export type UserRegisterRequest = {
   id: string
@@ -18,8 +20,13 @@ export type UserRegisterRequest = {
   password: string
 }
 
-export class UserRegisterUseCase implements UseCase {
-  constructor(private userRepository: UserRepository) {}
+@injectable()
+export class UserRegisterUsecase implements Usecase {
+  constructor(
+    @inject(ContainerSymbols.UserRepository)
+    private userRepository: UserRepository
+  ) {}
+
   async run({ id, name, lastname, email, password }: UserRegisterRequest): Promise<void> {
     const userId = new UuidVO(id)
     const userName = new NameVO(name)

@@ -2,16 +2,22 @@ import { ApplicationUnauthorizedException } from '@application/exceptions/applic
 import { User } from '@domain/entities/user.entity'
 import { UserRepository } from '@domain/repositories/user.repository'
 import { UuidVO } from '@domain/value-objects/uuid.vo'
+import { ContainerSymbols } from '@infrastructure/dependency-injection/symbols'
+import { inject, injectable } from 'inversify'
 import { Primitives } from 'src/types/primitives'
 
-import { UseCase } from './usecase'
+import { Usecase } from './usecase'
 
 export type UserGetProfileRequest = {
   id: string
 }
 
-export class UserGetProfileUsecase implements UseCase {
-  constructor(private userRepository: UserRepository) {}
+@injectable()
+export class UserGetProfileUsecase implements Usecase {
+  constructor(
+    @inject(ContainerSymbols.UserRepository)
+    private userRepository: UserRepository
+  ) {}
 
   async run({ id }: UserGetProfileRequest): Promise<Primitives<User>> {
     const userId = new UuidVO(id)
