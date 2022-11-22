@@ -1,4 +1,3 @@
-import { ApplicationUnauthorizedException } from '@application/exceptions/application-unauthorized.exception'
 import { UserGetProfileUsecase } from '@application/use-cases/user-get-profile.usecase'
 import { ContainerSymbols } from '@infrastructure/dependency-injection/symbols'
 import { UserTokenDTO } from '@infrastructure/dtos/user-token.dto'

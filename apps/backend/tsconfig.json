@@ -1,7 +1,6 @@
 {
     "extends": "tsconfig/base.json",
     "compilerOptions": {
-        "outDir": "dist",
         "target": "ES2022",
         "lib": ["es6"],
         "types": ["reflect-metadata", "jest"],
@@ -26,7 +25,8 @@
     "include": [
         "**/*.ts",
         "**/*.d.ts",
-        "**/*.js"
+        "**/*.js",
+        ".eslintrc.js"
     ],
     "exclude": [
         "node_modules"

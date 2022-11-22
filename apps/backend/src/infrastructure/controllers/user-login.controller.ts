@@ -5,7 +5,6 @@ import { sign } from '@infrastructure/services/jwt.service'
 import { StatusCodes } from '@infrastructure/utils/status-code'
 import type { NextFunction, Response } from 'express'
 import { inject, injectable } from 'inversify'
-import { nextTick } from 'process'
 import { TypedRequestBody } from 'src/types/express'
 
 import { Controller } from './controller'
