@@ -1,8 +1,9 @@
-import { DescriptonVO } from '@domain/value-objects/description.vo'
+import { DescriptionVO } from '@domain/value-objects/description.vo'
 import { LocationVO } from '@domain/value-objects/location.vo'
 import { NameVO } from '@domain/value-objects/name.vo'
 import { SlugVO } from '@domain/value-objects/slug.vo'
 import { UuidVO } from '@domain/value-objects/uuid.vo'
+import { Primitives } from 'src/types/primitives'
 
 export class Restaurant {
   constructor(
@@ -10,6 +11,18 @@ export class Restaurant {
     public name: NameVO,
     public domain: SlugVO,
     public location: LocationVO,
-    public description: DescriptonVO
+    public description: DescriptionVO,
+    public ownerId: UuidVO
   ) {}
+
+  toPrimitives(): Primitives<Restaurant> {
+    return {
+      id: this.id.value,
+      name: this.name.value,
+      domain: this.domain.value,
+      location: this.location.value,
+      description: this.description.value,
+      ownerId: this.ownerId.value,
+    }
+  }
 }
