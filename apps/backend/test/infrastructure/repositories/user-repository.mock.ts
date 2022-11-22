@@ -26,6 +26,10 @@ export class UserRepositoryMock implements UserRepository {
     this.updateMock = jest.fn()
   }
 
+  remove(): Promise<void> {
+    throw new Error('Method not implemented.')
+  }
+
   async findById(id: UuidVO): Promise<User | null> {
     return await this.findByIdMock(id)
   }
