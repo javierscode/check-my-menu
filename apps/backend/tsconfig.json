@@ -2,11 +2,9 @@
     "extends": "tsconfig/base.json",
     "compilerOptions": {
         "outDir": "dist",
-        "target": "es5",
+        "target": "ES2022",
         "lib": ["es6"],
-        "types": ["reflect-metadata"],
-        "module": "commonjs",
-        "moduleResolution": "node",
+        "types": ["reflect-metadata", "jest"],
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true,
         "baseUrl": ".",

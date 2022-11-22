@@ -1,7 +1,9 @@
+import { ApplicationUnauthorizedException } from '@application/exceptions/application-unauthorized.exception'
 import { UserGetProfileUsecase } from '@application/use-cases/user-get-profile.usecase'
 import { ContainerSymbols } from '@infrastructure/dependency-injection/symbols'
 import { UserTokenDTO } from '@infrastructure/dtos/user-token.dto'
-import type { Response } from 'express'
+import { StatusCodes } from '@infrastructure/utils/status-code'
+import type { NextFunction, Response } from 'express'
 import { inject, injectable } from 'inversify'
 import { TypedRequestBody } from 'src/types/express'
 
@@ -14,11 +16,14 @@ export class UserGetProfileController implements Controller {
     private userGetProfileUseCase: UserGetProfileUsecase
   ) {}
 
-  async run(req: TypedRequestBody<UserTokenDTO>, res: Response): Promise<void> {
+  async run(req: TypedRequestBody<UserTokenDTO>, res: Response, next: NextFunction): Promise<void> {
     const id = req.body.id
 
-    const profile = await this.userGetProfileUseCase.run({ id })
-
-    res.send(profile)
+    try {
+      const profile = await this.userGetProfileUseCase.run({ id })
+      res.status(StatusCodes.OK).send(profile)
+    } catch (error) {
+      next(error)
+    }
   }
 }

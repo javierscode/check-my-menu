@@ -1,3 +1,3 @@
 export interface Controller {
-  run(req: unknown, res: unknown): unknown
+  run(req: unknown, res: unknown, next: unknown): unknown
 }

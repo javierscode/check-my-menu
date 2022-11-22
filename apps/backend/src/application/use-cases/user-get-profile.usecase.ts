@@ -1,6 +1,6 @@
 import { ApplicationUnauthorizedException } from '@application/exceptions/application-unauthorized.exception'
 import { User } from '@domain/entities/user.entity'
-import { UserRepository } from '@domain/repositories/user.repository'
+import type { UserRepository } from '@domain/repositories/user.repository'
 import { UuidVO } from '@domain/value-objects/uuid.vo'
 import { ContainerSymbols } from '@infrastructure/dependency-injection/symbols'
 import { inject, injectable } from 'inversify'

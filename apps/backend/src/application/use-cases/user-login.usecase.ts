@@ -1,5 +1,5 @@
 import { InvalidUserLoginException } from '@application/exceptions/invalid-user-login.exception'
-import { UserRepository } from '@domain/repositories/user.repository'
+import type { UserRepository } from '@domain/repositories/user.repository'
 import { EmailVO } from '@domain/value-objects/email.vo'
 import { PlainPasswordVO } from '@domain/value-objects/plain-password.vo'
 import { ContainerSymbols } from '@infrastructure/dependency-injection/symbols'

@@ -1,7 +1,7 @@
 import { UserEmailAlreadyInUseException } from '@application/exceptions/user-email-already-in-use.exception'
 import { UserIdAlreadyInUseException } from '@application/exceptions/user-id-already-in-use.exception'
 import { User } from '@domain/entities/user.entity'
-import { UserRepository } from '@domain/repositories/user.repository'
+import type { UserRepository } from '@domain/repositories/user.repository'
 import { EmailVO } from '@domain/value-objects/email.vo'
 import { NameVO } from '@domain/value-objects/name.vo'
 import { PasswordVO } from '@domain/value-objects/password.vo'

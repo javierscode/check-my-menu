@@ -1,7 +1,8 @@
 import { UserRegisterUsecase } from '@application/use-cases/user-register.usecase'
 import { ContainerSymbols } from '@infrastructure/dependency-injection/symbols'
 import { UserRegisterDTO } from '@infrastructure/dtos/user-register.dto'
-import { Response } from 'express'
+import { StatusCodes } from '@infrastructure/utils/status-code'
+import { NextFunction, Response } from 'express'
 import { inject, injectable } from 'inversify'
 import { TypedRequestBody } from 'src/types/express'
 
@@ -14,10 +15,18 @@ export class UserRegisterController implements Controller {
     private userRegisterUseCase: UserRegisterUsecase
   ) {}
 
-  async run(req: TypedRequestBody<UserRegisterDTO>, res: Response): Promise<void> {
+  async run(
+    req: TypedRequestBody<UserRegisterDTO>,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> {
     const { id, name, lastname, email, password } = req.body
 
-    await this.userRegisterUseCase.run({ id, name, lastname, email, password })
-    res.status(201).send()
+    try {
+      await this.userRegisterUseCase.run({ id, name, lastname, email, password })
+      res.status(StatusCodes.CREATED).send()
+    } catch (error) {
+      next(error)
+    }
   }
 }
