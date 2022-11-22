@@ -8,6 +8,10 @@ const USERS_DDBB: User[] = []
 
 @injectable()
 export class InMemoryUserRepository implements UserRepository {
+  remove(): Promise<void> {
+    throw new Error('Method not implemented.')
+  }
+
   async findById(id: UuidVO): Promise<User | null> {
     const foundUser = await Promise.resolve(USERS_DDBB.find(user => user.id.equals(id)))
     if (!foundUser) return null
