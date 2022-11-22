@@ -1,5 +1,5 @@
 import { UserIdAlreadyInUseException } from '@application/exceptions/user-id-already-in-use.exception'
-import { UserRegisterUseCase } from '@application/use-cases/user-register.usecase'
+import { UserRegisterUsecase } from '@application/use-cases/user-register.usecase'
 import { VOFormatException } from '@domain/exceptions/vo-format.exception'
 import { UserMother } from '@test/domain/mothers/user.entity.mother'
 import { UserRepositoryMock } from '@test/infrastructure/repositories/user-repository.mock'
@@ -7,11 +7,11 @@ import { UserRepositoryMock } from '@test/infrastructure/repositories/user-repos
 import { UserRegisterRequestMother } from '../mothers/user-register-request.mother'
 
 let repository: UserRepositoryMock
-let usecase: UserRegisterUseCase
+let usecase: UserRegisterUsecase
 
 beforeEach(() => {
   repository = new UserRepositoryMock()
-  usecase = new UserRegisterUseCase(repository)
+  usecase = new UserRegisterUsecase(repository)
 })
 
 describe('User Register - Use Case', () => {

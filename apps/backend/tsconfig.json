@@ -1,6 +1,11 @@
 {
     "extends": "tsconfig/base.json",
     "compilerOptions": {
+        "target": "ES2022",
+        "lib": ["es6"],
+        "types": ["reflect-metadata", "jest"],
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
         "baseUrl": ".",
         "paths": {
             "@application/*": [
@@ -20,7 +25,8 @@
     "include": [
         "**/*.ts",
         "**/*.d.ts",
-        "**/*.js"
+        "**/*.js",
+        ".eslintrc.js"
     ],
     "exclude": [
         "node_modules"
