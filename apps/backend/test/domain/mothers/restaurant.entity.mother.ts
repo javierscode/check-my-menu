@@ -1,4 +1,4 @@
-import { RestaurantCreationRequest } from '@application/use-cases/restaurant-creation.usecase'
+import { CreateRestaurantRequest } from '@application/use-cases/restaurant/create-restaurant.usecase'
 import { Restaurant } from '@domain/entities/restaurant.entity'
 import { DescriptionVO } from '@domain/value-objects/description.vo'
 import { LocationVO } from '@domain/value-objects/location.vo'
@@ -31,7 +31,7 @@ export class RestaurantMother {
     location,
     description,
     ownerId,
-  }: RestaurantCreationRequest): Restaurant {
+  }: CreateRestaurantRequest): Restaurant {
     return this.create(
       new UuidVO(id),
       new NameVO(name),

@@ -1,4 +1,4 @@
-import { UserRegisterRequest } from '@application/use-cases/user-register.usecase'
+import { UserRegisterRequest } from '@application/use-cases/user/user-register.usecase'
 import { User } from '@domain/entities/user.entity'
 import { EmailVO } from '@domain/value-objects/email.vo'
 import { NameVO } from '@domain/value-objects/name.vo'

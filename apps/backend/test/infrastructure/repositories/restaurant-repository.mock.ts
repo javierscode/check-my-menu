@@ -58,6 +58,10 @@ export class RestaurantRepositoryMock implements RestaurantRepository {
     await Promise.resolve(this.updateMock(domainRestaurant))
   }
 
+  assertFindbyOnwerHaveBeenCalledWith(expected: UuidVO): void {
+    expect(this.findByOwnerMock).toHaveBeenCalledWith(expected)
+  }
+
   assertFindByIdHaveBeenCalledWith(expected: UuidVO): void {
     expect(this.findByIdMock).toHaveBeenCalledWith(expected)
   }

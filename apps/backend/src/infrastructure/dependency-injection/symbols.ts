@@ -5,13 +5,13 @@ const Repositories = {
 
 const UseCases = {
   UserLoginUsecase: Symbol.for('UserLoginUsecase'),
-  UserGetProfileUsecase: Symbol.for('UserGetProfileUsecase'),
+  GetUserProfileUsecase: Symbol.for('GetUserProfileUsecase'),
   UserRegisterUsecase: Symbol.for('UserRegisterUsecase'),
 }
 
 const Controllers = {
   UserLoginController: Symbol.for('UserLoginController'),
-  UserGetProfileController: Symbol.for('UserGetProfileController'),
+  GetUserProfileController: Symbol.for('GetUserProfileController'),
   UserRegisterController: Symbol.for('UserRegisterController'),
 }
 
