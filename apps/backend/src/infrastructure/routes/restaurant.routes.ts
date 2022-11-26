@@ -36,8 +36,8 @@ RestaurantRoutes.post(
 )
 
 RestaurantRoutes.delete(
-  '/',
-  validator.validate({ body: DeleteRestaurantSchema }),
+  '/:id',
+  validator.validate({ params: DeleteRestaurantSchema }),
   deleteRestaurantController.run.bind(deleteRestaurantController)
 )
 
@@ -48,8 +48,8 @@ RestaurantRoutes.put(
 )
 
 RestaurantRoutes.get(
-  '/',
-  validator.validate({ body: GetRestaurantByOwnerSchema }),
+  '/:ownerId',
+  validator.validate({ params: GetRestaurantByOwnerSchema }),
   getRestaurantsByOwnerController.run.bind(getRestaurantsByOwnerController)
 )
 

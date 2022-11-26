@@ -4,7 +4,7 @@ import { GetRestaurantByOwnerDTO } from '@infrastructure/dtos/restaurant/get-res
 import { StatusCodes } from '@infrastructure/utils/status-code'
 import { NextFunction, Response } from 'express'
 import { inject, injectable } from 'inversify'
-import { TypedRequestBody } from 'src/types/express'
+import { TypedRequestBody, TypedRequestParams } from 'src/types/express'
 
 import { Controller } from '../controller'
 
@@ -16,11 +16,11 @@ export class GetRestaurantsByOwnerController implements Controller {
   ) {}
 
   async run(
-    req: TypedRequestBody<GetRestaurantByOwnerDTO>,
+    req: TypedRequestParams<GetRestaurantByOwnerDTO>,
     res: Response,
     next: NextFunction
   ): Promise<void> {
-    const { ownerId } = req.body
+    const { ownerId } = req.params
 
     try {
       const restaurants = await this.getRestaurantsByOwnerUsecase.run({ id: ownerId })

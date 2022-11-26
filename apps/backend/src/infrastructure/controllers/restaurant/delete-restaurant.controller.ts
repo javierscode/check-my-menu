@@ -4,7 +4,7 @@ import { DeleteRestaurantDTO } from '@infrastructure/dtos/restaurant/delete-rest
 import { StatusCodes } from '@infrastructure/utils/status-code'
 import { NextFunction, Response } from 'express'
 import { inject, injectable } from 'inversify'
-import { TypedRequestBody } from 'src/types/express'
+import { TypedRequestBody, TypedRequestParams } from 'src/types/express'
 
 import { Controller } from '../controller'
 
@@ -16,11 +16,11 @@ export class DeleteRestaurantController implements Controller {
   ) {}
 
   async run(
-    req: TypedRequestBody<DeleteRestaurantDTO>,
+    req: TypedRequestParams<DeleteRestaurantDTO>,
     res: Response,
     next: NextFunction
   ): Promise<void> {
-    const { id } = req.body
+    const { id } = req.params
 
     try {
       await this.deleteRestaurantUsecase.run({ id })
