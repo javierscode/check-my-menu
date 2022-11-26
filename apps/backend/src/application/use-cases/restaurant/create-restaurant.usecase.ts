@@ -2,13 +2,15 @@ import { RestaurantSlugAlreadyInUseException } from '@application/exceptions/res
 import { RestaurantOwnerIdNotExistException } from '@application/exceptions/restaurant/restaurant-owner-id-not-exist.exception'
 import { RestaurantIdAlreadyInUseException } from '@application/exceptions/restaurant/restaurant-slug-already-in-use.exception'
 import { Restaurant } from '@domain/entities/restaurant.entity'
-import { RestaurantRepository } from '@domain/repositories/restaurant.repository'
-import { UserRepository } from '@domain/repositories/user.repository'
+import type { RestaurantRepository } from '@domain/repositories/restaurant.repository'
+import type { UserRepository } from '@domain/repositories/user.repository'
 import { DescriptionVO } from '@domain/value-objects/description.vo'
 import { LocationVO } from '@domain/value-objects/location.vo'
 import { NameVO } from '@domain/value-objects/name.vo'
 import { SlugVO } from '@domain/value-objects/slug.vo'
 import { UuidVO } from '@domain/value-objects/uuid.vo'
+import { ContainerSymbols } from '@infrastructure/dependency-injection/symbols'
+import { inject, injectable } from 'inversify'
 
 import { Usecase } from '../usecase'
 
@@ -21,9 +23,12 @@ export type CreateRestaurantRequest = {
   ownerId: string
 }
 
+@injectable()
 export class CreateRestaurantUsecase implements Usecase {
   constructor(
+    @inject(ContainerSymbols.RestaurantRepository)
     private restaurantRepository: RestaurantRepository,
+    @inject(ContainerSymbols.UserRepository)
     private userRepository: UserRepository
   ) {}
 
