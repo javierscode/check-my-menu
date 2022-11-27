@@ -1,6 +1,7 @@
 import { CreateRestaurantUsecase } from '@application/use-cases/restaurant/create-restaurant.usecase'
 import { ContainerSymbols } from '@infrastructure/dependency-injection/symbols'
 import { CreateRestaurantDTO } from '@infrastructure/dtos/restaurant/create-restaurant.dto'
+import { InfrastructureUnauthorizedException } from '@infrastructure/exceptions/infrastructure-unauthorized.exception'
 import { StatusCodes } from '@infrastructure/utils/status-code'
 import { NextFunction, Response } from 'express'
 import { inject, injectable } from 'inversify'
@@ -20,7 +21,10 @@ export class CreateRestaurantController implements Controller {
     res: Response,
     next: NextFunction
   ): Promise<void> {
-    const { id, name, domain, location, description, ownerId } = req.body
+    const userId = req.userId
+    if (!userId) return next(new InfrastructureUnauthorizedException())
+
+    const { id, name, domain, location, description } = req.body
 
     try {
       await this.createRestaurantUsecase.run({
@@ -29,7 +33,7 @@ export class CreateRestaurantController implements Controller {
         domain,
         location,
         description,
-        ownerId,
+        ownerId: userId,
       })
       res.status(StatusCodes.CREATED).send()
     } catch (error) {

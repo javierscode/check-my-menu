@@ -1,10 +1,9 @@
 import { GetRestaurantsByOwnerUsecase } from '@application/use-cases/restaurant/get-restaurants-by-owner.usecase'
 import { ContainerSymbols } from '@infrastructure/dependency-injection/symbols'
-import { GetRestaurantByOwnerDTO } from '@infrastructure/dtos/restaurant/get-restaurant-by-owner.dto'
+import { InfrastructureUnauthorizedException } from '@infrastructure/exceptions/infrastructure-unauthorized.exception'
 import { StatusCodes } from '@infrastructure/utils/status-code'
-import { NextFunction, Response } from 'express'
+import { NextFunction, Request, Response } from 'express'
 import { inject, injectable } from 'inversify'
-import { TypedRequestBody, TypedRequestParams } from 'src/types/express'
 
 import { Controller } from '../controller'
 
@@ -15,15 +14,12 @@ export class GetRestaurantsByOwnerController implements Controller {
     private getRestaurantsByOwnerUsecase: GetRestaurantsByOwnerUsecase
   ) {}
 
-  async run(
-    req: TypedRequestParams<GetRestaurantByOwnerDTO>,
-    res: Response,
-    next: NextFunction
-  ): Promise<void> {
-    const { ownerId } = req.params
+  async run(req: Request, res: Response, next: NextFunction): Promise<void> {
+    const userId = req.userId
+    if (!userId) return next(new InfrastructureUnauthorizedException())
 
     try {
-      const restaurants = await this.getRestaurantsByOwnerUsecase.run({ id: ownerId })
+      const restaurants = await this.getRestaurantsByOwnerUsecase.run({ id: userId })
       res.status(StatusCodes.OK).send(restaurants)
     } catch (error) {
       next(error)

@@ -9,7 +9,6 @@ import { ContainerSymbols } from '@infrastructure/dependency-injection/symbols'
 import { CreateRestaurantSchema } from '@infrastructure/dtos/restaurant/create-restaurant.dto'
 import { DeleteRestaurantSchema } from '@infrastructure/dtos/restaurant/delete-restaurant.dto'
 import { EditRestaurantSchema } from '@infrastructure/dtos/restaurant/edit-restaurant.dto'
-import { GetRestaurantByOwnerSchema } from '@infrastructure/dtos/restaurant/get-restaurant-by-owner.dto'
 import { Router } from 'express'
 import { Validator } from 'express-json-validator-middleware'
 
@@ -47,10 +46,6 @@ RestaurantRoutes.put(
   editRestaurantController.run.bind(editRestaurantController)
 )
 
-RestaurantRoutes.get(
-  '/:ownerId',
-  validator.validate({ params: GetRestaurantByOwnerSchema }),
-  getRestaurantsByOwnerController.run.bind(getRestaurantsByOwnerController)
-)
+RestaurantRoutes.get('/', getRestaurantsByOwnerController.run.bind(getRestaurantsByOwnerController))
 
 export default RestaurantRoutes

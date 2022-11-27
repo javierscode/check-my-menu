@@ -4,7 +4,7 @@ import { DeleteRestaurantDTO } from '@infrastructure/dtos/restaurant/delete-rest
 import { StatusCodes } from '@infrastructure/utils/status-code'
 import { NextFunction, Response } from 'express'
 import { inject, injectable } from 'inversify'
-import { TypedRequestBody, TypedRequestParams } from 'src/types/express'
+import { TypedRequestParams } from 'src/types/express'
 
 import { Controller } from '../controller'
 

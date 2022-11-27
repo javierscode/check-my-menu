@@ -3,7 +3,6 @@ import { myContainer } from '@infrastructure/dependency-injection/container'
 import { ContainerSymbols } from '@infrastructure/dependency-injection/symbols'
 import { UserLoginDTO } from '@infrastructure/dtos/user/user-login.dto'
 import { UserRegisterDTO } from '@infrastructure/dtos/user/user-register.dto'
-import { UserTokenDTO } from '@infrastructure/dtos/user/user-token.dto'
 import { InMemoryUserRepository } from '@infrastructure/repositories/inmemory-user.repository'
 import { StatusCodes } from '@infrastructure/utils/status-code'
 import { EmailVOMother } from '@test/domain/mothers/email.vo.mother'
@@ -14,6 +13,7 @@ import app from 'src/app'
 import request from 'supertest'
 
 let UserToTest: User
+let UserToken: string
 
 beforeAll(async () => {
   UserToTest = await UserMother.random()
@@ -40,41 +40,6 @@ describe('User Register - Controller', () => {
   })
 })
 
-describe('User GetProfile - Controller', () => {
-  describe('GET /user/profile', () => {
-    describe('When a valid user ID is sent', () => {
-      it('should return a user profile', async () => {
-        const requestBody: UserTokenDTO = { id: UserToTest.id.value }
-        const expectedBody = UserToTest.toPrimitives()
-
-        await request(app)
-          .get('/user/profile')
-          .send(requestBody)
-          .expect(StatusCodes.OK)
-          .then(response => {
-            expect(response.body).toStrictEqual(expectedBody)
-          })
-      })
-    })
-
-    describe('When a invalid user ID is sent', () => {
-      it('should return UNAUTHORIZED', async () => {
-        const requestBody: UserTokenDTO = { id: UuidVOMother.random().value }
-
-        await request(app).get('/user/profile').send(requestBody).expect(StatusCodes.UNAUTHORIZED)
-      })
-    })
-
-    describe('When a invalid request is sent', () => {
-      it('should return BAD_REQUEST', async () => {
-        const requestBody = {}
-
-        await request(app).get('/user/profile').send(requestBody).expect(StatusCodes.BAD_REQUEST)
-      })
-    })
-  })
-})
-
 describe('User login - Controller', () => {
   describe('POST /user/login', () => {
     describe('When a valid request is sent', () => {
@@ -90,6 +55,8 @@ describe('User login - Controller', () => {
           .expect(StatusCodes.OK)
           .then(response => {
             expect(response.body).toHaveProperty('token')
+            const { token } = response.body as Record<string, string>
+            token && (UserToken = token)
           })
       })
     })
@@ -113,6 +80,31 @@ describe('User login - Controller', () => {
         }
 
         await request(app).post('/user/login').send(requestBody).expect(StatusCodes.UNAUTHORIZED)
+      })
+    })
+  })
+})
+
+describe('User GetProfile - Controller', () => {
+  describe('GET /user/profile', () => {
+    describe('When a valid user ID is sent', () => {
+      it('should return a user profile', async () => {
+        const expectedBody = UserToTest.toPrimitives()
+
+        await request(app)
+          .get('/user/profile')
+          .set('Authorization', `Bearer ${UserToken}`)
+          .send()
+          .expect(StatusCodes.OK)
+          .then(response => {
+            expect(response.body).toStrictEqual(expectedBody)
+          })
+      })
+    })
+
+    describe('When a invalid request is sent', () => {
+      it('should return UNAUTHORIZED', async () => {
+        await request(app).get('/user/profile').send().expect(StatusCodes.UNAUTHORIZED)
       })
     })
   })
