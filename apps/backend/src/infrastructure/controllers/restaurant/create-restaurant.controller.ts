@@ -1,4 +1,5 @@
 import { CreateRestaurantUsecase } from '@application/use-cases/restaurant/create-restaurant.usecase'
+import { CheckUserExistenceUsecase } from '@application/use-cases/user/check-user-existence.usecase'
 import { ContainerSymbols } from '@infrastructure/dependency-injection/symbols'
 import { CreateRestaurantDTO } from '@infrastructure/dtos/restaurant/create-restaurant.dto'
 import { InfrastructureUnauthorizedException } from '@infrastructure/exceptions/infrastructure-unauthorized.exception'
@@ -13,7 +14,9 @@ import { Controller } from '../controller'
 export class CreateRestaurantController implements Controller {
   constructor(
     @inject(ContainerSymbols.CreateRestaurantUsecase)
-    private createRestaurantUsecase: CreateRestaurantUsecase
+    private createRestaurantUsecase: CreateRestaurantUsecase,
+    @inject(ContainerSymbols.CheckUserExistenceUsecase)
+    private checkUserExistenceUsecase: CheckUserExistenceUsecase
   ) {}
 
   async run(
@@ -27,6 +30,7 @@ export class CreateRestaurantController implements Controller {
     const { id, name, domain, location, description } = req.body
 
     try {
+      await this.checkUserExistenceUsecase.run({ id: userId })
       await this.createRestaurantUsecase.run({
         id,
         name,

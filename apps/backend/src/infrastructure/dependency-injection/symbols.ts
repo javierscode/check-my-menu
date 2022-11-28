@@ -9,11 +9,13 @@ const UseCases = {
   UserLoginUsecase: Symbol.for('UserLoginUsecase'),
   GetUserProfileUsecase: Symbol.for('GetUserProfileUsecase'),
   UserRegisterUsecase: Symbol.for('UserRegisterUsecase'),
+  CheckUserExistenceUsecase: Symbol.for('CheckUserExistenceUsecase'),
   // Restaurant
   CreateRestaurantUsecase: Symbol.for('CreateRestaurantUsecase'),
   DeleteRestaurantUsecase: Symbol.for('DeleteRestaurantUsecase'),
   EditRestaurantUsecase: Symbol.for('EditRestaurantUsecase'),
   GetRestaurantsByOwnerUsecase: Symbol.for('GetRestaurantsByOwnerUsecase'),
+  CheckRestaurantOwnerUsecase: Symbol.for('CheckRestaurantOwnerUsecase'),
 }
 
 const Controllers = {

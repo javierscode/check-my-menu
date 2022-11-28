@@ -1,6 +1,8 @@
+import { CheckRestaurantOwnerUsecase } from '@application/use-cases/restaurant/check-restaurant-owner.usecase'
 import { EditRestaurantUsecase } from '@application/use-cases/restaurant/edit-restaurant.usecase'
 import { ContainerSymbols } from '@infrastructure/dependency-injection/symbols'
 import { EditRestaurantDTO } from '@infrastructure/dtos/restaurant/edit-restaurant.dto'
+import { InfrastructureUnauthorizedException } from '@infrastructure/exceptions/infrastructure-unauthorized.exception'
 import { StatusCodes } from '@infrastructure/utils/status-code'
 import { NextFunction, Response } from 'express'
 import { inject, injectable } from 'inversify'
@@ -12,7 +14,9 @@ import { Controller } from '../controller'
 export class EditRestaurantController implements Controller {
   constructor(
     @inject(ContainerSymbols.EditRestaurantUsecase)
-    private editRestaurantUsecase: EditRestaurantUsecase
+    private editRestaurantUsecase: EditRestaurantUsecase,
+    @inject(ContainerSymbols.CheckRestaurantOwnerUsecase)
+    private checkRestaurantOwnerUsecase: CheckRestaurantOwnerUsecase
   ) {}
 
   async run(
@@ -20,9 +24,13 @@ export class EditRestaurantController implements Controller {
     res: Response,
     next: NextFunction
   ): Promise<void> {
+    const userId = req.userId
+    if (!userId) return next(new InfrastructureUnauthorizedException())
+
     const { id, name, domain, location, description } = req.body
 
     try {
+      await this.checkRestaurantOwnerUsecase.run({ restaurantId: id, ownerId: userId })
       await this.editRestaurantUsecase.run({ id, name, domain, location, description })
       res.status(StatusCodes.OK).send()
     } catch (error) {

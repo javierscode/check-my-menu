@@ -1,3 +1,4 @@
+import { CheckRestaurantOwnerUsecase } from '@application/use-cases/restaurant/check-restaurant-owner.usecase'
 import { CreateRestaurantUsecase } from '@application/use-cases/restaurant/create-restaurant.usecase'
 import { DeleteRestaurantUsecase } from '@application/use-cases/restaurant/delete-restaurant.usecase'
 import { EditRestaurantUsecase } from '@application/use-cases/restaurant/edit-restaurant.usecase'
@@ -34,6 +35,10 @@ export function defineRestaurantDependencies(container: Container) {
   container
     .bind<GetRestaurantsByOwnerUsecase>(ContainerSymbols.GetRestaurantsByOwnerUsecase)
     .to(GetRestaurantsByOwnerUsecase)
+
+  container
+    .bind<CheckRestaurantOwnerUsecase>(ContainerSymbols.CheckRestaurantOwnerUsecase)
+    .to(CheckRestaurantOwnerUsecase)
 
   // Controllers
   container
