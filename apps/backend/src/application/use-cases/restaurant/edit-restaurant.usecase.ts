@@ -44,6 +44,7 @@ export class EditRestaurantUsecase implements Usecase {
       restaurantDescription,
       foundRestaurantById.ownerId
     )
+
     await this.restaurantRepository.update(restaurant)
   }
 }

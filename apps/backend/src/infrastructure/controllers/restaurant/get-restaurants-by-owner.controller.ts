@@ -20,7 +20,7 @@ export class GetRestaurantsByOwnerController implements Controller {
 
     try {
       const restaurants = await this.getRestaurantsByOwnerUsecase.run({ id: userId })
-      res.status(StatusCodes.OK).send(restaurants)
+      res.status(StatusCodes.OK).send(restaurants.map(rest => rest.toPrimitives()))
     } catch (error) {
       next(error)
     }

@@ -38,7 +38,7 @@ export class InMemoryRestaurantRepository implements RestaurantRepository {
     const foundIndex = RESTAURANTS_DDBB.findIndex(restaurant =>
       restaurant.id.equals(domainEntity.id)
     )
-    if (foundIndex) RESTAURANTS_DDBB[foundIndex] = domainEntity
+    if (foundIndex !== -1) RESTAURANTS_DDBB[foundIndex] = domainEntity
     return Promise.resolve()
   }
 

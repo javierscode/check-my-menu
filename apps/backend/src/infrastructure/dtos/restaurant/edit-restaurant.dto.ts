@@ -10,7 +10,7 @@ export const EditRestaurantSchema: JSONSchema7Object = {
     location: { type: 'string' as JSONSchema7TypeName },
     description: { type: 'string' as JSONSchema7TypeName },
   },
-  required: ['id', 'name', 'domain', 'location', 'description', 'ownerId'],
+  required: ['id', 'name', 'domain', 'location', 'description'],
   additionalProperties: false,
 }
 
