@@ -1,7 +1,7 @@
 import type { JSONSchema7Object, JSONSchema7TypeName } from 'json-schema'
 
-export const UserTokenSchema: JSONSchema7Object = {
-  $id: 'UserTokenDTO',
+export const DeleteRestaurantSchema: JSONSchema7Object = {
+  $id: 'DeleteRestaurantDTO',
   type: 'object' as JSONSchema7TypeName,
   properties: {
     id: { type: 'string' as JSONSchema7TypeName },
@@ -10,4 +10,6 @@ export const UserTokenSchema: JSONSchema7Object = {
   additionalProperties: false,
 }
 
-export type UserTokenDTO = { id: string }
+export type DeleteRestaurantDTO = {
+  id: string
+}

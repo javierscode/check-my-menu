@@ -7,7 +7,7 @@ import { myContainer } from '@infrastructure/dependency-injection/container'
 import { ContainerSymbols } from '@infrastructure/dependency-injection/symbols'
 import { UserLoginSchema } from '@infrastructure/dtos/user/user-login.dto'
 import { UserRegisterSchema } from '@infrastructure/dtos/user/user-register.dto'
-import { UserTokenSchema } from '@infrastructure/dtos/user/user-token.dto'
+import { authMiddleware } from '@infrastructure/middlewares/auth.middleware'
 import { Router } from 'express'
 import { Validator } from 'express-json-validator-middleware'
 
@@ -26,7 +26,7 @@ const validator = new Validator({ allErrors: true })
 
 UserRoutes.get(
   '/profile',
-  validator.validate({ body: UserTokenSchema }),
+  authMiddleware,
   getUserProfileController.run.bind(getUserProfileController)
 )
 UserRoutes.post(
