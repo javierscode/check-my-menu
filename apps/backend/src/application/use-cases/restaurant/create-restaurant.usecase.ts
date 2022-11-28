@@ -1,9 +1,7 @@
 import { RestaurantSlugAlreadyInUseException } from '@application/exceptions/restaurant/restaurant-id-already-in-use.exception'
-import { RestaurantOwnerIdNotExistException } from '@application/exceptions/restaurant/restaurant-owner-id-not-exist.exception'
 import { RestaurantIdAlreadyInUseException } from '@application/exceptions/restaurant/restaurant-slug-already-in-use.exception'
 import { Restaurant } from '@domain/entities/restaurant.entity'
 import type { RestaurantRepository } from '@domain/repositories/restaurant.repository'
-import type { UserRepository } from '@domain/repositories/user.repository'
 import { DescriptionVO } from '@domain/value-objects/description.vo'
 import { LocationVO } from '@domain/value-objects/location.vo'
 import { NameVO } from '@domain/value-objects/name.vo'
@@ -27,9 +25,7 @@ export type CreateRestaurantRequest = {
 export class CreateRestaurantUsecase implements Usecase {
   constructor(
     @inject(ContainerSymbols.RestaurantRepository)
-    private restaurantRepository: RestaurantRepository,
-    @inject(ContainerSymbols.UserRepository)
-    private userRepository: UserRepository
+    private restaurantRepository: RestaurantRepository
   ) {}
 
   async run({
@@ -55,8 +51,6 @@ export class CreateRestaurantUsecase implements Usecase {
       restaurantDescription,
       restaurantOwner
     )
-    const owner = await this.userRepository.findById(restaurantOwner)
-    if (!owner) throw new RestaurantOwnerIdNotExistException()
 
     const foundRestaurantById = await this.restaurantRepository.findById(restaurantId)
     if (foundRestaurantById) throw new RestaurantIdAlreadyInUseException()

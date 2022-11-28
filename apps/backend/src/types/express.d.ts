@@ -10,10 +10,10 @@ export interface TypedRequestBody<T> extends Request {
   body: T
 }
 
-export interface TypedRequestParams<T> extends Express.Request {
+export interface TypedRequestParams<T> extends Request {
   params: T
 }
 
-export interface AuthRequest extends Express.Request {
+export interface AuthRequest extends Request {
   userId: string
 }

@@ -1,3 +1,4 @@
+import { CheckUserExistenceUsecase } from '@application/use-cases/user/check-user-existence.usecase'
 import { GetUserProfileUsecase } from '@application/use-cases/user/get-user-profile.usecase'
 import { UserLoginUsecase } from '@application/use-cases/user/user-login.usecase'
 import { UserRegisterUsecase } from '@application/use-cases/user/user-register.usecase'
@@ -20,6 +21,9 @@ export function defineUserDependencies(container: Container) {
     .to(GetUserProfileUsecase)
   container.bind<UserLoginUsecase>(ContainerSymbols.UserLoginUsecase).to(UserLoginUsecase)
   container.bind<UserRegisterUsecase>(ContainerSymbols.UserRegisterUsecase).to(UserRegisterUsecase)
+  container
+    .bind<CheckUserExistenceUsecase>(ContainerSymbols.CheckUserExistenceUsecase)
+    .to(CheckUserExistenceUsecase)
 
   // Controllers
   container
