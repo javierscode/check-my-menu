@@ -5,6 +5,8 @@ import { DescriptionVO } from '@domain/value-objects/description.vo'
 import { ImageVO } from '@domain/value-objects/image.vo'
 import { NameVO } from '@domain/value-objects/name.vo'
 import { UuidVO } from '@domain/value-objects/uuid.vo'
+import { ContainerSymbols } from '@infrastructure/dependency-injection/symbols'
+import { inject, injectable } from 'inversify'
 
 import { Usecase } from '../usecase'
 
@@ -15,8 +17,12 @@ export interface EditCategoryRequest {
   image: string
 }
 
+@injectable()
 export class EditCategoryUsecase implements Usecase {
-  constructor(private categoryRepository: CategoryRepository) {}
+  constructor(
+    @inject(ContainerSymbols.CategoryRepository)
+    private categoryRepository: CategoryRepository
+  ) {}
 
   async run({ id, name, description, image }: EditCategoryRequest): Promise<void> {
     const categoryId = new UuidVO(id)

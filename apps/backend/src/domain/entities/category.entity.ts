@@ -2,6 +2,7 @@ import { DescriptionVO } from '@domain/value-objects/description.vo'
 import { ImageVO } from '@domain/value-objects/image.vo'
 import { NameVO } from '@domain/value-objects/name.vo'
 import { UuidVO } from '@domain/value-objects/uuid.vo'
+import { Primitives } from 'src/types/primitives'
 
 export class Category {
   constructor(
@@ -12,4 +13,15 @@ export class Category {
     public restaurantId: UuidVO,
     public ownerId: UuidVO
   ) {}
+
+  toPrimitives(): Primitives<Category> {
+    return {
+      id: this.id.value,
+      name: this.name.value,
+      description: this.description.value,
+      image: this.image.value,
+      restaurantId: this.restaurantId.value,
+      ownerId: this.ownerId.value,
+    }
+  }
 }

@@ -2,7 +2,6 @@ import { CheckRestaurantOwnerUsecase } from '@application/use-cases/restaurant/c
 import { DeleteRestaurantUsecase } from '@application/use-cases/restaurant/delete-restaurant.usecase'
 import { ContainerSymbols } from '@infrastructure/dependency-injection/symbols'
 import { DeleteRestaurantDTO } from '@infrastructure/dtos/restaurant/delete-restaurant.dto'
-import { InfrastructureUnauthorizedException } from '@infrastructure/exceptions/infrastructure-unauthorized.exception'
 import { StatusCodes } from '@infrastructure/utils/status-code'
 import { NextFunction, Response } from 'express'
 import { inject, injectable } from 'inversify'
@@ -24,8 +23,7 @@ export class DeleteRestaurantController implements Controller {
     res: Response,
     next: NextFunction
   ): Promise<void> {
-    const userId = req.userId
-    if (!userId) return next(new InfrastructureUnauthorizedException())
+    const userId = req.userId as string
 
     const { id } = req.params
 
