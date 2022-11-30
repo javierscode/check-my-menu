@@ -2,6 +2,7 @@ import 'reflect-metadata'
 
 import { authMiddleware } from '@infrastructure/middlewares/auth.middleware'
 import { errorMiddleWare } from '@infrastructure/middlewares/error.middleware'
+import CategoryRoutes from '@infrastructure/routes/category.routes'
 import RestaurantRoutes from '@infrastructure/routes/restaurant.routes'
 import UserRoutes from '@infrastructure/routes/user.routes'
 import cors from 'cors'
@@ -19,6 +20,7 @@ app.use(cors(options))
 app.use(express.json())
 app.use('/user', UserRoutes)
 app.use('/restaurant', authMiddleware, RestaurantRoutes)
+app.use('/category', authMiddleware, CategoryRoutes)
 
 app.get('/', (_, res) => {
   res.send('Express + TypeScript Server')

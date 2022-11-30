@@ -15,8 +15,7 @@ export class GetUserProfileController implements Controller {
   ) {}
 
   async run(req: Request, res: Response, next: NextFunction): Promise<void> {
-    const id = req.userId
-    if (!id) return next(new InfrastructureUnauthorizedException())
+    const id = req.userId as string
 
     try {
       const profile = await this.GetUserProfileUseCase.run({ id })

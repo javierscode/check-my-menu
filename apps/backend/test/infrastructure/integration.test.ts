@@ -1,32 +1,44 @@
+import { Category } from '@domain/entities/category.entity'
 import { Restaurant } from '@domain/entities/restaurant.entity'
 import { User } from '@domain/entities/user.entity'
 import { myContainer } from '@infrastructure/dependency-injection/container'
 import { ContainerSymbols } from '@infrastructure/dependency-injection/symbols'
+import { CreateCategoryDTO } from '@infrastructure/dtos/category/create-category.dto'
+import { EditCategoryDTO } from '@infrastructure/dtos/category/edit-category.dto'
+import { GetCategoriesByRestaurantDTO } from '@infrastructure/dtos/category/get-categories-by-restaurant.dto'
 import { CreateRestaurantDTO } from '@infrastructure/dtos/restaurant/create-restaurant.dto'
 import { EditRestaurantDTO } from '@infrastructure/dtos/restaurant/edit-restaurant.dto'
 import { UserLoginDTO } from '@infrastructure/dtos/user/user-login.dto'
 import { UserRegisterDTO } from '@infrastructure/dtos/user/user-register.dto'
+import { InMemoryCategoryRepository } from '@infrastructure/repositories/inmemory-category.repository'
 import { InMemoryRestaurantRepository } from '@infrastructure/repositories/inmemory-restaurant.repository'
 import { InMemoryUserRepository } from '@infrastructure/repositories/inmemory-user.repository'
 import { StatusCodes } from '@infrastructure/utils/status-code'
+import { CategoryMother } from '@test/domain/mothers/category.entity.mother'
 import { EmailVOMother } from '@test/domain/mothers/email.vo.mother'
 import { PasswordVOMother } from '@test/domain/mothers/password.vo.mother'
 import { RestaurantMother } from '@test/domain/mothers/restaurant.entity.mother'
 import { UserMother } from '@test/domain/mothers/user.entity.mother'
 import { UuidVOMother } from '@test/domain/mothers/uuid.vo.mother'
 import app from 'src/app'
+import { Primitives } from 'src/types/primitives'
 import request from 'supertest'
 
 let UserToTest: User
 let UserToken: string
 let RestaurantToTest: Restaurant
+let CategoryToTest: Category
 
 beforeAll(async () => {
   UserToTest = await UserMother.random()
   myContainer.rebind(ContainerSymbols.UserRepository).to(InMemoryUserRepository)
   RestaurantToTest = RestaurantMother.random()
   myContainer.rebind(ContainerSymbols.RestaurantRepository).to(InMemoryRestaurantRepository)
+  CategoryToTest = CategoryMother.random()
+  myContainer.rebind(ContainerSymbols.CategoryRepository).to(InMemoryCategoryRepository)
 })
+
+/** --- USER --- */
 
 describe('User Register - Controller', () => {
   describe('POST /user/register', () => {
@@ -118,6 +130,8 @@ describe('User GetProfile - Controller', () => {
   })
 })
 
+/** --- RESTAURANT --- */
+
 describe('Create Restaurant - Controller', () => {
   describe('POST /restaurant/', () => {
     describe('When a valid restaurant is send', () => {
@@ -204,9 +218,124 @@ describe('Get Restaurants by Owner - Controller', () => {
   })
 })
 
+/** --- CATEGORY --- */
+
+describe('Create Category - Controller', () => {
+  describe('POST /category/', () => {
+    describe('When a valid Category is send', () => {
+      it('should return a CREATED', async () => {
+        const body: CreateCategoryDTO = {
+          id: CategoryToTest.id.value,
+          name: CategoryToTest.name.value,
+          description: CategoryToTest.description.value,
+          image: CategoryToTest.image.value,
+          restaurantId: RestaurantToTest.id.value,
+        }
+
+        await request(app)
+          .post('/category/')
+          .set('Authorization', `Bearer ${UserToken}`)
+          .send(body)
+          .expect(StatusCodes.CREATED)
+      })
+    })
+
+    describe('When a invalid request is sent', () => {
+      it('should return UNAUTHORIZED', async () => {
+        await request(app).post('/category/').send().expect(StatusCodes.UNAUTHORIZED)
+      })
+    })
+  })
+})
+
+describe('Edit Category - Controller', () => {
+  describe('PUT /Category/', () => {
+    describe('When a valid Category is send', () => {
+      it('should return a CREATED', async () => {
+        const body: EditCategoryDTO = {
+          id: CategoryToTest.id.value,
+          name: CategoryToTest.name.value,
+          description: 'Description changed for test',
+          image: CategoryToTest.image.value,
+        }
+
+        await request(app)
+          .put('/category/')
+          .set('Authorization', `Bearer ${UserToken}`)
+          .send(body)
+          .expect(StatusCodes.OK)
+      })
+    })
+
+    describe('When a invalid request is sent', () => {
+      it('should return UNAUTHORIZED', async () => {
+        await request(app).put('/Category/').send().expect(StatusCodes.UNAUTHORIZED)
+      })
+    })
+  })
+})
+
+describe('Get Categories by Restaurant - Controller', () => {
+  describe('Get /Category/', () => {
+    describe('When a valid userToken is send', () => {
+      it('should return an array of categories', async () => {
+        const body: GetCategoriesByRestaurantDTO = {
+          restaurantId: RestaurantToTest.id.value,
+        }
+        const expectedBody: Array<Primitives<Category>> = [
+          {
+            ...CategoryToTest.toPrimitives(),
+            description: 'Description changed for test',
+            ownerId: UserToTest.id.value,
+            restaurantId: RestaurantToTest.id.value,
+          },
+        ]
+        await request(app)
+          .get('/category/')
+          .set('Authorization', `Bearer ${UserToken}`)
+          .send(body)
+          .expect(StatusCodes.OK)
+          .then(response => {
+            expect(response.body).toStrictEqual(expectedBody)
+          })
+      })
+    })
+
+    describe('When a invalid request is sent', () => {
+      it('should return UNAUTHORIZED', async () => {
+        await request(app).get('/restaurant/').send().expect(StatusCodes.UNAUTHORIZED)
+      })
+    })
+  })
+})
+
+/** --- DELETIONS RESTAURANT | CATEGORY | DISH --- */
+
+describe('Delete Category - Controller', () => {
+  describe('DELETE /category/', () => {
+    describe('When a valid category id is send', () => {
+      it('should return a OK', async () => {
+        const id = CategoryToTest.id.value
+
+        await request(app)
+          .delete('/category/' + id)
+          .set('Authorization', `Bearer ${UserToken}`)
+          .send()
+          .expect(StatusCodes.OK)
+      })
+    })
+
+    describe('When a invalid request is sent', () => {
+      it('should return UNAUTHORIZED', async () => {
+        await request(app).delete('/category/').send().expect(StatusCodes.UNAUTHORIZED)
+      })
+    })
+  })
+})
+
 describe('Delete Restaurant - Controller', () => {
   describe('DELETE /restaurant/', () => {
-    describe('When a valid id restaurant is send', () => {
+    describe('When a valid restaurant id is send', () => {
       it('should return a OK', async () => {
         const id = RestaurantToTest.id.value
 

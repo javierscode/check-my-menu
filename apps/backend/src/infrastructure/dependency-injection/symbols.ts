@@ -2,6 +2,7 @@
 const Repositories = {
   UserRepository: Symbol.for('UserRepository'),
   RestaurantRepository: Symbol.for('RestaurantRepository'),
+  CategoryRepository: Symbol.for('CategoryRepository'),
 }
 
 const UseCases = {
@@ -16,6 +17,14 @@ const UseCases = {
   EditRestaurantUsecase: Symbol.for('EditRestaurantUsecase'),
   GetRestaurantsByOwnerUsecase: Symbol.for('GetRestaurantsByOwnerUsecase'),
   CheckRestaurantOwnerUsecase: Symbol.for('CheckRestaurantOwnerUsecase'),
+
+  // Category
+  CreateCategoryUsecase: Symbol.for('CreateCategoryUsecase'),
+  DeleteCategoryUsecase: Symbol.for('DeleteCategoryUsecase'),
+  EditCategoryUsecase: Symbol.for('EditCategoryUsecase'),
+  GetCategoriesByRestaurantUsecase: Symbol.for('GetCategoriesByRestaurantUsecase'),
+  CheckCategoryOwnerUsecase: Symbol.for('CheckCategoryOwnerUsecase'),
+  CheckCategoryOfRestaurantUsecase: Symbol.for('CheckCategoryOfRestaurantUsecase'),
 }
 
 const Controllers = {
@@ -28,6 +37,11 @@ const Controllers = {
   DeleteRestaurantController: Symbol.for('DeleteRestaurantController'),
   EditRestaurantController: Symbol.for('EditRestaurantController'),
   GetRestaurantsByOwnerController: Symbol.for('GetRestaurantsByOwnerController'),
+  // Category
+  CreateCategoryController: Symbol.for('CreateCategoryController'),
+  DeleteCategoryController: Symbol.for('DeleteCategoryController'),
+  EditCategoryController: Symbol.for('EditCategoryController'),
+  GetCategoriesByRestaurantController: Symbol.for('GetCategoriesByRestaurantController'),
 }
 
 const ContainerSymbols = {

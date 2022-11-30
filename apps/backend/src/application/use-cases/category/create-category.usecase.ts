@@ -1,11 +1,13 @@
 import { CategoryIdAlreadyInUseException } from '@application/exceptions/category/category-id-already-in-use.exception'
 import { Usecase } from '@application/use-cases/usecase'
 import { Category } from '@domain/entities/category.entity'
-import { CategoryRepository } from '@domain/repositories/category.repository'
+import type { CategoryRepository } from '@domain/repositories/category.repository'
 import { DescriptionVO } from '@domain/value-objects/description.vo'
 import { ImageVO } from '@domain/value-objects/image.vo'
 import { NameVO } from '@domain/value-objects/name.vo'
 import { UuidVO } from '@domain/value-objects/uuid.vo'
+import { ContainerSymbols } from '@infrastructure/dependency-injection/symbols'
+import { inject, injectable } from 'inversify'
 
 export interface CreateCategoryRequest {
   id: string
@@ -16,8 +18,12 @@ export interface CreateCategoryRequest {
   ownerId: string
 }
 
+@injectable()
 export class CreateCategoryUsecase implements Usecase {
-  constructor(private readonly categoryRepository: CategoryRepository) {}
+  constructor(
+    @inject(ContainerSymbols.CategoryRepository)
+    private readonly categoryRepository: CategoryRepository
+  ) {}
 
   async run({
     id,
