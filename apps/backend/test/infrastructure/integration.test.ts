@@ -1,4 +1,5 @@
 import { Category } from '@domain/entities/category.entity'
+import { Dish } from '@domain/entities/dish.entity'
 import { Restaurant } from '@domain/entities/restaurant.entity'
 import { User } from '@domain/entities/user.entity'
 import { myContainer } from '@infrastructure/dependency-injection/container'
@@ -6,15 +7,20 @@ import { ContainerSymbols } from '@infrastructure/dependency-injection/symbols'
 import { CreateCategoryDTO } from '@infrastructure/dtos/category/create-category.dto'
 import { EditCategoryDTO } from '@infrastructure/dtos/category/edit-category.dto'
 import { GetCategoriesByRestaurantDTO } from '@infrastructure/dtos/category/get-categories-by-restaurant.dto'
+import { CreateDishDTO } from '@infrastructure/dtos/dish/create-dish.dto'
+import { EditDishDTO } from '@infrastructure/dtos/dish/edit-dish.dto'
+import { GetDishesByCategoryDTO } from '@infrastructure/dtos/dish/get-dishes-by-category.dto'
 import { CreateRestaurantDTO } from '@infrastructure/dtos/restaurant/create-restaurant.dto'
 import { EditRestaurantDTO } from '@infrastructure/dtos/restaurant/edit-restaurant.dto'
 import { UserLoginDTO } from '@infrastructure/dtos/user/user-login.dto'
 import { UserRegisterDTO } from '@infrastructure/dtos/user/user-register.dto'
 import { InMemoryCategoryRepository } from '@infrastructure/repositories/inmemory-category.repository'
+import { InMemoryDishRepository } from '@infrastructure/repositories/inmemory-dish.repository'
 import { InMemoryRestaurantRepository } from '@infrastructure/repositories/inmemory-restaurant.repository'
 import { InMemoryUserRepository } from '@infrastructure/repositories/inmemory-user.repository'
 import { StatusCodes } from '@infrastructure/utils/status-code'
 import { CategoryMother } from '@test/domain/mothers/category.entity.mother'
+import { DishMother } from '@test/domain/mothers/dish.entity.mother'
 import { EmailVOMother } from '@test/domain/mothers/email.vo.mother'
 import { PasswordVOMother } from '@test/domain/mothers/password.vo.mother'
 import { RestaurantMother } from '@test/domain/mothers/restaurant.entity.mother'
@@ -28,6 +34,7 @@ let UserToTest: User
 let UserToken: string
 let RestaurantToTest: Restaurant
 let CategoryToTest: Category
+let DishToTest: Dish
 
 beforeAll(async () => {
   UserToTest = await UserMother.random()
@@ -36,6 +43,8 @@ beforeAll(async () => {
   myContainer.rebind(ContainerSymbols.RestaurantRepository).to(InMemoryRestaurantRepository)
   CategoryToTest = CategoryMother.random()
   myContainer.rebind(ContainerSymbols.CategoryRepository).to(InMemoryCategoryRepository)
+  DishToTest = DishMother.random()
+  myContainer.rebind(ContainerSymbols.DishRepository).to(InMemoryDishRepository)
 })
 
 /** --- USER --- */
@@ -292,6 +301,100 @@ describe('Get Categories by Restaurant - Controller', () => {
         ]
         await request(app)
           .get('/category/')
+          .send(body)
+          .expect(StatusCodes.OK)
+          .then(response => {
+            expect(response.body).toStrictEqual(expectedBody)
+          })
+      })
+    })
+
+    describe('When a invalid request is sent', () => {
+      it('should return BAD_REQUEST', async () => {
+        await request(app).get('/category/').send().expect(StatusCodes.BAD_REQUEST)
+      })
+    })
+  })
+})
+
+/** --- DISH --- */
+describe('Create Dish - Controller', () => {
+  describe('POST /dish/', () => {
+    describe('When a valid Dish is send', () => {
+      it('should return a CREATED', async () => {
+        const body: CreateDishDTO = {
+          id: DishToTest.id.value,
+          name: DishToTest.name.value,
+          description: DishToTest.description.value,
+          image: DishToTest.image.value,
+          price: DishToTest.price.value,
+          allergens: DishToTest.allergens.map(allergen => allergen.value),
+          categoryIds: [CategoryToTest.id.value],
+        }
+
+        await request(app)
+          .post('/dish/')
+          .set('Authorization', `Bearer ${UserToken}`)
+          .send(body)
+          .expect(StatusCodes.CREATED)
+      })
+    })
+
+    describe('When a invalid request is sent', () => {
+      it('should return UNAUTHORIZED', async () => {
+        await request(app).post('/category/').send().expect(StatusCodes.UNAUTHORIZED)
+      })
+    })
+  })
+})
+
+describe('Edit Dish - Controller', () => {
+  describe('PUT /dish/', () => {
+    describe('When a valid Dish is send', () => {
+      it('should return a CREATED', async () => {
+        const body: EditDishDTO = {
+          id: DishToTest.id.value,
+          name: DishToTest.name.value,
+          description: 'Description changed for test',
+          image: DishToTest.image.value,
+          price: DishToTest.price.value,
+          allergens: DishToTest.allergens.map(allergen => allergen.value),
+          categoryIds: [CategoryToTest.id.value],
+        }
+
+        await request(app)
+          .put('/dish/')
+          .set('Authorization', `Bearer ${UserToken}`)
+          .send(body)
+          .expect(StatusCodes.OK)
+      })
+    })
+
+    describe('When a invalid request is sent', () => {
+      it('should return UNAUTHORIZED', async () => {
+        await request(app).put('/dish/').send().expect(StatusCodes.UNAUTHORIZED)
+      })
+    })
+  })
+})
+
+describe('Get Dishes by Category - Controller', () => {
+  describe('Get /dish/', () => {
+    describe('When a valid userToken is send', () => {
+      it('should return an array of dishes', async () => {
+        const body: GetDishesByCategoryDTO = {
+          categoryId: CategoryToTest.id.value,
+        }
+        const expectedBody: Array<Primitives<Dish>> = [
+          {
+            ...DishToTest.toPrimitives(),
+            description: 'Description changed for test',
+            categoryIds: [CategoryToTest.id.value],
+            ownerId: UserToTest.id.value,
+          },
+        ]
+        await request(app)
+          .get('/dish/')
           .send(body)
           .expect(StatusCodes.OK)
           .then(response => {
