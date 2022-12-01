@@ -1,5 +1,4 @@
 import { GetCategoriesByRestaurantUsecase } from '@application/use-cases/category/get-categories-by-restaurant.usecase'
-import { CheckRestaurantOwnerUsecase } from '@application/use-cases/restaurant/check-restaurant-owner.usecase'
 import { ContainerSymbols } from '@infrastructure/dependency-injection/symbols'
 import { GetCategoriesByRestaurantDTO } from '@infrastructure/dtos/category/get-categories-by-restaurant.dto'
 import { StatusCodes } from '@infrastructure/utils/status-code'

@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
-import { CreateRestaurantController } from '@infrastructure/controllers/restaurant/create-restaurant.controller'
-import { DeleteRestaurantController } from '@infrastructure/controllers/restaurant/delete-restaurant.controller'
-import { EditRestaurantController } from '@infrastructure/controllers/restaurant/edit-restaurant.controller'
-import { GetRestaurantsByOwnerController } from '@infrastructure/controllers/restaurant/get-restaurants-by-owner.controller'
+import type { CreateRestaurantController } from '@infrastructure/controllers/restaurant/create-restaurant.controller'
+import type { DeleteRestaurantController } from '@infrastructure/controllers/restaurant/delete-restaurant.controller'
+import type { EditRestaurantController } from '@infrastructure/controllers/restaurant/edit-restaurant.controller'
+import type { GetRestaurantsByOwnerController } from '@infrastructure/controllers/restaurant/get-restaurants-by-owner.controller'
 import { myContainer } from '@infrastructure/dependency-injection/container'
 import { ContainerSymbols } from '@infrastructure/dependency-injection/symbols'
 import { CreateRestaurantSchema } from '@infrastructure/dtos/restaurant/create-restaurant.dto'
