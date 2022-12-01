@@ -2,6 +2,7 @@ import { GetCategoriesByRestaurantUsecase } from '@application/use-cases/categor
 import { CheckRestaurantOwnerUsecase } from '@application/use-cases/restaurant/check-restaurant-owner.usecase'
 import { ContainerSymbols } from '@infrastructure/dependency-injection/symbols'
 import { GetCategoriesByRestaurantDTO } from '@infrastructure/dtos/category/get-categories-by-restaurant.dto'
+import { StatusCodes } from '@infrastructure/utils/status-code'
 import { NextFunction, Response } from 'express'
 import { inject, injectable } from 'inversify'
 import { TypedRequestBody } from 'src/types/express'
@@ -12,9 +13,7 @@ import { Controller } from '../controller'
 export class GetCategoriesByRestaurantController implements Controller {
   constructor(
     @inject(ContainerSymbols.GetCategoriesByRestaurantUsecase)
-    private readonly getCategoriesByRestaurantUsecase: GetCategoriesByRestaurantUsecase,
-    @inject(ContainerSymbols.CheckRestaurantOwnerUsecase)
-    private readonly checkRestaurantOwnerUsecase: CheckRestaurantOwnerUsecase
+    private readonly getCategoriesByRestaurantUsecase: GetCategoriesByRestaurantUsecase
   ) {}
 
   async run(
@@ -22,14 +21,12 @@ export class GetCategoriesByRestaurantController implements Controller {
     res: Response,
     next: NextFunction
   ): Promise<void> {
-    const userId = req.userId as string
     const { restaurantId } = req.body
 
     try {
-      await this.checkRestaurantOwnerUsecase.run({ restaurantId, ownerId: userId })
       const categories = await this.getCategoriesByRestaurantUsecase.run({ restaurantId })
 
-      res.status(200).send(categories.map(category => category.toPrimitives()))
+      res.status(StatusCodes.OK).send(categories.map(category => category.toPrimitives()))
     } catch (error) {
       next(error)
     }

@@ -249,7 +249,7 @@ describe('Create Category - Controller', () => {
 })
 
 describe('Edit Category - Controller', () => {
-  describe('PUT /Category/', () => {
+  describe('PUT /category/', () => {
     describe('When a valid Category is send', () => {
       it('should return a CREATED', async () => {
         const body: EditCategoryDTO = {
@@ -269,7 +269,7 @@ describe('Edit Category - Controller', () => {
 
     describe('When a invalid request is sent', () => {
       it('should return UNAUTHORIZED', async () => {
-        await request(app).put('/Category/').send().expect(StatusCodes.UNAUTHORIZED)
+        await request(app).put('/category/').send().expect(StatusCodes.UNAUTHORIZED)
       })
     })
   })
@@ -292,7 +292,6 @@ describe('Get Categories by Restaurant - Controller', () => {
         ]
         await request(app)
           .get('/category/')
-          .set('Authorization', `Bearer ${UserToken}`)
           .send(body)
           .expect(StatusCodes.OK)
           .then(response => {
@@ -302,8 +301,8 @@ describe('Get Categories by Restaurant - Controller', () => {
     })
 
     describe('When a invalid request is sent', () => {
-      it('should return UNAUTHORIZED', async () => {
-        await request(app).get('/restaurant/').send().expect(StatusCodes.UNAUTHORIZED)
+      it('should return BAD_REQUEST', async () => {
+        await request(app).get('/category/').send().expect(StatusCodes.BAD_REQUEST)
       })
     })
   })
@@ -327,7 +326,12 @@ describe('Delete Category - Controller', () => {
 
     describe('When a invalid request is sent', () => {
       it('should return UNAUTHORIZED', async () => {
-        await request(app).delete('/category/').send().expect(StatusCodes.UNAUTHORIZED)
+        const id = CategoryToTest.id.value
+
+        await request(app)
+          .delete('/category/' + id)
+          .send()
+          .expect(StatusCodes.UNAUTHORIZED)
       })
     })
   })
@@ -349,7 +353,12 @@ describe('Delete Restaurant - Controller', () => {
 
     describe('When a invalid request is sent', () => {
       it('should return UNAUTHORIZED', async () => {
-        await request(app).delete('/restaurant/').send().expect(StatusCodes.UNAUTHORIZED)
+        const id = RestaurantToTest.id.value
+
+        await request(app)
+          .delete('/restaurant/' + id)
+          .send()
+          .expect(StatusCodes.UNAUTHORIZED)
       })
     })
   })

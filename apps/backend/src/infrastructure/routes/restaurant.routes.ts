@@ -9,6 +9,7 @@ import { ContainerSymbols } from '@infrastructure/dependency-injection/symbols'
 import { CreateRestaurantSchema } from '@infrastructure/dtos/restaurant/create-restaurant.dto'
 import { DeleteRestaurantSchema } from '@infrastructure/dtos/restaurant/delete-restaurant.dto'
 import { EditRestaurantSchema } from '@infrastructure/dtos/restaurant/edit-restaurant.dto'
+import { authMiddleware } from '@infrastructure/middlewares/auth.middleware'
 import { Router } from 'express'
 import { Validator } from 'express-json-validator-middleware'
 
@@ -30,22 +31,29 @@ const validator = new Validator({ allErrors: true })
 
 RestaurantRoutes.post(
   '/',
+  authMiddleware,
   validator.validate({ body: CreateRestaurantSchema }),
   createRestaurantController.run.bind(createRestaurantController)
 )
 
 RestaurantRoutes.delete(
   '/:id',
+  authMiddleware,
   validator.validate({ params: DeleteRestaurantSchema }),
   deleteRestaurantController.run.bind(deleteRestaurantController)
 )
 
 RestaurantRoutes.put(
   '/',
+  authMiddleware,
   validator.validate({ body: EditRestaurantSchema }),
   editRestaurantController.run.bind(editRestaurantController)
 )
 
-RestaurantRoutes.get('/', getRestaurantsByOwnerController.run.bind(getRestaurantsByOwnerController))
+RestaurantRoutes.get(
+  '/',
+  authMiddleware,
+  getRestaurantsByOwnerController.run.bind(getRestaurantsByOwnerController)
+)
 
 export default RestaurantRoutes

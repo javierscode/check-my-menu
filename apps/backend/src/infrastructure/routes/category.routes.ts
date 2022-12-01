@@ -10,6 +10,7 @@ import { CreateCategorySchema } from '@infrastructure/dtos/category/create-categ
 import { DeleteCategorySchema } from '@infrastructure/dtos/category/delete-category.dto'
 import { EditCategorySchema } from '@infrastructure/dtos/category/edit-category.dto'
 import { GetCategoriesByRestaurantSchema } from '@infrastructure/dtos/category/get-categories-by-restaurant.dto'
+import { authMiddleware } from '@infrastructure/middlewares/auth.middleware'
 import { Router } from 'express'
 import { Validator } from 'express-json-validator-middleware'
 
@@ -22,7 +23,7 @@ const deleteCategoryController = myContainer.get<DeleteCategoryController>(
 const editCategoryController = myContainer.get<EditCategoryController>(
   ContainerSymbols.EditCategoryController
 )
-const getCategorysByOwnerController = myContainer.get<GetCategoriesByRestaurantController>(
+const getCategorysByRestaurantController = myContainer.get<GetCategoriesByRestaurantController>(
   ContainerSymbols.GetCategoriesByRestaurantController
 )
 
@@ -31,18 +32,21 @@ const validator = new Validator({ allErrors: true })
 
 CategoryRoutes.post(
   '/',
+  authMiddleware,
   validator.validate({ body: CreateCategorySchema }),
   createCategoryController.run.bind(createCategoryController)
 )
 
 CategoryRoutes.delete(
   '/:id',
+  authMiddleware,
   validator.validate({ params: DeleteCategorySchema }),
   deleteCategoryController.run.bind(deleteCategoryController)
 )
 
 CategoryRoutes.put(
   '/',
+  authMiddleware,
   validator.validate({ body: EditCategorySchema }),
   editCategoryController.run.bind(editCategoryController)
 )
@@ -50,7 +54,7 @@ CategoryRoutes.put(
 CategoryRoutes.get(
   '/',
   validator.validate({ body: GetCategoriesByRestaurantSchema }),
-  getCategorysByOwnerController.run.bind(getCategorysByOwnerController)
+  getCategorysByRestaurantController.run.bind(getCategorysByRestaurantController)
 )
 
 export default CategoryRoutes
