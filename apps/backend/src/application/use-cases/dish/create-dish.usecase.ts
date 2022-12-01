@@ -1,12 +1,14 @@
 import { DishIdAlreadyInUseException } from '@application/exceptions/dish/dish-id-already-in-use.exception'
 import { Dish } from '@domain/entities/dish.entity'
-import { DishRepository } from '@domain/repositories/dish.repository'
+import type { DishRepository } from '@domain/repositories/dish.repository'
 import { AllergenVO } from '@domain/value-objects/allergen.vo'
 import { DescriptionVO } from '@domain/value-objects/description.vo'
 import { ImageVO } from '@domain/value-objects/image.vo'
 import { NameVO } from '@domain/value-objects/name.vo'
 import { PriceVO } from '@domain/value-objects/price.vo'
 import { UuidVO } from '@domain/value-objects/uuid.vo'
+import { ContainerSymbols } from '@infrastructure/dependency-injection/symbols'
+import { inject, injectable } from 'inversify'
 
 import { Usecase } from '../usecase'
 
@@ -21,8 +23,12 @@ export interface CreateDishRequest {
   ownerId: string
 }
 
+@injectable()
 export class CreateDishUsecase implements Usecase {
-  constructor(private readonly dishRepository: DishRepository) {}
+  constructor(
+    @inject(ContainerSymbols.DishRepository)
+    private readonly dishRepository: DishRepository
+  ) {}
 
   async run({
     id,
