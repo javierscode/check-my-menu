@@ -412,6 +412,32 @@ describe('Get Dishes by Category - Controller', () => {
 })
 
 /** --- DELETIONS RESTAURANT | CATEGORY | DISH --- */
+describe('Delete Dish - Controller', () => {
+  describe('DELETE /dish/', () => {
+    describe('When a valid dish id is send', () => {
+      it('should return a OK', async () => {
+        const id = DishToTest.id.value
+
+        await request(app)
+          .delete('/dish/' + id)
+          .set('Authorization', `Bearer ${UserToken}`)
+          .send()
+          .expect(StatusCodes.OK)
+      })
+    })
+
+    describe('When a invalid request is sent', () => {
+      it('should return UNAUTHORIZED', async () => {
+        const id = DishToTest.id.value
+
+        await request(app)
+          .delete('/dish/' + id)
+          .send()
+          .expect(StatusCodes.UNAUTHORIZED)
+      })
+    })
+  })
+})
 
 describe('Delete Category - Controller', () => {
   describe('DELETE /category/', () => {
