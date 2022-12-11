@@ -4,7 +4,9 @@ import { NameVO } from '@domain/value-objects/name.vo'
 import { UuidVO } from '@domain/value-objects/uuid.vo'
 import { Primitives } from 'src/types/primitives'
 
-export class Category {
+import { AggregateRoot } from './root.entity'
+
+export class Category extends AggregateRoot {
   constructor(
     public readonly id: UuidVO,
     public name: NameVO,
@@ -12,7 +14,9 @@ export class Category {
     public image: ImageVO,
     public restaurantId: UuidVO,
     public ownerId: UuidVO
-  ) {}
+  ) {
+    super(id)
+  }
 
   toPrimitives(): Primitives<Category> {
     return {

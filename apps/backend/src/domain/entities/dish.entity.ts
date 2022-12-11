@@ -7,7 +7,9 @@ import { PriceVO } from '@domain/value-objects/price.vo'
 import { UuidVO } from '@domain/value-objects/uuid.vo'
 import { Primitives } from 'src/types/primitives'
 
-export class Dish {
+import { AggregateRoot } from './root.entity'
+
+export class Dish extends AggregateRoot {
   public readonly id: UuidVO
   public name: NameVO
   public description: DescriptionVO
@@ -27,6 +29,7 @@ export class Dish {
     categoryIds: Array<UuidVO>,
     ownerId: UuidVO
   ) {
+    super(id)
     this.assertIsValid(allergens, categoryIds)
     this.id = id
     this.name = name

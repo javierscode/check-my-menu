@@ -4,10 +4,6 @@ import { PlainPasswordVO } from './plain-password.vo'
 import { ValueObject } from './value-object'
 
 export class PasswordVO extends ValueObject<string> {
-  public equals(valueObject: PasswordVO): boolean {
-    return this.value === valueObject.value
-  }
-
   protected assertIsValid() {
     return true
   }

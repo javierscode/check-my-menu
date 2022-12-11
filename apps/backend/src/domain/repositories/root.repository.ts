@@ -1,7 +1,9 @@
+import { AggregateRoot } from '@domain/entities/root.entity'
+
 /**
  * Root repository
  */
-export interface RootRepository<T extends { id: unknown }> {
+export interface RootRepository<T extends AggregateRoot> {
   /**
    * Finds by id
    * @param id Entity id

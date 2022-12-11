@@ -3,7 +3,9 @@ export abstract class ValueObject<T> {
     this.assertIsValid(value)
   }
 
-  public abstract equals(valueObject: ValueObject<T>): boolean
+  equals(other: ValueObject<T>): boolean {
+    return other.constructor.name === this.constructor.name && other.value === this.value
+  }
 
   protected abstract assertIsValid(value: T): void
 }

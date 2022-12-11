@@ -5,7 +5,9 @@ import { SlugVO } from '@domain/value-objects/slug.vo'
 import { UuidVO } from '@domain/value-objects/uuid.vo'
 import { Primitives } from 'src/types/primitives'
 
-export class Restaurant {
+import { AggregateRoot } from './root.entity'
+
+export class Restaurant extends AggregateRoot {
   constructor(
     public readonly id: UuidVO,
     public name: NameVO,
@@ -13,7 +15,9 @@ export class Restaurant {
     public location: LocationVO,
     public description: DescriptionVO,
     public ownerId: UuidVO
-  ) {}
+  ) {
+    super(id)
+  }
 
   toPrimitives(): Primitives<Restaurant> {
     return {

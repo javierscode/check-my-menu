@@ -4,14 +4,18 @@ import { PasswordVO } from '@domain/value-objects/password.vo'
 import { UuidVO } from '@domain/value-objects/uuid.vo'
 import { Primitives } from 'src/types/primitives'
 
-export class User {
+import { AggregateRoot } from './root.entity'
+
+export class User extends AggregateRoot {
   constructor(
     public readonly id: UuidVO,
     public name: NameVO,
     public lastname: NameVO,
     public email: EmailVO,
     public password: PasswordVO
-  ) {}
+  ) {
+    super(id)
+  }
 
   public toPrimitives(): Primitives<User> {
     return {

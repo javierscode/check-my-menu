@@ -9,16 +9,16 @@ import { RootRepository } from './root.repository'
  */
 export interface RestaurantRepository extends RootRepository<Restaurant> {
   /**
-   * Finds a Restaurant by email
-   * @param email Restaurant email
+   * Finds a Restaurant by owner
+   * @param ownerId Restaurant owner
    * @returns Domain Restaurant
    */
-  findByOwner(email: UuidVO): Promise<Restaurant[]>
+  findByOwner(ownerId: UuidVO): Promise<Restaurant[]>
 
   /**
-   * Finds a Restaurant by email
-   * @param email Restaurant email
+   * Finds a Restaurant by slug
+   * @param slug Restaurant slug
    * @returns Domain Restaurant
    */
-  findBySlug(email: SlugVO): Promise<Restaurant | null>
+  findBySlug(slug: SlugVO): Promise<Restaurant | null>
 }
