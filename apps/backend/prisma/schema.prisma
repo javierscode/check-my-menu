@@ -1,0 +1,69 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model UserDB {
+  id         String         @id
+  name       String
+  lastname   String
+  email      String         @unique
+  password   String
+  restaurant RestaurantDB[]
+  category   CategoryDB[]
+  dish       DishDB[]
+}
+
+model RestaurantDB {
+  id          String       @id
+  name        String
+  domain      String       @unique
+  location    String
+  description String
+  owner       UserDB       @relation(fields: [ownerId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  ownerId     String
+  category    CategoryDB[]
+  DishDB      DishDB[]
+}
+
+model CategoryDB {
+  id           String              @id
+  name         String
+  description  String
+  image        String
+  restaurant   RestaurantDB        @relation(fields: [restaurantId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  restaurantId String
+  owner        UserDB              @relation(fields: [ownerId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  ownerId      String
+  dishes       CategoriesOndishs[]
+}
+
+model DishDB {
+  id           String              @id
+  name         String
+  description  String
+  image        String
+  price        Float
+  allergens    String[]
+  categories   CategoriesOndishs[]
+  restaurant   RestaurantDB        @relation(fields: [restaurantId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  restaurantId String
+  owner        UserDB              @relation(fields: [ownerId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  ownerId      String
+}
+
+model CategoriesOndishs {
+  dish       DishDB     @relation(fields: [dishId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  dishId     String
+  category   CategoryDB @relation(fields: [categoryId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  categoryId String
+
+  @@id([dishId, categoryId])
+}

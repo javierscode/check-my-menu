@@ -9,7 +9,7 @@ import { CreateCategoryController } from '@infrastructure/controllers/category/c
 import { DeleteCategoryController } from '@infrastructure/controllers/category/delete-category.controller'
 import { EditCategoryController } from '@infrastructure/controllers/category/edit-category.controller'
 import { GetCategoriesByRestaurantController } from '@infrastructure/controllers/category/get-categories-by-restaurant.controller'
-import { InMemoryCategoryRepository } from '@infrastructure/repositories/inmemory-category.repository'
+import { PostgreSQLCategoryRepository } from '@infrastructure/persistence/repositories/postgresql/postgresql-category.repository'
 import { Container } from 'inversify'
 
 import { ContainerSymbols } from './symbols'
@@ -18,7 +18,7 @@ export function defineCategoryDependencies(container: Container) {
   // Repositories
   container
     .bind<CategoryRepository>(ContainerSymbols.CategoryRepository)
-    .to(InMemoryCategoryRepository)
+    .to(PostgreSQLCategoryRepository)
 
   // Use Cases
   container

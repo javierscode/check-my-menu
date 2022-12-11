@@ -6,14 +6,14 @@ import { UserRepository } from '@domain/repositories/user.repository'
 import { GetUserProfileController } from '@infrastructure/controllers/user/get-user-profile.controller'
 import { UserLoginController } from '@infrastructure/controllers/user/user-login.controller'
 import { UserRegisterController } from '@infrastructure/controllers/user/user-register.controller'
-import { InMemoryUserRepository } from '@infrastructure/repositories/inmemory-user.repository'
+import { PostgreSQLUserRepository } from '@infrastructure/persistence/repositories/postgresql/postgresql-user.repository'
 import { Container } from 'inversify'
 
 import { ContainerSymbols } from './symbols'
 
 export function defineUserDependencies(container: Container) {
   // Repositories
-  container.bind<UserRepository>(ContainerSymbols.UserRepository).to(InMemoryUserRepository)
+  container.bind<UserRepository>(ContainerSymbols.UserRepository).to(PostgreSQLUserRepository)
 
   // Use Cases
   container

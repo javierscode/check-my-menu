@@ -8,14 +8,14 @@ import { CreateDishController } from '@infrastructure/controllers/dish/create-di
 import { DeleteDishController } from '@infrastructure/controllers/dish/delete-dish.controller'
 import { EditDishController } from '@infrastructure/controllers/dish/edit-dish.controller'
 import { GetDishesByCategoryController } from '@infrastructure/controllers/dish/get-dishes-by-category.controller'
-import { InMemoryDishRepository } from '@infrastructure/repositories/inmemory-dish.repository'
+import { PostgreSQLDishRepository } from '@infrastructure/persistence/repositories/postgresql/postgresql-dish.repository'
 import { Container } from 'inversify'
 
 import { ContainerSymbols } from './symbols'
 
 export function defineDishDependencies(container: Container) {
   // Repositories
-  container.bind<DishRepository>(ContainerSymbols.DishRepository).to(InMemoryDishRepository)
+  container.bind<DishRepository>(ContainerSymbols.DishRepository).to(PostgreSQLDishRepository)
 
   // Use Cases
   container.bind<CreateDishUsecase>(ContainerSymbols.CreateDishUsecase).to(CreateDishUsecase)

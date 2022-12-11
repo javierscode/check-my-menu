@@ -8,7 +8,7 @@ import { CreateRestaurantController } from '@infrastructure/controllers/restaura
 import { DeleteRestaurantController } from '@infrastructure/controllers/restaurant/delete-restaurant.controller'
 import { EditRestaurantController } from '@infrastructure/controllers/restaurant/edit-restaurant.controller'
 import { GetRestaurantsByOwnerController } from '@infrastructure/controllers/restaurant/get-restaurants-by-owner.controller'
-import { InMemoryRestaurantRepository } from '@infrastructure/repositories/inmemory-restaurant.repository'
+import { PostgreSQLRestaurantRepository } from '@infrastructure/persistence/repositories/postgresql/postgresql-restaurant.repository'
 import { Container } from 'inversify'
 
 import { ContainerSymbols } from './symbols'
@@ -17,7 +17,7 @@ export function defineRestaurantDependencies(container: Container) {
   // Repositories
   container
     .bind<RestaurantRepository>(ContainerSymbols.RestaurantRepository)
-    .to(InMemoryRestaurantRepository)
+    .to(PostgreSQLRestaurantRepository)
 
   // Use Cases
   container
