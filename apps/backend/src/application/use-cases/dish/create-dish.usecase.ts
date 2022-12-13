@@ -20,6 +20,7 @@ export interface CreateDishRequest {
   price: number
   allergens: string[]
   categoryIds: string[]
+  restaurantId: string
   ownerId: string
 }
 
@@ -38,6 +39,7 @@ export class CreateDishUsecase implements Usecase {
     price,
     allergens,
     categoryIds,
+    restaurantId,
     ownerId,
   }: CreateDishRequest): Promise<void> {
     const Id = new UuidVO(id)
@@ -47,9 +49,20 @@ export class CreateDishUsecase implements Usecase {
     const Price = new PriceVO(price)
     const Allergens = allergens.map(allergen => new AllergenVO(allergen))
     const CategoryIds = categoryIds.map(id => new UuidVO(id))
+    const RestaurantId = new UuidVO(restaurantId)
     const OwnerId = new UuidVO(ownerId)
 
-    const newDish = new Dish(Id, Name, Description, Image, Price, Allergens, CategoryIds, OwnerId)
+    const newDish = new Dish(
+      Id,
+      Name,
+      Description,
+      Image,
+      Price,
+      Allergens,
+      CategoryIds,
+      RestaurantId,
+      OwnerId
+    )
 
     const foundDishById = await this.dishRepository.findById(Id)
     if (foundDishById) throw new DishIdAlreadyInUseException()

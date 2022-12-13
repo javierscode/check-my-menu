@@ -3,11 +3,13 @@ import { CreateDishUsecase } from '@application/use-cases/dish/create-dish.useca
 import { DeleteDishUsecase } from '@application/use-cases/dish/delete-dish.usecase'
 import { EditDishUsecase } from '@application/use-cases/dish/edit-dish.usecase'
 import { GetDishesByCategoryUsecase } from '@application/use-cases/dish/get-dishes-by-category.usecase'
+import { GetDishesByRestaurantUsecase } from '@application/use-cases/dish/get-dishes-by-restaurant.usecase'
 import { DishRepository } from '@domain/repositories/dish.repository'
 import { CreateDishController } from '@infrastructure/controllers/dish/create-dish.controller'
 import { DeleteDishController } from '@infrastructure/controllers/dish/delete-dish.controller'
 import { EditDishController } from '@infrastructure/controllers/dish/edit-dish.controller'
 import { GetDishesByCategoryController } from '@infrastructure/controllers/dish/get-dishes-by-category.controller'
+import { GetDishesByRestaurantController } from '@infrastructure/controllers/dish/get-dishes-by-restaurant.controller'
 import { PostgreSQLDishRepository } from '@infrastructure/persistence/repositories/postgresql/postgresql-dish.repository'
 import { Container } from 'inversify'
 
@@ -29,6 +31,10 @@ export function defineDishDependencies(container: Container) {
     .to(GetDishesByCategoryUsecase)
 
   container
+    .bind<GetDishesByRestaurantUsecase>(ContainerSymbols.GetDishesByRestaurantUsecase)
+    .to(GetDishesByRestaurantUsecase)
+
+  container
     .bind<CheckDishOwnerUsecase>(ContainerSymbols.CheckDishOwnerUsecase)
     .to(CheckDishOwnerUsecase)
 
@@ -46,4 +52,8 @@ export function defineDishDependencies(container: Container) {
   container
     .bind<GetDishesByCategoryController>(ContainerSymbols.GetDishesByCategoryController)
     .to(GetDishesByCategoryController)
+
+  container
+    .bind<GetDishesByRestaurantController>(ContainerSymbols.GetDishesByRestaurantController)
+    .to(GetDishesByRestaurantController)
 }

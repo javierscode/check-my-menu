@@ -13,4 +13,11 @@ export interface DishRepository extends RootRepository<Dish> {
    * @returns Domain array of Dish
    */
   findByCategory(id: UuidVO): Promise<Dish[]>
+
+  /**
+   * Finds a Dish by restaurant id
+   * @param id Dish restaurant id
+   * @returns Domain array of Dish
+   */
+  findByRestaurant(id: UuidVO): Promise<Dish[]>
 }

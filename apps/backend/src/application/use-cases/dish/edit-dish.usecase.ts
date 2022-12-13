@@ -57,6 +57,7 @@ export class EditDishUsecase implements Usecase {
       Price,
       Allergens,
       CategoryIds,
+      foundDishById.restaurantId,
       foundDishById.ownerId
     )
 

@@ -14,6 +14,11 @@ export class InMemoryDishRepository implements DishRepository {
     return Promise.resolve(foundDishes)
   }
 
+  findByRestaurant(id: UuidVO): Promise<Dish[]> {
+    const foundDishes = DISH_DDBB.filter(dish => dish.restaurantId.equals(id))
+    return Promise.resolve(foundDishes)
+  }
+
   findById(id: UuidVO): Promise<Dish | null> {
     const foundDish = DISH_DDBB.find(dish => dish.id.equals(id))
     return Promise.resolve(foundDish ?? null)

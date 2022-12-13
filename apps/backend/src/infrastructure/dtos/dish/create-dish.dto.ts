@@ -17,8 +17,18 @@ export const CreateDishSchema: JSONSchema7Object = {
       type: 'array' as JSONSchema7TypeName,
       items: { type: 'string' as JSONSchema7TypeName },
     },
+    restaurantId: { type: 'string' as JSONSchema7TypeName },
   },
-  required: ['id', 'name', 'description', 'image', 'price', 'allergens', 'categoryIds'],
+  required: [
+    'id',
+    'name',
+    'description',
+    'image',
+    'price',
+    'allergens',
+    'categoryIds',
+    'restaurantId',
+  ],
   additionalProperties: false,
 }
 
@@ -30,4 +40,5 @@ export type CreateDishDTO = {
   price: number
   allergens: string[]
   categoryIds: string[]
+  restaurantId: string
 }

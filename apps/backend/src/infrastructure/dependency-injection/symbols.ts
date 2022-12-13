@@ -33,6 +33,7 @@ const UseCases = {
   DeleteDishUsecase: Symbol.for('DeleteDishUsecase'),
   EditDishUsecase: Symbol.for('EditDishUsecase'),
   GetDishesByCategoryUsecase: Symbol.for('GetDishesByCategoryUsecase'),
+  GetDishesByRestaurantUsecase: Symbol.for('GetDishesByRestaurantUsecase'),
   CheckDishOwnerUsecase: Symbol.for('CheckDishOwnerUsecase'),
 }
 
@@ -59,6 +60,7 @@ const Controllers = {
   DeleteDishController: Symbol.for('DeleteDishController'),
   EditDishController: Symbol.for('EditDishController'),
   GetDishesByCategoryController: Symbol.for('GetDishesByCategoryController'),
+  GetDishesByRestaurantController: Symbol.for('GetDishesByRestaurantController'),
 }
 
 const ContainerSymbols = {

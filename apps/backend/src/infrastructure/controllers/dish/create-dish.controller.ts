@@ -24,7 +24,7 @@ export class CreateDishController implements Controller {
     next: NextFunction
   ): Promise<void> {
     const userId = req.userId as string
-    const { id, name, description, image, price, allergens, categoryIds } = req.body
+    const { id, name, description, image, price, allergens, categoryIds, restaurantId } = req.body
 
     try {
       await Promise.all(
@@ -40,6 +40,7 @@ export class CreateDishController implements Controller {
         price,
         allergens,
         categoryIds,
+        restaurantId,
         ownerId: userId,
       })
 

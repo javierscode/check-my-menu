@@ -1,4 +1,3 @@
-import { DomainFormatException } from '@domain/exceptions/domain-format.exception'
 import { AllergenVO } from '@domain/value-objects/allergen.vo'
 import { DescriptionVO } from '@domain/value-objects/description.vo'
 import { ImageVO } from '@domain/value-objects/image.vo'
@@ -17,6 +16,7 @@ export class Dish extends AggregateRoot {
   public price: PriceVO
   public allergens: Array<AllergenVO>
   public categoryIds: Array<UuidVO>
+  public restaurantId: UuidVO
   public ownerId: UuidVO
 
   constructor(
@@ -27,10 +27,10 @@ export class Dish extends AggregateRoot {
     price: PriceVO,
     allergens: Array<AllergenVO>,
     categoryIds: Array<UuidVO>,
+    restaurantId: UuidVO,
     ownerId: UuidVO
   ) {
     super(id)
-    this.assertIsValid(allergens, categoryIds)
     this.id = id
     this.name = name
     this.description = description
@@ -38,13 +38,8 @@ export class Dish extends AggregateRoot {
     this.price = price
     this.allergens = allergens
     this.categoryIds = categoryIds
+    this.restaurantId = restaurantId
     this.ownerId = ownerId
-  }
-
-  assertIsValid(allergens: Array<AllergenVO>, categoryIds: Array<UuidVO>): void {
-    if (allergens.length < 1 || categoryIds.length < 1) {
-      throw new DomainFormatException()
-    }
   }
 
   toPrimitives(): Primitives<Dish> {
@@ -56,6 +51,7 @@ export class Dish extends AggregateRoot {
       price: this.price.value,
       allergens: this.allergens.map(allergen => allergen.value),
       categoryIds: this.categoryIds.map(categoryId => categoryId.value),
+      restaurantId: this.restaurantId.value,
       ownerId: this.ownerId.value,
     }
   }

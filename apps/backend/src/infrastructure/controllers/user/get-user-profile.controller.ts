@@ -1,6 +1,5 @@
 import { GetUserProfileUsecase } from '@application/use-cases/user/get-user-profile.usecase'
 import { ContainerSymbols } from '@infrastructure/dependency-injection/symbols'
-import { InfrastructureUnauthorizedException } from '@infrastructure/exceptions/infrastructure-unauthorized.exception'
 import { StatusCodes } from '@infrastructure/utils/status-code'
 import type { NextFunction, Request, Response } from 'express'
 import { inject, injectable } from 'inversify'
