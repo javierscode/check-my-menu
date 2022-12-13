@@ -6,6 +6,7 @@ import { DishMother } from '@test/domain/mothers/dish.entity.mother'
 export class DishRepositoryMock implements DishRepository {
   private findByIdMock: jest.Mock<Promise<Dish> | null, [id: UuidVO]>
   private findByCategoryMock: jest.Mock<Promise<Dish[]>, [id: UuidVO]>
+  private findByRestaurantMock: jest.Mock<Promise<Dish[]>, [id: UuidVO]>
   private createMock: jest.Mock
   private updateMock: jest.Mock
   private removeMock: jest.Mock
@@ -22,9 +23,18 @@ export class DishRepositoryMock implements DishRepository {
       if (this.expectedDish) return Promise.resolve([this.expectedDish])
       else return Promise.resolve([DishMother.random()])
     })
+    this.findByRestaurantMock = jest.fn((id: UuidVO) => {
+      if (!id || this.createMock.mock.calls.length <= 0) return Promise.resolve([] as Dish[])
+      if (this.expectedDish) return Promise.resolve([this.expectedDish])
+      else return Promise.resolve([DishMother.random()])
+    })
     this.createMock = jest.fn()
     this.updateMock = jest.fn()
     this.removeMock = jest.fn()
+  }
+
+  async findByRestaurant(id: UuidVO): Promise<Dish[]> {
+    return await this.findByRestaurantMock(id)
   }
 
   async findById(id: UuidVO): Promise<Dish | null> {
@@ -54,8 +64,12 @@ export class DishRepositoryMock implements DishRepository {
     expect(this.findByIdMock).toHaveBeenCalledWith(expected)
   }
 
-  assertFindbyCategoryHaveBeenCalledWith(expected: UuidVO): void {
+  assertFindByCategoryHaveBeenCalledWith(expected: UuidVO): void {
     expect(this.findByCategoryMock).toHaveBeenCalledWith(expected)
+  }
+
+  assertFindByRestaurantHaveBeenCalledWith(expected: UuidVO): void {
+    expect(this.findByRestaurantMock).toHaveBeenCalledWith(expected)
   }
 
   assertCreateHaveBeenCalledWith(expected: Dish): void {

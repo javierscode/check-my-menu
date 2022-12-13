@@ -23,9 +23,20 @@ export class DishMother {
     price: PriceVO,
     allergens: Array<AllergenVO>,
     categoryIds: Array<UuidVO>,
+    restaurantId: UuidVO,
     ownerId: UuidVO
   ): Dish {
-    return new Dish(id, name, description, image, price, allergens, categoryIds, ownerId)
+    return new Dish(
+      id,
+      name,
+      description,
+      image,
+      price,
+      allergens,
+      categoryIds,
+      restaurantId,
+      ownerId
+    )
   }
 
   static fromRequest({
@@ -36,6 +47,7 @@ export class DishMother {
     price,
     allergens,
     categoryIds,
+    restaurantId,
     ownerId,
   }: CreateDishRequest): Dish {
     return this.create(
@@ -46,6 +58,7 @@ export class DishMother {
       new PriceVO(price),
       allergens.map(allergen => new AllergenVO(allergen)),
       categoryIds.map(id => new UuidVO(id)),
+      new UuidVO(restaurantId),
       new UuidVO(ownerId)
     )
   }
@@ -58,6 +71,7 @@ export class DishMother {
     const randomPrice = PriceVOMother.random()
     const randomAllergen = AllergenVOMother.random()
     const randomCategory = UuidVOMother.random()
+    const randomRestaurantId = UuidVOMother.random()
     const randomOwnerId = UuidVOMother.random()
 
     return this.create(
@@ -68,6 +82,7 @@ export class DishMother {
       randomPrice,
       [randomAllergen],
       [randomCategory],
+      randomRestaurantId,
       randomOwnerId
     )
   }

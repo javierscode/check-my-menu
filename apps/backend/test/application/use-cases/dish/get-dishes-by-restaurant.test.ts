@@ -1,26 +1,26 @@
-import { GetDishesByCategoryUsecase } from '@application/use-cases/dish/get-dishes-by-category.usecase'
+import { GetDishesByRestaurantUsecase } from '@application/use-cases/dish/get-dishes-by-restaurant.usecase'
 import { DomainFormatException } from '@domain/exceptions/domain-format.exception'
-import { GetDishesByCategoryRequestMother } from '@test/application/mothers/dish/get-dishes-by-category-request.mother'
+import { GetDishesByRestaurantRequestMother } from '@test/application/mothers/dish/get-dishes-by-restaurant-request.mother'
 import { DishMother } from '@test/domain/mothers/dish.entity.mother'
 import { DishRepositoryMock } from '@test/infrastructure/repositories/dish-repository.mock'
 
 let dishRepository: DishRepositoryMock
-let usecase: GetDishesByCategoryUsecase
+let usecase: GetDishesByRestaurantUsecase
 
 beforeEach(() => {
   dishRepository = new DishRepositoryMock()
-  usecase = new GetDishesByCategoryUsecase(dishRepository)
+  usecase = new GetDishesByRestaurantUsecase(dishRepository)
 })
 
-describe('Get Dishes by Category - Use Case', () => {
+describe('Get Dishes by Restaurant - Use Case', () => {
   describe('When a valid request is sent', () => {
     it('should return an array of dishes', async () => {
       const expectedDish = DishMother.random()
       dishRepository.setExpectedDish(expectedDish)
-      const request = GetDishesByCategoryRequestMother.create(expectedDish.categoryIds[0])
+      const request = GetDishesByRestaurantRequestMother.create(expectedDish.restaurantId)
 
       const listOfDishs = await usecase.run(request)
-      dishRepository.assertFindByCategoryHaveBeenCalledWith(expectedDish.categoryIds[0])
+      dishRepository.assertFindByRestaurantHaveBeenCalledWith(expectedDish.restaurantId)
       expect(listOfDishs).toEqual([expectedDish])
     })
   })
@@ -30,7 +30,7 @@ describe('Get Dishes by Category - Use Case', () => {
       await expect(async () => {
         const expectedDish = DishMother.random()
         dishRepository.setExpectedDish(expectedDish)
-        const request = GetDishesByCategoryRequestMother.invalidRequest()
+        const request = GetDishesByRestaurantRequestMother.invalidRequest()
 
         await usecase.run(request)
       }).rejects.toThrow(DomainFormatException)
@@ -40,10 +40,10 @@ describe('Get Dishes by Category - Use Case', () => {
   describe('When the onwer doesnt exist', () => {
     it('should return an empty array', async () => {
       const expectedDish = DishMother.random()
-      const request = GetDishesByCategoryRequestMother.create(expectedDish.categoryIds[0])
+      const request = GetDishesByRestaurantRequestMother.create(expectedDish.restaurantId)
       const listOfDishs = await usecase.run(request)
 
-      dishRepository.assertFindByCategoryHaveBeenCalledWith(expectedDish.categoryIds[0])
+      dishRepository.assertFindByRestaurantHaveBeenCalledWith(expectedDish.restaurantId)
       expect(listOfDishs).toEqual([])
     })
   })

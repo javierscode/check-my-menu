@@ -2,6 +2,10 @@ import { Category } from '@domain/entities/category.entity'
 import { Dish } from '@domain/entities/dish.entity'
 import { Restaurant } from '@domain/entities/restaurant.entity'
 import { User } from '@domain/entities/user.entity'
+import { CategoryRepository } from '@domain/repositories/category.repository'
+import { DishRepository } from '@domain/repositories/dish.repository'
+import { RestaurantRepository } from '@domain/repositories/restaurant.repository'
+import { UserRepository } from '@domain/repositories/user.repository'
 import { myContainer } from '@infrastructure/dependency-injection/container'
 import { ContainerSymbols } from '@infrastructure/dependency-injection/symbols'
 import { CreateCategoryDTO } from '@infrastructure/dtos/category/create-category.dto'
@@ -10,6 +14,7 @@ import { GetCategoriesByRestaurantDTO } from '@infrastructure/dtos/category/get-
 import { CreateDishDTO } from '@infrastructure/dtos/dish/create-dish.dto'
 import { EditDishDTO } from '@infrastructure/dtos/dish/edit-dish.dto'
 import { GetDishesByCategoryDTO } from '@infrastructure/dtos/dish/get-dishes-by-category.dto'
+import { GetDishesByRestaurantDTO } from '@infrastructure/dtos/dish/get-dishes-by-restaurant.dto'
 import { CreateRestaurantDTO } from '@infrastructure/dtos/restaurant/create-restaurant.dto'
 import { EditRestaurantDTO } from '@infrastructure/dtos/restaurant/edit-restaurant.dto'
 import { UserLoginDTO } from '@infrastructure/dtos/user/user-login.dto'
@@ -26,10 +31,12 @@ import { PasswordVOMother } from '@test/domain/mothers/password.vo.mother'
 import { RestaurantMother } from '@test/domain/mothers/restaurant.entity.mother'
 import { UserMother } from '@test/domain/mothers/user.entity.mother'
 import { UuidVOMother } from '@test/domain/mothers/uuid.vo.mother'
-import app from 'src/app'
+// import app from 'src/app'
+import { Express } from 'express'
 import { Primitives } from 'src/types/primitives'
 import request from 'supertest'
 
+let app: Express
 let UserToTest: User
 let UserToken: string
 let RestaurantToTest: Restaurant
@@ -38,13 +45,18 @@ let DishToTest: Dish
 
 beforeAll(async () => {
   UserToTest = await UserMother.random()
-  myContainer.rebind(ContainerSymbols.UserRepository).to(InMemoryUserRepository)
+  myContainer.rebind<UserRepository>(ContainerSymbols.UserRepository).to(InMemoryUserRepository)
   RestaurantToTest = RestaurantMother.random()
-  myContainer.rebind(ContainerSymbols.RestaurantRepository).to(InMemoryRestaurantRepository)
+  myContainer
+    .rebind<RestaurantRepository>(ContainerSymbols.RestaurantRepository)
+    .to(InMemoryRestaurantRepository)
   CategoryToTest = CategoryMother.random()
-  myContainer.rebind(ContainerSymbols.CategoryRepository).to(InMemoryCategoryRepository)
+  myContainer
+    .rebind<CategoryRepository>(ContainerSymbols.CategoryRepository)
+    .to(InMemoryCategoryRepository)
   DishToTest = DishMother.random()
-  myContainer.rebind(ContainerSymbols.DishRepository).to(InMemoryDishRepository)
+  myContainer.rebind<DishRepository>(ContainerSymbols.DishRepository).to(InMemoryDishRepository)
+  app = await import('src/app').then(module => module.default)
 })
 
 /** --- USER --- */
@@ -330,6 +342,7 @@ describe('Create Dish - Controller', () => {
           price: DishToTest.price.value,
           allergens: DishToTest.allergens.map(allergen => allergen.value),
           categoryIds: [CategoryToTest.id.value],
+          restaurantId: RestaurantToTest.id.value,
         }
 
         await request(app)
@@ -390,6 +403,41 @@ describe('Get Dishes by Category - Controller', () => {
             ...DishToTest.toPrimitives(),
             description: 'Description changed for test',
             categoryIds: [CategoryToTest.id.value],
+            restaurantId: RestaurantToTest.id.value,
+            ownerId: UserToTest.id.value,
+          },
+        ]
+        await request(app)
+          .get('/dish/')
+          .send(body)
+          .expect(StatusCodes.OK)
+          .then(response => {
+            expect(response.body).toStrictEqual(expectedBody)
+          })
+      })
+    })
+
+    describe('When a invalid request is sent', () => {
+      it('should return BAD_REQUEST', async () => {
+        await request(app).get('/category/').send().expect(StatusCodes.BAD_REQUEST)
+      })
+    })
+  })
+})
+
+describe('Get Dishes by Restaurant - Controller', () => {
+  describe('Get /dish/', () => {
+    describe('When a valid userToken is send', () => {
+      it('should return an array of dishes', async () => {
+        const body: GetDishesByRestaurantDTO = {
+          restaurantId: RestaurantToTest.id.value,
+        }
+        const expectedBody: Array<Primitives<Dish>> = [
+          {
+            ...DishToTest.toPrimitives(),
+            description: 'Description changed for test',
+            categoryIds: [CategoryToTest.id.value],
+            restaurantId: RestaurantToTest.id.value,
             ownerId: UserToTest.id.value,
           },
         ]

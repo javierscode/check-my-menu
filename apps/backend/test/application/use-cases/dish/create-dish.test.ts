@@ -25,6 +25,7 @@ describe('Create Dish - Use Case', () => {
         expectedDish.price,
         expectedDish.allergens,
         expectedDish.categoryIds,
+        expectedDish.restaurantId,
         expectedDish.ownerId
       )
 
@@ -57,6 +58,7 @@ describe('Create Dish - Use Case', () => {
           expectedDish.price,
           expectedDish.allergens,
           expectedDish.categoryIds,
+          expectedDish.restaurantId,
           expectedDish.ownerId
         )
         await usecase.run(request)

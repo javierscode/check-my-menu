@@ -17,6 +17,7 @@ export class CreateDishRequestMother {
     price: PriceVO,
     allergens: Array<AllergenVO>,
     categoryIds: Array<UuidVO>,
+    restaurantId: UuidVO,
     ownerId: UuidVO
   ): CreateDishRequest {
     return {
@@ -27,6 +28,7 @@ export class CreateDishRequestMother {
       price: price.value,
       allergens: allergens.map(allergen => allergen.value),
       categoryIds: categoryIds.map(DishId => DishId.value),
+      restaurantId: restaurantId.value,
       ownerId: ownerId.value,
     }
   }
@@ -41,6 +43,7 @@ export class CreateDishRequestMother {
       randomDish.price,
       randomDish.allergens,
       randomDish.categoryIds,
+      randomDish.restaurantId,
       randomDish.ownerId
     )
   }
@@ -56,6 +59,7 @@ export class CreateDishRequestMother {
       price: randomDish.price.value,
       allergens: randomDish.allergens.map(allergen => allergen.value),
       categoryIds: randomDish.categoryIds.map(categoryId => categoryId.value),
+      restaurantId: randomDish.restaurantId.value,
       ownerId: randomDish.ownerId.value,
     }
   }
