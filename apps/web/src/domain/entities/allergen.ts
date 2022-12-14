@@ -1,0 +1,16 @@
+export enum Allergen {
+  NUTS = 'NUTS',
+  CRUSTACEANS = 'CRUSTACEANS',
+  FISH = 'FISH',
+  MILK = 'MILK',
+  CEREALS = 'CEREALS',
+  EGGS = 'EGGS',
+  MOLLUSCS = 'MOLLUSCS',
+  PEANUTS = 'PEANUTS',
+  SOYA = 'SOYA',
+  CELERY = 'CELERY',
+  MUSTARD = 'MUSTARD',
+  SESAME = 'SESAME',
+  LUPINE = 'LUPINE',
+  SULPUR = 'SULPUR',
+}
