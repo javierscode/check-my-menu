@@ -239,6 +239,37 @@ describe('Get Restaurants by Owner - Controller', () => {
   })
 })
 
+describe('Get Restaurant by Domain - Controller', () => {
+  describe('Get /restaurant/:domain', () => {
+    describe('When a valid domain is send', () => {
+      it('should return a restaurant', async () => {
+        const expectedBody = {
+          ...RestaurantToTest.toPrimitives(),
+          location: 'Location changed',
+          ownerId: UserToTest.id.value,
+        }
+
+        await request(app)
+          .get('/restaurant/' + RestaurantToTest.domain.value)
+          .send()
+          .expect(StatusCodes.OK)
+          .then(response => {
+            expect(response.body).toStrictEqual(expectedBody)
+          })
+      })
+    })
+
+    describe('When a invalid request is sent', () => {
+      it('should return BAD_REQUEST', async () => {
+        await request(app)
+          .get('/restaurant/' + 'invalidDomain')
+          .send()
+          .expect(StatusCodes.BAD_REQUEST)
+      })
+    })
+  })
+})
+
 /** --- CATEGORY --- */
 
 describe('Create Category - Controller', () => {

@@ -9,6 +9,7 @@ import { ContainerSymbols } from '@infrastructure/dependency-injection/symbols'
 import { CreateRestaurantSchema } from '@infrastructure/dtos/restaurant/create-restaurant.dto'
 import { DeleteRestaurantSchema } from '@infrastructure/dtos/restaurant/delete-restaurant.dto'
 import { EditRestaurantSchema } from '@infrastructure/dtos/restaurant/edit-restaurant.dto'
+import { getRestaurantByDomainSchema } from '@infrastructure/dtos/restaurant/get-restaurant-by-domain.dto'
 import { authMiddleware } from '@infrastructure/middlewares/auth.middleware'
 import { Router } from 'express'
 import { Validator } from 'express-json-validator-middleware'
@@ -24,6 +25,9 @@ const editRestaurantController = myContainer.get<EditRestaurantController>(
 )
 const getRestaurantsByOwnerController = myContainer.get<GetRestaurantsByOwnerController>(
   ContainerSymbols.GetRestaurantsByOwnerController
+)
+const getRestaurantByDomainController = myContainer.get<GetRestaurantsByOwnerController>(
+  ContainerSymbols.GetRestaurantByDomainController
 )
 
 const RestaurantRoutes = Router()
@@ -56,4 +60,9 @@ RestaurantRoutes.get(
   getRestaurantsByOwnerController.run.bind(getRestaurantsByOwnerController)
 )
 
+RestaurantRoutes.get(
+  '/:domain',
+  validator.validate({ params: getRestaurantByDomainSchema }),
+  getRestaurantByDomainController.run.bind(getRestaurantByDomainController)
+)
 export default RestaurantRoutes

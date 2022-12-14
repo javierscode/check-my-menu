@@ -18,6 +18,7 @@ const UseCases = {
   DeleteRestaurantUsecase: Symbol.for('DeleteRestaurantUsecase'),
   EditRestaurantUsecase: Symbol.for('EditRestaurantUsecase'),
   GetRestaurantsByOwnerUsecase: Symbol.for('GetRestaurantsByOwnerUsecase'),
+  GetRestaurantByDomainUsecase: Symbol.for('GetRestaurantByDomainUsecase'),
   CheckRestaurantOwnerUsecase: Symbol.for('CheckRestaurantOwnerUsecase'),
 
   // Category
@@ -48,6 +49,7 @@ const Controllers = {
   DeleteRestaurantController: Symbol.for('DeleteRestaurantController'),
   EditRestaurantController: Symbol.for('EditRestaurantController'),
   GetRestaurantsByOwnerController: Symbol.for('GetRestaurantsByOwnerController'),
+  GetRestaurantByDomainController: Symbol.for('GetRestaurantByDomainController'),
 
   // Category
   CreateCategoryController: Symbol.for('CreateCategoryController'),
