@@ -53,7 +53,7 @@ CategoryRoutes.put(
 
 CategoryRoutes.get(
   '/',
-  validator.validate({ body: GetCategoriesByRestaurantSchema }),
+  validator.validate({ query: GetCategoriesByRestaurantSchema }),
   getCategorysByRestaurantController.run.bind(getCategorysByRestaurantController)
 )
 

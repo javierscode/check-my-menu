@@ -331,7 +331,7 @@ describe('Get Categories by Restaurant - Controller', () => {
   describe('Get /Category/', () => {
     describe('When a valid userToken is send', () => {
       it('should return an array of categories', async () => {
-        const body: GetCategoriesByRestaurantDTO = {
+        const query: GetCategoriesByRestaurantDTO = {
           restaurantId: RestaurantToTest.id.value,
         }
         const expectedBody: Array<Primitives<Category>> = [
@@ -344,7 +344,8 @@ describe('Get Categories by Restaurant - Controller', () => {
         ]
         await request(app)
           .get('/category/')
-          .send(body)
+          .query(query)
+          .send()
           .expect(StatusCodes.OK)
           .then(response => {
             expect(response.body).toStrictEqual(expectedBody)
@@ -426,7 +427,7 @@ describe('Get Dishes by Category - Controller', () => {
   describe('Get /dish/', () => {
     describe('When a valid userToken is send', () => {
       it('should return an array of dishes', async () => {
-        const body: GetDishesByCategoryDTO = {
+        const query: GetDishesByCategoryDTO = {
           categoryId: CategoryToTest.id.value,
         }
         const expectedBody: Array<Primitives<Dish>> = [
@@ -440,7 +441,8 @@ describe('Get Dishes by Category - Controller', () => {
         ]
         await request(app)
           .get('/dish/')
-          .send(body)
+          .query(query)
+          .send()
           .expect(StatusCodes.OK)
           .then(response => {
             expect(response.body).toStrictEqual(expectedBody)
@@ -460,7 +462,7 @@ describe('Get Dishes by Restaurant - Controller', () => {
   describe('Get /dish/', () => {
     describe('When a valid userToken is send', () => {
       it('should return an array of dishes', async () => {
-        const body: GetDishesByRestaurantDTO = {
+        const query: GetDishesByRestaurantDTO = {
           restaurantId: RestaurantToTest.id.value,
         }
         const expectedBody: Array<Primitives<Dish>> = [
@@ -474,7 +476,8 @@ describe('Get Dishes by Restaurant - Controller', () => {
         ]
         await request(app)
           .get('/dish/')
-          .send(body)
+          .query(query)
+          .send()
           .expect(StatusCodes.OK)
           .then(response => {
             expect(response.body).toStrictEqual(expectedBody)
