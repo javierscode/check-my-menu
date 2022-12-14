@@ -1,3 +1,5 @@
+import { LeftArrowIcon } from '@application/icons/LeftArrowIcon'
+import Image from 'next/image'
 import Link from 'next/link'
 
 import styles from './Navbar.module.css'
@@ -11,11 +13,17 @@ type Props = {
 export function Navbar({ restaurantTitle, backTo, currentLocation }: Props) {
   return (
     <nav className={styles.navigation}>
-      <div className={styles.row}>
-        {backTo && <Link href={backTo}>{'<-'}</Link>}
-        {backTo && currentLocation ? <h1>{currentLocation}</h1> : <h1>Check my menu</h1>}
+      <div className={styles.container}>
+        <div className={styles.row}>
+          {backTo && (
+            <Link href={backTo}>
+              <LeftArrowIcon />
+            </Link>
+          )}
+          {backTo && currentLocation ? <h1>{currentLocation}</h1> : <h1>Check my menu</h1>}
+        </div>
+        <h2>{restaurantTitle}</h2>
       </div>
-      <h2>{restaurantTitle}</h2>
     </nav>
   )
 }

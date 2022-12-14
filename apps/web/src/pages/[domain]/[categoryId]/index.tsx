@@ -35,11 +35,15 @@ export default function ListOfDishes({
       />
       <main className='container'>
         <Banner src={categoryImage} alt={categoryTitle} />
-        <GridList>
-          {dishes.map(dish => (
-            <DishCard key={dish.id} dish={dish} href={`/${restaurantSlug}/dish/${dish.id}`} />
-          ))}
-        </GridList>
+        <div className='container-sm'>
+          {dishes.length > 0 ? (
+            dishes.map(dish => (
+              <DishCard key={dish.id} dish={dish} href={`/${restaurantSlug}/dish/${dish.id}`} />
+            ))
+          ) : (
+            <p>No dishes found</p>
+          )}
+        </div>
       </main>
     </>
   )
@@ -68,7 +72,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async context => {
   if (!category) return redirect404
 
   const dishes = await DishService.getDishesByCategoryId(categoryId)
-  if (!dishes || dishes.length === 0) return redirect404
+  if (!dishes) return redirect404
 
   return {
     props: {
