@@ -4,7 +4,7 @@ import { GetCategoriesByRestaurantDTO } from '@infrastructure/dtos/category/get-
 import { StatusCodes } from '@infrastructure/utils/status-code'
 import { NextFunction, Response } from 'express'
 import { inject, injectable } from 'inversify'
-import { TypedRequestBody } from 'src/types/express'
+import { TypedRequestQuery } from 'src/types/express'
 
 import { Controller } from '../controller'
 
@@ -16,11 +16,11 @@ export class GetCategoriesByRestaurantController implements Controller {
   ) {}
 
   async run(
-    req: TypedRequestBody<GetCategoriesByRestaurantDTO>,
+    req: TypedRequestQuery<GetCategoriesByRestaurantDTO>,
     res: Response,
     next: NextFunction
   ): Promise<void> {
-    const { restaurantId } = req.body
+    const { restaurantId } = req.query
 
     try {
       const categories = await this.getCategoriesByRestaurantUsecase.run({ restaurantId })

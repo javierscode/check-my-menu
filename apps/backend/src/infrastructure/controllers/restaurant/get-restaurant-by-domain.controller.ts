@@ -1,7 +1,5 @@
-import { GetCategoriesByRestaurantRequest } from '@application/use-cases/category/get-categories-by-restaurant.usecase'
 import { GetRestaurantByDomainUsecase } from '@application/use-cases/restaurant/get-restaurant-by-domain.usecase'
 import { ContainerSymbols } from '@infrastructure/dependency-injection/symbols'
-import { GetCategoriesByRestaurantDTO } from '@infrastructure/dtos/category/get-categories-by-restaurant.dto'
 import { getRestaurantByDomainDTO } from '@infrastructure/dtos/restaurant/get-restaurant-by-domain.dto'
 import { StatusCodes } from '@infrastructure/utils/status-code'
 import { NextFunction, Response } from 'express'

@@ -16,7 +16,7 @@ import { GetDishesByRestaurantDTO } from '@infrastructure/dtos/dish/get-dishes-b
 import { authMiddleware } from '@infrastructure/middlewares/auth.middleware'
 import { NextFunction, Response, Router } from 'express'
 import { Validator } from 'express-json-validator-middleware'
-import { TypedRequestBody } from 'src/types/express'
+import { TypedRequestQuery } from 'src/types/express'
 
 const createDishController = myContainer.get<CreateDishController>(
   ContainerSymbols.CreateDishController
@@ -58,17 +58,17 @@ DishRoutes.put(
 
 DishRoutes.get(
   '/',
-  validator.validate({ body: GetDishesSchema }),
-  async (req: TypedRequestBody<GetDishesDTO>, res: Response, next: NextFunction) => {
-    if (req.body.categoryId) {
+  validator.validate({ query: GetDishesSchema }),
+  async (req: TypedRequestQuery<GetDishesDTO>, res: Response, next: NextFunction) => {
+    if (req.query.categoryId) {
       return getDishesByCategoryController.run(
-        req as TypedRequestBody<GetDishesByCategoryDTO>,
+        req as TypedRequestQuery<GetDishesByCategoryDTO>,
         res,
         next
       )
-    } else if (req.body.restaurantId) {
+    } else if (req.query.restaurantId) {
       return getDishesByRestaurantController.run(
-        req as TypedRequestBody<GetDishesByRestaurantDTO>,
+        req as TypedRequestQuery<GetDishesByRestaurantDTO>,
         res,
         next
       )

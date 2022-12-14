@@ -14,6 +14,10 @@ export interface TypedRequestParams<T> extends Request {
   params: T
 }
 
+export interface TypedRequestQuery<T> extends Request {
+  query: T
+}
+
 export interface AuthRequest extends Request {
   userId: string
 }
