@@ -9,6 +9,10 @@ export class FetchCategoryService implements CategoryService {
     this.fetcher = Fetcher
   }
 
+  getCategoryById(categoryId: string): Promise<Category | null> {
+    return this.fetcher.get<Category>(`/category/${categoryId}`)
+  }
+
   getCategoriesByRestaurantId(restaurantId: string): Promise<Category[]> {
     return this.fetcher.get<Category[]>(`/category/?restaurantId=${restaurantId}`)
   }

@@ -5,20 +5,16 @@ import styles from './CategoryCard.module.css'
 
 type Props = {
   category: Category
-  currentSlug: string
+  href: string
 }
 
-export function CategoryCard({ category, currentSlug }: Props) {
+export function CategoryCard({ category, href }: Props) {
   const customStyles = {
     '--image-url': `url(${category.image})`,
   } as React.CSSProperties
 
   return (
-    <Link
-      style={customStyles}
-      className={styles.card}
-      href={`/${currentSlug}/${category.restaurantId}`}
-    >
+    <Link style={customStyles} className={styles.card} href={href}>
       <h2>{category.name}</h2>
       <p>{category.description}</p>
     </Link>

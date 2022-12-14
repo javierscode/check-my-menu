@@ -1,0 +1,11 @@
+.banner{
+    display: block;
+    position: relative;
+
+    width: 100%;
+    height: 20vh;
+}
+
+.banner img{
+    object-fit: cover;
+}
