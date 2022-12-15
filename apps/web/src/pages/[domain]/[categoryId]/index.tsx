@@ -1,6 +1,5 @@
 import { Banner } from '@application/components/Banner'
 import { DishCard } from '@application/components/DishCard'
-import { GridList } from '@application/components/GridList'
 import { Navbar } from '@application/components/Navbar'
 import { Dish } from '@domain/entities/dish'
 import { CategoryService } from '@domain/services/category.service'
@@ -15,6 +14,7 @@ type Props = {
   restaurantTitle: string
   restaurantSlug: string
   categoryTitle: string
+  categoryId: string
   categoryImage: string
   dishes: Dish[]
 }
@@ -23,6 +23,7 @@ export default function ListOfDishes({
   restaurantTitle,
   restaurantSlug,
   categoryTitle,
+  categoryId,
   categoryImage,
   dishes,
 }: Props) {
@@ -38,7 +39,11 @@ export default function ListOfDishes({
         <div className='container-sm'>
           {dishes.length > 0 ? (
             dishes.map(dish => (
-              <DishCard key={dish.id} dish={dish} href={`/${restaurantSlug}/dish/${dish.id}`} />
+              <DishCard
+                key={dish.id}
+                dish={dish}
+                href={`/${restaurantSlug}/${categoryId}/${dish.id}`}
+              />
             ))
           ) : (
             <p>No dishes found</p>
@@ -79,6 +84,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async context => {
       restaurantTitle: restaurant.name,
       restaurantSlug: domain,
       categoryTitle: category.name,
+      categoryId: category.id,
       categoryImage: category.image,
       dishes,
     },
