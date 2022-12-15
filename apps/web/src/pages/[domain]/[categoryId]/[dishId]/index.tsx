@@ -4,16 +4,11 @@ import { Navbar } from '@application/components/Navbar'
 import { RelatedDishes } from '@application/components/RelatedDishes'
 import { Category } from '@domain/entities/category'
 import { Dish } from '@domain/entities/dish'
-import { CategoryService } from '@domain/services/category.service'
-import { DishService } from '@domain/services/dish.service'
-import { RestaurantService } from '@domain/services/restaurant.service'
-import { randomIntFromInterval } from '@infrastructure/utils/math'
-import { MockCategoryService } from '@test/infrastructure/services/mock-category.service'
-import { MockDishService } from '@test/infrastructure/services/mock-dish.service'
-import { MockRestaurantService } from '@test/infrastructure/services/mock-restaurant.service'
+import { FRONTEND_URL, pageRedirect404 } from '@infrastructure/constants'
+import { Fetcher } from '@infrastructure/services/fetcher'
 import { GetServerSideProps } from 'next'
 
-type Props = {
+export type DishDetailPageProps = {
   restaurantTitle: string
   restaurantSlug: string
   previousCategory: string
@@ -29,7 +24,7 @@ export default function DishDetailPage({
   dish,
   relatedCategories,
   relatedDishes,
-}: Props) {
+}: DishDetailPageProps) {
   return (
     <>
       <Navbar
@@ -56,53 +51,21 @@ export default function DishDetailPage({
   )
 }
 
-export const getServerSideProps: GetServerSideProps<Props> = async context => {
-  const RestaurantService: RestaurantService = new MockRestaurantService()
-  const CategoryService: CategoryService = new MockCategoryService()
-  const DishService: DishService = new MockDishService()
-
+export const getServerSideProps: GetServerSideProps<DishDetailPageProps> = async context => {
   const { domain, categoryId, dishId } = context.query
 
-  const redirect404 = {
-    redirect: {
-      destination: '/404',
-      permanent: false,
-    },
-  }
+  if (!domain || typeof domain !== 'string') return pageRedirect404
+  if (!categoryId || typeof categoryId !== 'string') return pageRedirect404
+  if (!dishId || typeof dishId !== 'string') return pageRedirect404
 
-  if (!domain || typeof domain !== 'string') return redirect404
-  if (!categoryId || typeof categoryId !== 'string') return redirect404
-  if (!dishId || typeof dishId !== 'string') return redirect404
-
-  const restaurant = await RestaurantService.getRestaurantByDomain(domain)
-  if (!restaurant) return redirect404
-
-  const dish = await DishService.getDishById(dishId)
-  if (!dish) return redirect404
-
-  const relatedCategories = await Promise.all(
-    dish.categoryIds.map(
-      async categoryId => (await CategoryService.getCategoryById(categoryId)) as Category
+  try {
+    const props = await Fetcher.get<DishDetailPageProps>(
+      `${FRONTEND_URL}/api/dish-detail-by-id/?domain=${domain}&categoryId=${categoryId}&dishId=${dishId}`
     )
-  )
-
-  const draftDishes = (await DishService.getDishesByCategoryId(categoryId)).filter(
-    dish => dish.id !== dishId
-  )
-
-  const relatedDishes: [Dish, Dish] = [
-    draftDishes[randomIntFromInterval(0, draftDishes.length - 1)],
-    draftDishes[randomIntFromInterval(0, draftDishes.length - 1)],
-  ]
-
-  return {
-    props: {
-      restaurantTitle: 'Restaurant Title',
-      restaurantSlug: domain,
-      previousCategory: categoryId,
-      dish,
-      relatedCategories,
-      relatedDishes: relatedDishes as [Dish, Dish],
-    },
+    return {
+      props,
+    }
+  } catch (error) {
+    return pageRedirect404
   }
 }

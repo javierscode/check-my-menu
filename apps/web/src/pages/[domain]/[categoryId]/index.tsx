@@ -2,15 +2,11 @@ import { Banner } from '@application/components/Banner'
 import { DishCard } from '@application/components/DishCard'
 import { Navbar } from '@application/components/Navbar'
 import { Dish } from '@domain/entities/dish'
-import { CategoryService } from '@domain/services/category.service'
-import { DishService } from '@domain/services/dish.service'
-import { RestaurantService } from '@domain/services/restaurant.service'
-import { MockCategoryService } from '@test/infrastructure/services/mock-category.service'
-import { MockDishService } from '@test/infrastructure/services/mock-dish.service'
-import { MockRestaurantService } from '@test/infrastructure/services/mock-restaurant.service'
+import { FRONTEND_URL, pageRedirect404 } from '@infrastructure/constants'
+import { Fetcher } from '@infrastructure/services/fetcher'
 import type { GetServerSideProps } from 'next'
 
-type Props = {
+export type ListOfDishesPageProps = {
   restaurantTitle: string
   restaurantSlug: string
   categoryTitle: string
@@ -26,7 +22,7 @@ export default function ListOfDishes({
   categoryId,
   categoryImage,
   dishes,
-}: Props) {
+}: ListOfDishesPageProps) {
   return (
     <>
       <Navbar
@@ -54,39 +50,20 @@ export default function ListOfDishes({
   )
 }
 
-export const getServerSideProps: GetServerSideProps<Props> = async context => {
-  const RestaurantService: RestaurantService = new MockRestaurantService()
-  const CategoryService: CategoryService = new MockCategoryService()
-  const DishService: DishService = new MockDishService()
-
-  const redirect404 = {
-    redirect: {
-      destination: '/404',
-      permanent: false,
-    },
-  }
+export const getServerSideProps: GetServerSideProps<ListOfDishesPageProps> = async context => {
   const { domain, categoryId } = context.query
 
-  if (!domain || typeof domain !== 'string') return redirect404
-  if (!categoryId || typeof categoryId !== 'string') return redirect404
+  if (!domain || typeof domain !== 'string') return pageRedirect404
+  if (!categoryId || typeof categoryId !== 'string') return pageRedirect404
 
-  const restaurant = await RestaurantService.getRestaurantByDomain(domain)
-  if (!restaurant) return redirect404
-
-  const category = await CategoryService.getCategoryById(categoryId)
-  if (!category) return redirect404
-
-  const dishes = await DishService.getDishesByCategoryId(categoryId)
-  if (!dishes) return redirect404
-
-  return {
-    props: {
-      restaurantTitle: restaurant.name,
-      restaurantSlug: domain,
-      categoryTitle: category.name,
-      categoryId: category.id,
-      categoryImage: category.image,
-      dishes,
-    },
+  try {
+    const props = await Fetcher.get<ListOfDishesPageProps>(
+      `${FRONTEND_URL}/api/list-of-dishes-by-category/?domain=${domain}&categoryId=${categoryId}`
+    )
+    return {
+      props,
+    }
+  } catch (error) {
+    return pageRedirect404
   }
 }

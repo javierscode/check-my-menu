@@ -1,5 +1,3 @@
-const BACKEND_URL = process.env.BACKEND_URL as string
-
 const defaultHeaders = {
   'Content-Type': 'application/json',
 }
@@ -14,7 +12,7 @@ const genericFetch = async <T>(
   url: string,
   options?: fetchOptions
 ): Promise<T> => {
-  return fetch(BACKEND_URL + url, {
+  return fetch(url, {
     method,
     headers: {
       ...defaultHeaders,
