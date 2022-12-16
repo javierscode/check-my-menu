@@ -1,6 +1,6 @@
 {
   "$schema": "https://turborepo.org/schema.json",
-  "globalDependencies": ["$NODE_ENV", "$POSTGRES_USER", "$POSTGRES_PASSWORD", "$POSTGRES_DB", "$BACKEND_URL","$FRONTEND_URL"],
+  "globalDependencies": ["$NODE_ENV", "$POSTGRES_USER", "$POSTGRES_PASSWORD", "$POSTGRES_DB", "$BACKEND_URL","$FRONTEND_URL", "$COOKIE_AUTH_KEY"],
   "pipeline": {
     "build": {
       "dependsOn": ["^build"],

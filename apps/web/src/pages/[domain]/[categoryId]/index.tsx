@@ -3,8 +3,8 @@ import { DishCard } from '@application/components/DishCard'
 import { Navbar } from '@application/components/Navbar'
 import { Dish } from '@domain/entities/dish'
 import { FRONTEND_URL, pageRedirect404 } from '@infrastructure/constants'
+import { noRequireAuth } from '@infrastructure/gssp/no-require-auth'
 import { Fetcher } from '@infrastructure/services/fetcher'
-import type { GetServerSideProps } from 'next'
 
 export type ListOfDishesPageProps = {
   restaurantTitle: string
@@ -50,20 +50,26 @@ export default function ListOfDishes({
   )
 }
 
-export const getServerSideProps: GetServerSideProps<ListOfDishesPageProps> = async context => {
+export const getServerSideProps = noRequireAuth<ListOfDishesPageProps>(async (context, auth) => {
   const { domain, categoryId } = context.query
 
   if (!domain || typeof domain !== 'string') return pageRedirect404
   if (!categoryId || typeof categoryId !== 'string') return pageRedirect404
 
   try {
-    const props = await Fetcher.get<ListOfDishesPageProps>(
+    const { data, error } = await Fetcher.get<ListOfDishesPageProps>(
       `${FRONTEND_URL}/api/list-of-dishes-by-category/?domain=${domain}&categoryId=${categoryId}`
     )
+
+    if (error || !data) return pageRedirect404
+
     return {
-      props,
+      props: {
+        ...data,
+        auth,
+      },
     }
   } catch (error) {
     return pageRedirect404
   }
-}
+})

@@ -1,8 +1,11 @@
 import { RootEntity } from './root'
 
-export interface User extends RootEntity {
+export interface UserData extends RootEntity {
   name: string
   lastname: string
   email: string
-  token: string
+}
+
+export interface User extends UserData {
+  password: string
 }

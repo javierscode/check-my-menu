@@ -11,10 +11,10 @@ export class FetchCategoryService implements CategoryService {
   }
 
   getCategoryById(categoryId: string): Promise<Category | null> {
-    return this.fetcher.get<Category>(`${BACKEND_URL}/category/${categoryId}`)
+    throw new Error('Method not implemented.')
   }
 
   getCategoriesByRestaurantId(restaurantId: string): Promise<Category[]> {
-    return this.fetcher.get<Category[]>(`${BACKEND_URL}/category/?restaurantId=${restaurantId}`)
+    throw new Error('Method not implemented.')
   }
 }

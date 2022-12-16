@@ -3,8 +3,8 @@ import { GridList } from '@application/components/GridList'
 import { Navbar } from '@application/components/Navbar'
 import { Category } from '@domain/entities/category'
 import { FRONTEND_URL, pageRedirect404 } from '@infrastructure/constants'
+import { noRequireAuth } from '@infrastructure/gssp/no-require-auth'
 import { Fetcher } from '@infrastructure/services/fetcher'
-import type { GetServerSideProps } from 'next'
 
 export type ListOfCategoryPageProps = {
   restaurantTitle: string
@@ -35,21 +35,24 @@ export default function ListOfCategoryPage({
   )
 }
 
-export const getServerSideProps: GetServerSideProps<ListOfCategoryPageProps> = async context => {
+export const getServerSideProps = noRequireAuth<ListOfCategoryPageProps>(async (context, auth) => {
   const { domain } = context.query
   if (!domain || typeof domain !== 'string') return pageRedirect404
 
   try {
-    const props = await Fetcher.get<ListOfCategoryPageProps>(
+    const { data, error } = await Fetcher.get<ListOfCategoryPageProps>(
       `${FRONTEND_URL}/api/list-of-category-by-domain/?domain=${domain}`
     )
 
+    if (error || !data) return pageRedirect404
+
     return {
-      props,
+      props: {
+        ...data,
+        auth,
+      },
     }
   } catch (error) {
-    console.log(error)
-
     return pageRedirect404
   }
-}
+})

@@ -2,7 +2,19 @@ import { Allergen } from '@domain/entities/allergen'
 import { Category } from '@domain/entities/category'
 import { Dish } from '@domain/entities/dish'
 import { Restaurant } from '@domain/entities/restaurant'
+import { UserData } from '@domain/entities/user'
 
+type BackendUser = UserData & { password: string }
+
+export const fakeUsers: BackendUser[] = [
+  {
+    id: '1',
+    name: 'John',
+    lastname: 'Doe',
+    email: 'test@test.com',
+    password: 'test',
+  },
+]
 export const fakeCategories: Category[] = [
   {
     id: '1',

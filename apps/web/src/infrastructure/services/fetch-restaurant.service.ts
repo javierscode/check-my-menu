@@ -10,7 +10,11 @@ export class FetchRestaurantService implements RestaurantService {
     this.fetcher = Fetcher
   }
 
+  getMyRestaurants(token: string): Promise<Restaurant[]> {
+    throw new Error('Method not implemented.')
+  }
+
   getRestaurantByDomain(domain: string): Promise<Restaurant> {
-    return this.fetcher.get<Restaurant>(`${BACKEND_URL}/restaurant/?domain=${domain}`)
+    throw new Error('Method not implemented.')
   }
 }

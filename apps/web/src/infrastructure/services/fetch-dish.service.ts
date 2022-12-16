@@ -10,11 +10,15 @@ export class FetchDishService implements DishService {
     this.fetcher = Fetcher
   }
 
+  getDishesByRestaurantId(restaurantId: string, token: string): Promise<Dish[]> {
+    throw new Error('Method not implemented.')
+  }
+
   getDishById(dishId: string): Promise<Dish | null> {
     throw new Error('Method not implemented.')
   }
 
-  async getDishesByCategoryId(categoryId: string): Promise<Dish[]> {
-    return this.fetcher.get<Dish[]>(`${BACKEND_URL}/dish/?categoryId=${categoryId}`)
+  getDishesByCategoryId(categoryId: string): Promise<Dish[]> {
+    throw new Error('Method not implemented.')
   }
 }
