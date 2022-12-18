@@ -1,0 +1,32 @@
+.label{
+    width: 100%;
+    position: relative;
+}
+
+.label input{
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid #ccc;
+    font-size: 0.85rem;
+
+    width: 100%;
+}
+
+.label input:focus{
+    outline: none;
+    border: 1px solid gray;
+}
+
+.label p{
+    position: absolute;
+    top: 2.2rem;
+    left: 0;
+
+    font-size: 0.65rem;
+    font-weight: 500;
+    font-style: italic;
+    color: #950000;
+
+    pointer-events: none;
+    transition: all 0.2s ease-in-out;
+}

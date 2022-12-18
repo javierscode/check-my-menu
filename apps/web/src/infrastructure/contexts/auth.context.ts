@@ -1,10 +1,10 @@
 import { UserData } from '@domain/entities/user'
 import { createContext, useContext } from 'react'
 
-type AuthContextType = {
+export type AuthContextType = {
   token?: string
-  updateAuth: (token: string, profile: UserData) => void
   profile?: UserData
+  updateAuth: (token: string, profile: UserData) => void
 }
 
 const AuthContext = createContext<AuthContextType | null>(null)

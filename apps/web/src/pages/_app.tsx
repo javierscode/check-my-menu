@@ -7,8 +7,9 @@ import { AppProps } from 'next/app'
 import { AuthProps } from 'src/types/next'
 
 export default function MyApp({ Component, pageProps: { auth, ...restOfTheProps } }: AppProps) {
-  const { tokenRef, updateAuth, profileRef } = useAuth(auth as AuthProps)
-  console.log('render MyApp', tokenRef.current, profileRef.current)
+  const { tokenRef, updateAuth, profileRef } = useAuth(
+    auth ? (auth as AuthProps) : { token: undefined, profile: undefined }
+  )
 
   return (
     <AuthContextProvider

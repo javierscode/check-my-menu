@@ -1,3 +1,5 @@
+import { LoginForm } from '@application/components/LoginForm'
+import { UserAccessLayout } from '@application/components/UserAccessLayout'
 import { UserData } from '@domain/entities/user'
 import { useAuthContext } from '@infrastructure/contexts/auth.context'
 import { requireNoAuth } from '@infrastructure/gssp/require-no-auth.gssp'
@@ -34,22 +36,14 @@ export default function LoginPage() {
   }
 
   return (
-    <div>
-      <h1>Login</h1>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor='email'>Email</label>
-        <input type='email' id='email' value={email} onChange={e => setEmail(e.target.value)} />
-        <label htmlFor='password'>Password</label>
-        <input
-          type='password'
-          id='password'
-          value={password}
-          onChange={e => setPassword(e.target.value)}
-        />
-
-        <button type='submit'>Login</button>
-      </form>
-    </div>
+    <UserAccessLayout
+      imageUrl='/login.jpeg'
+      title='Login'
+      subTitle='Welcome back!'
+      link={{ introduction: "You don't have an account?", text: 'Sign up', to: '/register' }}
+    >
+      <LoginForm />
+    </UserAccessLayout>
   )
 }
 
