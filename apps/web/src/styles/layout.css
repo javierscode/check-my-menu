@@ -9,3 +9,9 @@
     max-width: 640px;
     margin: 0 auto;
 }
+
+.admin-layout{
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    height: 100%;
+}
