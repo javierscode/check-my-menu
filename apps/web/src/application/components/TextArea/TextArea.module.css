@@ -3,16 +3,19 @@
     position: relative;
 }
 
-.label input{
+.label textarea{
     width: 100%;
     padding: 0.5rem 0.75rem;
     border: 1px solid #ccc;
     font-size: 0.85rem;
-
+    resize: none;
     width: 100%;
+
+    font-family: inherit;
+
 }
 
-.label input:focus{
+.label textarea:focus{
     outline: none;
     border: 1px solid gray;
 }

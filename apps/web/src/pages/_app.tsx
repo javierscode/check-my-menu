@@ -20,6 +20,7 @@ export default function MyApp({ Component, pageProps: { auth, ...restOfTheProps 
       }}
     >
       <Component {...restOfTheProps} />
+      <div id='modal'></div>
     </AuthContextProvider>
   )
 }

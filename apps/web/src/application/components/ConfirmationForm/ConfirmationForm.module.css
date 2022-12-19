@@ -1,0 +1,39 @@
+.confirmation{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    padding: 0 20px;
+}
+
+.title{
+    font-size: 1.2rem;
+    font-weight: 500;
+    font-style: italic;
+    margin-bottom: 1rem;
+}
+
+.actions{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    width: 100%;
+}
+
+.button{
+    padding: 0.5rem 0.75rem;
+    cursor: pointer;
+    border: 1px solid gray;
+    font-size: 0.85rem;
+    background-color: gainsboro;
+
+    width: 100%;
+}
+
+.cancel{
+    background-color: white;
+}

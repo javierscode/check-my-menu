@@ -13,8 +13,8 @@ type Props = {
   items: Item[]
   buttonTitle: string
   onAdd: () => void
-  onEdit: (item: Item) => void
-  onDelete: (item: Item) => void
+  onEdit: (id: string) => void
+  onDelete: (id: string) => void
 }
 
 const checkLinkTo = (item: Item) => {
@@ -34,8 +34,8 @@ export function AdminList({ title, items, buttonTitle, onAdd, onEdit, onDelete }
           key={item.id}
           linkTo={checkLinkTo(item)}
           title={item.name}
-          onEdit={() => onEdit(item)}
-          onDelete={() => onDelete(item)}
+          onEdit={() => onEdit(item.id)}
+          onDelete={() => onDelete(item.id)}
         />
       ))}
       <button className={styles.button} onClick={onAdd}>
