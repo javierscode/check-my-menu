@@ -4,7 +4,7 @@ import styles from './Input.module.css'
 
 type Props = {
   id: string
-  placeholder: string
+  placeholder?: string
   type: React.InputHTMLAttributes<HTMLInputElement>['type']
   title?: string
   error?: string

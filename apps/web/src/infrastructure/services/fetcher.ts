@@ -17,13 +17,15 @@ const genericFetch = async <T>(
   url: string,
   options?: fetchOptions
 ): Promise<fetchResponse<T>> => {
+  const body = options?.body ? JSON.stringify(options.body) : undefined
+
   return fetch(url, {
     method,
     headers: {
       ...defaultHeaders,
       Authorization: options?.authToken ? `Bearer ${options.authToken}` : '',
     },
-    body: options?.body ? JSON.stringify(options.body) : undefined,
+    body,
   }).then(async res => {
     if (!res.ok) return { error: res.statusText, data: undefined }
 

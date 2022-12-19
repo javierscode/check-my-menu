@@ -21,7 +21,7 @@ const checkLinkTo = (item: Item) => {
   const isRestaurant = Object.keys(item).includes('domain')
   const restaurant = item as Restaurant
   if (isRestaurant) {
-    return `/admin/${restaurant.domain}/categories`
+    return `/admin/${restaurant.id}/categories`
   }
 }
 

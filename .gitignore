@@ -13,6 +13,7 @@ coverage
 .next/
 out/
 build
+apps/web/public/images/
 
 # misc
 .DS_Store
