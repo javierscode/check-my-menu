@@ -7,7 +7,7 @@ export const useAuth = ({ token, profile }: AuthProps) => {
   const profileRef = useRef<UserData>()
   const [, setDummy] = useState(true)
 
-  const updateAuth = (newToken: string, newProfile: UserData) => {
+  const updateAuth = (newToken?: string, newProfile?: UserData) => {
     if (
       newToken === tokenRef.current &&
       JSON.stringify(newProfile) === JSON.stringify(profileRef.current)

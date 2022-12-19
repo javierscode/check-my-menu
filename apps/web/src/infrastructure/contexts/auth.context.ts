@@ -4,7 +4,7 @@ import { createContext, useContext } from 'react'
 export type AuthContextType = {
   token?: string
   profile?: UserData
-  updateAuth: (token: string, profile: UserData) => void
+  updateAuth: (token?: string, profile?: UserData) => void
 }
 
 const AuthContext = createContext<AuthContextType | null>(null)

@@ -7,7 +7,10 @@ type fetchOptions = {
   body?: Record<string, unknown>
 }
 
-type fetchResponse<T> = { error: string; data: undefined } | { data: T; error: undefined }
+type fetchResponse<T> =
+  | { error: string; data: undefined }
+  | { data: T; error: undefined }
+  | { data: undefined; error: undefined }
 
 const genericFetch = async <T>(
   method: 'GET' | 'POST' | 'PUT' | 'DELETE',
@@ -24,8 +27,12 @@ const genericFetch = async <T>(
   }).then(async res => {
     if (!res.ok) return { error: res.statusText, data: undefined }
 
-    const data = (await res.json()) as T
-    return { data, error: undefined }
+    try {
+      const data = (await res.json()) as T
+      return { data, error: undefined }
+    } catch {
+      return { error: undefined, data: undefined }
+    }
   })
 }
 

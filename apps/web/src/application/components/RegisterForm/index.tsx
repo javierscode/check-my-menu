@@ -1,6 +1,7 @@
 import { Input } from '@application/components/Input'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useAuthContext } from '@infrastructure/contexts/auth.context'
+import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
@@ -24,16 +25,19 @@ export function RegisterForm() {
     resolver: yupResolver(RegisterSchema),
   })
   const { updateAuth } = useAuthContext()
-  const [registerError, setRegisterError] = useState<string | null>(null)
+  const router = useRouter()
+  const [registerError, setRegisterError] = useState<boolean>(false)
 
-  const onSubmit: SubmitHandler<Inputs> = ({ name, lastname, email, password }) => {
-    try {
-      setRegisterError(null)
-      registerNewUser({ name, lastname, email, password, updateAuth })
-    } catch (error) {
-      setRegisterError('Something went wrong')
-    }
-  }
+  const onSubmit: SubmitHandler<Inputs> = ({ name, lastname, email, password }) =>
+    registerNewUser({
+      name,
+      lastname,
+      email,
+      password,
+      updateAuth,
+      setError: setRegisterError,
+      router,
+    })
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
@@ -68,7 +72,7 @@ export function RegisterForm() {
         error={errors.password?.message}
       />
       <button type='submit'>Sign up</button>
-      {registerError && <p className={styles.error}>{registerError}</p>}
+      {registerError && <p className={styles.error}>Something went wrong</p>}
     </form>
   )
 }

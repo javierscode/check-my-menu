@@ -1,6 +1,8 @@
+import { RegisterForm } from '@application/components/RegisterForm'
 import { UserAccessLayout } from '@application/components/UserAccessLayout'
-import { RegisterForm } from '@application/RegisterForm'
+import { useAuthContext } from '@infrastructure/contexts/auth.context'
 import { requireNoAuth } from '@infrastructure/gssp/require-no-auth.gssp'
+import { useRouter } from 'next/router'
 
 export default function RegisterPage() {
   return (

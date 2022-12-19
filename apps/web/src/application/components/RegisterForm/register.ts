@@ -3,7 +3,9 @@ import { AuthContextType } from '@infrastructure/contexts/auth.context'
 import { Fetcher } from '@infrastructure/services/fetcher'
 import { NextRouter } from 'next/router'
 
-type LoginParams = {
+type RegisterParams = {
+  name: string
+  lastname: string
   email: string
   password: string
   updateAuth: AuthContextType['updateAuth']
@@ -11,15 +13,22 @@ type LoginParams = {
   router: NextRouter
 }
 
-export function login({ email, password, updateAuth, setError, router }: LoginParams) {
-  return Fetcher.post<{
+export function registerNewUser({
+  name,
+  lastname,
+  email,
+  password,
+  updateAuth,
+  setError,
+  router,
+}: RegisterParams) {
+  Fetcher.post<{
     token: string
     profile: UserData
-  }>('/api/auth/login', { body: { email, password } })
+  }>('/api/auth/register', { body: { name, lastname, email, password } })
     .then(({ error, data }) => {
       if (error || !data) {
         console.error(error)
-        setError(true)
         return
       }
       const { token, profile } = data
