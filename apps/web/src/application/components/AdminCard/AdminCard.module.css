@@ -1,0 +1,43 @@
+.card{
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+
+    width: 100%;
+
+    border-radius: 10px;
+    border: 1px solid gray;
+    padding: 0.7rem 1rem;
+    min-width: 300px;
+}
+
+.header{
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.actions{
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+
+}
+
+.card svg{
+    cursor: pointer;
+    height: 1.5rem;
+    width: auto;
+}
+
+.card svg:hover{
+    color: #3f51b5;
+}
+
+.card button, .card a{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    gap: 1rem;
+}

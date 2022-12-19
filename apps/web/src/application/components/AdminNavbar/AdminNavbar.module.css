@@ -1,0 +1,32 @@
+.navigation{
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem 3rem;
+
+    background-color: gainsboro;
+
+    font-weight: 600;
+    font-size: 1.5rem;
+
+    width: 100%;
+}
+
+
+.row{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+
+    font-size: 1.25rem;
+    font-weight: 400;
+}
+
+
+.navigation svg{
+    height: auto;
+    width: 1.4rem;
+    margin-top: 5px;
+    cursor: pointer;
+}
+
