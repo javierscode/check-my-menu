@@ -1,4 +1,3 @@
-import { requireNoAuth } from '@infrastructure/gssp/require-no-auth.gssp'
 import { Button } from 'ui'
 
 export default function Web() {
@@ -13,4 +12,11 @@ export default function Web() {
   )
 }
 
-export const getServerSideProps = requireNoAuth()
+export const getServerSideProps = () => {
+  return {
+    redirect: {
+      destination: '/login',
+      permanent: false,
+    },
+  }
+}

@@ -1,3 +1,4 @@
+import { generateQr } from '@infrastructure/api/generate-qr'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
@@ -18,6 +19,15 @@ export function AdminAside({ restaurantName, restaurantDomain }: Props) {
   const pathToDishes = `/admin/${restaurantId}/dishes`
   const pathToRestaurants = `/admin/`
   const pathToPreview = `/${restaurantDomain}`
+  const origin = window.location.origin
+
+  const handleDownload = async () => {
+    const qr = await generateQr(origin + pathToPreview)
+    const link = document.createElement('a')
+    link.href = qr
+    link.download = 'qr.png'
+    link.click()
+  }
 
   return (
     <aside className={styles.aside}>
@@ -41,7 +51,7 @@ export function AdminAside({ restaurantName, restaurantDomain }: Props) {
         <Link href={pathToPreview} target='_blank'>
           <button>See Preview</button>
         </Link>
-        <button>Download QR</button>
+        <button onClick={handleDownload}>Download QR</button>
       </div>
     </aside>
   )
