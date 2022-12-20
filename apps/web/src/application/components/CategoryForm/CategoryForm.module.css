@@ -24,3 +24,25 @@
     width: 100%;
     margin-top: 1rem;
 }
+
+.label{
+
+    width: 100%;
+}
+
+.label p{
+    font-size: 0.85rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+.image{
+    position: relative;
+
+    width: 100%;
+    aspect-ratio: 16/9;
+}
+
+.image img{
+    object-fit: cover;
+}

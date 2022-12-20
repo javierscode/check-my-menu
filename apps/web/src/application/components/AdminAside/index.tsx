@@ -19,9 +19,9 @@ export function AdminAside({ restaurantName, restaurantDomain }: Props) {
   const pathToDishes = `/admin/${restaurantId}/dishes`
   const pathToRestaurants = `/admin/`
   const pathToPreview = `/${restaurantDomain}`
-  const origin = window.location.origin
 
   const handleDownload = async () => {
+    const origin = window.location.origin
     const qr = await generateQr(origin + pathToPreview)
     const link = document.createElement('a')
     link.href = qr
@@ -43,7 +43,9 @@ export function AdminAside({ restaurantName, restaurantDomain }: Props) {
         >
           Categories
         </Link>
-        <Link href={pathToDishes}>Dishes</Link>
+        <Link href={pathToDishes} className={currentPath === pathToDishes ? styles.selected : ''}>
+          Dishes
+        </Link>
       </div>
 
       <div className={styles.footer}>

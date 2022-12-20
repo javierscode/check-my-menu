@@ -2,6 +2,7 @@ import { Input } from '@application/components/Input'
 import { Category } from '@domain/entities/category'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { uploadImage } from '@infrastructure/api/upload-image'
+import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
@@ -40,8 +41,6 @@ export function CategoryForm({ item: category, onCloseForm }: Props) {
   const editingMode = !!category
 
   const onSubmit: SubmitHandler<Inputs> = async ({ name, description, image: ImageFile }) => {
-    console.log('onSubmit', { name, description, ImageFile, restaurantId })
-
     let image: string | undefined
     if (ImageFile.length > 0) {
       image = await uploadImage(ImageFile[0], 'category')
@@ -61,7 +60,6 @@ export function CategoryForm({ item: category, onCloseForm }: Props) {
       if (!image) return
       newCategory = await createCategory({ name, description, image, restaurantId })
     }
-    console.log('newCategory', newCategory)
 
     onCloseForm?.(newCategory)
   }
@@ -84,6 +82,14 @@ export function CategoryForm({ item: category, onCloseForm }: Props) {
         {...register('description', { required: true })}
         error={errors.description?.message}
       />
+      {editingMode && category?.image && (
+        <div className={styles.label}>
+          <p>Current image preview</p>
+          <div className={styles.image}>
+            <Image src={category.image} alt={category.name} fill />
+          </div>
+        </div>
+      )}
       <Input
         id='image'
         title={editingMode ? 'Change image' : 'Image'}
