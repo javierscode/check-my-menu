@@ -1,0 +1,57 @@
+.box{
+    width: 100%;
+    position: relative;
+}
+
+.title{
+    font-size: 0.85rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+.error{
+    position: absolute;
+    bottom: -1rem;
+    left: 0;
+
+    font-size: 0.65rem;
+    font-weight: 500;
+    font-style: italic;
+    color: #950000;
+
+    pointer-events: none;
+    transition: all 0.2s ease-in-out;
+}
+
+.button{
+    padding: 0.5rem 0.75rem;
+    border: 1px solid #ccc;
+    font-size: 0.85rem;
+    width: 100%;
+}
+.button[placeholder=true]{
+    color:gray;
+}
+
+.options{
+    position: absolute;
+    z-index: 1;
+    background-color: rgb(240, 240, 240);
+    width: 100%;
+    padding: 10px;
+
+    max-height: 200px;
+    overflow: auto;
+}
+
+.options li{
+    font-size: 0.85rem;
+
+    padding: 0.5rem 0.75rem;
+    cursor: pointer;
+}
+
+.options li[aria-selected="true"]{
+    font-weight: 500;
+    text-decoration: underline;
+}

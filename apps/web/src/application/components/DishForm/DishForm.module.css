@@ -1,0 +1,64 @@
+.form{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    height: 100%;
+    gap: 1.2rem;
+    width: 600px;
+}
+.row{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    width: 100%;
+    gap: 1.2rem;
+}
+
+.col{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    width: 100%;
+    gap: 1.2rem;
+}
+
+.title{
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.button{
+    padding: 0.5rem 0.75rem;
+    cursor: pointer;
+    border: 1px solid gray;
+    font-size: 0.85rem;
+    background-color: gainsboro;
+
+    width: 100%;
+    margin-top: 1rem;
+}
+
+.label{
+
+    width: 100%;
+}
+
+.label p{
+    font-size: 0.85rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+.image{
+    position: relative;
+
+    width: 100%;
+    aspect-ratio: 16/9;
+}
+
+.image img{
+    object-fit: cover;
+}

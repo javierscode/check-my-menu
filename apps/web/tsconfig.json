@@ -17,6 +17,6 @@
         ]
     },
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "**/*.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "**/*.js", "src/application/components/DishForm/edit-dish.ts"],
   "exclude": ["node_modules"]
 }

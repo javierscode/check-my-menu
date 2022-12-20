@@ -4,7 +4,7 @@ import { RestaurantService } from '@domain/services/restaurant.service'
 import { fakeRestaurants } from './constants'
 
 export class MockRestaurantService implements RestaurantService {
-  async getRestaurantById(id: string): Promise<Restaurant | null> {
+  async getRestaurantById(token: string, id: string): Promise<Restaurant | null> {
     return await Promise.resolve(fakeRestaurants.find(r => r.id === id) ?? null)
   }
 

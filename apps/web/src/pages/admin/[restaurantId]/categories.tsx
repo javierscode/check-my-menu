@@ -33,7 +33,7 @@ export default function ListOfCategoriesPage({
         <AdminList
           title='My Categories'
           items={items}
-          buttonTitle='Add new restaurant'
+          buttonTitle='Add new category'
           onAdd={onAdd}
           onEdit={onEdit}
           onDelete={onDelete}
@@ -51,7 +51,9 @@ export const getServerSideProps = requireAuth<ListOfCategoriesPageProps>(async (
   const CategoryService: CategoryService = new MockCategoryService()
   const RestaurantService: RestaurantService = new MockRestaurantService()
 
-  const restaurant = await RestaurantService.getRestaurantById(restaurantId)
+  if (!auth.token) return pageRedirect404
+
+  const restaurant = await RestaurantService.getRestaurantById(auth.token, restaurantId)
 
   if (!restaurant) return pageRedirect404
 
