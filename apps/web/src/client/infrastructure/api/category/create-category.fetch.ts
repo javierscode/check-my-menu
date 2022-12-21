@@ -9,7 +9,7 @@ export const createCategory = ({
 }: Omit<Category, 'id'>) => {
   return Fetcher.post<{
     category: Category
-  }>('/api/admin/create-category', { body: { name, description, image, restaurantId } })
+  }>('/api/admin/category/create-category', { body: { name, description, image, restaurantId } })
     .then(({ error, data }) => {
       if (error || !data) {
         console.error(error)

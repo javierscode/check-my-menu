@@ -1,7 +1,7 @@
 import { Fetcher } from '@shared/infrastructure/fetcher'
 
 export async function deleteDish(dishId: string): Promise<void> {
-  await Fetcher.post('/api/admin/delete-dish', {
+  await Fetcher.post('/api/admin/dish/delete-dish', {
     body: {
       id: dishId,
     },

@@ -3,24 +3,17 @@ import { InMemoryUserService } from '@server/infrastructure/services/inmemory/in
 import { NextApiRequest, NextApiResponse } from 'next'
 import { setAuthCookie } from 'src/server/infrastructure/utils/cookie'
 
+type TypedBody = {
+  name: string
+  lastname: string
+  email: string
+  password: string
+}
+
 export default async function registerHandler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method !== 'POST') return res.status(405).send('Method not allowed')
+  validationMiddleware(req, res)
 
-  const { name, lastname, email, password, ...rest } = req.body as Record<string, unknown>
-
-  if (
-    !name ||
-    !lastname ||
-    !email ||
-    !password ||
-    typeof name !== 'string' ||
-    typeof lastname !== 'string' ||
-    typeof email !== 'string' ||
-    typeof password !== 'string'
-  )
-    return res.status(400).send('Some field is missing or invalid')
-
-  if (Object.keys(rest).length !== 0) return res.status(400).send('Invalid body')
+  const { name, lastname, email, password } = req.body as TypedBody
 
   const UserService: UserService = new InMemoryUserService()
 
@@ -40,4 +33,24 @@ export default async function registerHandler(req: NextApiRequest, res: NextApiR
   } catch (error) {
     return res.status(500).end()
   }
+}
+
+function validationMiddleware(req: NextApiRequest, res: NextApiResponse) {
+  if (req.method !== 'POST') return res.status(405).send('Method not allowed')
+
+  const { name, lastname, email, password, ...rest } = req.body as Record<string, unknown>
+
+  if (
+    !name ||
+    !lastname ||
+    !email ||
+    !password ||
+    typeof name !== 'string' ||
+    typeof lastname !== 'string' ||
+    typeof email !== 'string' ||
+    typeof password !== 'string'
+  )
+    return res.status(400).send('Some field is missing or invalid')
+
+  if (Object.keys(rest).length !== 0) return res.status(400).send('Invalid body')
 }

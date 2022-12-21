@@ -4,7 +4,7 @@ import { Fetcher } from '@shared/infrastructure/fetcher'
 export const editCategory = (category: Category) => {
   return Fetcher.post<{
     category: Category
-  }>('/api/admin/edit-category', { body: { ...category } })
+  }>('/api/admin/category/edit-category', { body: { ...category } })
     .then(({ error, data }) => {
       if (error || !data) {
         console.error(error)

@@ -9,7 +9,7 @@ export const createRestaurant = ({
 }: Omit<Restaurant, 'id'>) => {
   return Fetcher.post<{
     restaurant: Restaurant
-  }>('/api/admin/create-restaurant', { body: { name, domain, location, description } })
+  }>('/api/admin/restaurant/create-restaurant', { body: { name, domain, location, description } })
     .then(({ error, data }) => {
       if (error || !data) {
         console.error(error)

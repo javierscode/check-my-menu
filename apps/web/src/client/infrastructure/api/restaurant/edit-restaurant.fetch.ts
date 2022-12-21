@@ -4,7 +4,7 @@ import { Fetcher } from '@shared/infrastructure/fetcher'
 export const editRestaurant = (restaurant: Restaurant) => {
   return Fetcher.post<{
     restaurant: Restaurant
-  }>('/api/admin/edit-restaurant', { body: { ...restaurant } })
+  }>('/api/admin/restaurant/edit-restaurant', { body: { ...restaurant } })
     .then(({ error, data }) => {
       if (error || !data) {
         console.error(error)

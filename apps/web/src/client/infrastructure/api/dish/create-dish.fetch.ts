@@ -12,7 +12,7 @@ export const createDish = ({
 }: Omit<Dish, 'id'>) => {
   return Fetcher.post<{
     dish: Dish
-  }>('/api/admin/create-dish', {
+  }>('/api/admin/dish/create-dish', {
     body: { name, description, price, image, allergens, categoryIds, restaurantId },
   })
     .then(({ error, data }) => {

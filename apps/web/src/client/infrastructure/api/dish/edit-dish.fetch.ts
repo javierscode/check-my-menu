@@ -4,7 +4,7 @@ import { Fetcher } from '@shared/infrastructure/fetcher'
 export const editDish = (dish: Dish) => {
   return Fetcher.post<{
     dish: Dish
-  }>('/api/admin/edit-dish', { body: { ...dish } })
+  }>('/api/admin/dish/edit-dish', { body: { ...dish } })
     .then(({ error, data }) => {
       if (error || !data) {
         console.error(error)

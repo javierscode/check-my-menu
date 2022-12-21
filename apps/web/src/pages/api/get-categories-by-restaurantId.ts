@@ -6,17 +6,6 @@ type TypedQuery = {
   restaurantId: string
 }
 
-function validationMiddleware(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method !== 'GET') {
-    return res.status(405).send('Method not allowed')
-  }
-  const { restaurantId } = req.query
-
-  if (!restaurantId || typeof restaurantId === 'object') {
-    return res.status(400).send('Missing restaurantId')
-  }
-}
-
 export default async function getCategoriesByRestaurantIdHandler(
   req: NextApiRequest,
   res: NextApiResponse
@@ -33,5 +22,16 @@ export default async function getCategoriesByRestaurantIdHandler(
     res.status(200).json({ categories })
   } catch (error) {
     res.status(500).end()
+  }
+}
+
+function validationMiddleware(req: NextApiRequest, res: NextApiResponse) {
+  if (req.method !== 'GET') {
+    return res.status(405).send('Method not allowed')
+  }
+  const { restaurantId } = req.query
+
+  if (!restaurantId || typeof restaurantId === 'object') {
+    return res.status(400).send('Missing restaurantId')
   }
 }
