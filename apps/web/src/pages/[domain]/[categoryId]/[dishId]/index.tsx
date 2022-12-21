@@ -2,11 +2,10 @@ import { Banner } from '@client/application/components/atoms/Banner'
 import { DishDetail } from '@client/application/components/molecules/DishDetail'
 import { Navbar } from '@client/application/components/molecules/Navbar'
 import { RelatedDishes } from '@client/application/components/organism/RelatedDishes'
+import { DishDetailPageGSSP } from '@server/application/gssp/dish-detail-page.gssp'
 import { noRequireAuth } from '@server/infrastructure/gssp/no-require-auth'
 import { Category } from '@shared/domain/entities/category'
 import { Dish } from '@shared/domain/entities/dish'
-import { FRONTEND_URL, pageRedirect404 } from '@shared/infrastructure/constants'
-import { Fetcher } from '@shared/infrastructure/fetcher'
 
 export type DishDetailPageProps = {
   restaurantTitle: string
@@ -51,27 +50,4 @@ export default function DishDetailPage({
   )
 }
 
-export const getServerSideProps = noRequireAuth(async (context, auth) => {
-  const { domain, categoryId, dishId } = context.query
-
-  if (!domain || typeof domain !== 'string') return pageRedirect404
-  if (!categoryId || typeof categoryId !== 'string') return pageRedirect404
-  if (!dishId || typeof dishId !== 'string') return pageRedirect404
-
-  try {
-    const { data, error } = await Fetcher.get<DishDetailPageProps>(
-      `${FRONTEND_URL}/api/dish-detail-by-id/?domain=${domain}&categoryId=${categoryId}&dishId=${dishId}`
-    )
-
-    if (error || !data) return pageRedirect404
-
-    return {
-      props: {
-        ...data,
-        auth,
-      },
-    }
-  } catch (error) {
-    return pageRedirect404
-  }
-})
+export const getServerSideProps = noRequireAuth<DishDetailPageProps>(DishDetailPageGSSP)

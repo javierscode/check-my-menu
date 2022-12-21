@@ -5,24 +5,20 @@ import { Modal } from '@client/application/components/molecules/Modal'
 import { AdminList } from '@client/application/components/organism/AdminList'
 import { deleteCategory } from '@client/infrastructure/api/category/delete-category.fetch'
 import { useAdminItemList } from '@client/infrastructure/hooks/use-admin-list'
-import { CategoryService } from '@server/domain/services/category.service'
-import { RestaurantService } from '@server/domain/services/restaurant.service'
+import { AdminMyCategoriesPageGSSP } from '@server/application/gssp/admin-my-categories-page.gssp'
 import { requireAuth } from '@server/infrastructure/gssp/require-auth.gssp'
-import { InMemoryCategoryService } from '@server/infrastructure/services/inmemory/inmemory-category.service'
-import { InMemoryRestaurantService } from '@server/infrastructure/services/inmemory/inmemory-restaurant.service'
 import { Category } from '@shared/domain/entities/category'
 import { Restaurant } from '@shared/domain/entities/restaurant'
-import { pageRedirect404 } from '@shared/infrastructure/constants'
 
-type ListOfCategoriesPageProps = {
+export type AdminMyCategoriesPageProps = {
   categories: Category[]
   restaurant: Restaurant
 }
 
-export default function ListOfCategoriesPage({
+export default function AdminMyCategoriesPage({
   categories: initialCategories,
   restaurant,
-}: ListOfCategoriesPageProps) {
+}: AdminMyCategoriesPageProps) {
   const { items, onAdd, onEdit, onDelete, closeModal, showModal, formToRender } =
     useAdminItemList<Category>(initialCategories, deleteCategory, CategoryForm)
   return (
@@ -43,27 +39,4 @@ export default function ListOfCategoriesPage({
     </>
   )
 }
-export const getServerSideProps = requireAuth<ListOfCategoriesPageProps>(async (context, auth) => {
-  const { restaurantId } = context.query
-
-  if (!restaurantId || typeof restaurantId !== 'string') return pageRedirect404
-
-  const CategoryService: CategoryService = new InMemoryCategoryService()
-  const RestaurantService: RestaurantService = new InMemoryRestaurantService()
-
-  if (!auth.token) return pageRedirect404
-
-  const restaurant = await RestaurantService.getRestaurantById(auth.token, restaurantId)
-
-  if (!restaurant) return pageRedirect404
-
-  const categories: Category[] = await CategoryService.getCategoriesByRestaurantId(restaurantId)
-
-  return {
-    props: {
-      categories,
-      restaurant,
-      auth,
-    },
-  }
-})
+export const getServerSideProps = requireAuth<AdminMyCategoriesPageProps>(AdminMyCategoriesPageGSSP)

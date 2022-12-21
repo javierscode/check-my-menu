@@ -1,10 +1,9 @@
 import { Banner } from '@client/application/components/atoms/Banner'
 import { DishCard } from '@client/application/components/atoms/DishCard'
 import { Navbar } from '@client/application/components/molecules/Navbar'
+import { ListOfDishesPageGSSP } from '@server/application/gssp/list-of-dishes-page.gssp'
 import { noRequireAuth } from '@server/infrastructure/gssp/no-require-auth'
 import { Dish } from '@shared/domain/entities/dish'
-import { FRONTEND_URL, pageRedirect404 } from '@shared/infrastructure/constants'
-import { Fetcher } from '@shared/infrastructure/fetcher'
 
 export type ListOfDishesPageProps = {
   restaurantTitle: string
@@ -15,7 +14,7 @@ export type ListOfDishesPageProps = {
   dishes: Dish[]
 }
 
-export default function ListOfDishes({
+export default function ListOfDishesPage({
   restaurantTitle,
   restaurantSlug,
   categoryTitle,
@@ -50,26 +49,4 @@ export default function ListOfDishes({
   )
 }
 
-export const getServerSideProps = noRequireAuth<ListOfDishesPageProps>(async (context, auth) => {
-  const { domain, categoryId } = context.query
-
-  if (!domain || typeof domain !== 'string') return pageRedirect404
-  if (!categoryId || typeof categoryId !== 'string') return pageRedirect404
-
-  try {
-    const { data, error } = await Fetcher.get<ListOfDishesPageProps>(
-      `${FRONTEND_URL}/api/list-of-dishes-by-category/?domain=${domain}&categoryId=${categoryId}`
-    )
-
-    if (error || !data) return pageRedirect404
-
-    return {
-      props: {
-        ...data,
-        auth,
-      },
-    }
-  } catch (error) {
-    return pageRedirect404
-  }
-})
+export const getServerSideProps = noRequireAuth<ListOfDishesPageProps>(ListOfDishesPageGSSP)

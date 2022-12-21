@@ -4,18 +4,17 @@ import { RestaurantForm } from '@client/application/components/molecules/Restaur
 import { AdminList } from '@client/application/components/organism/AdminList'
 import { deleteRestaurant } from '@client/infrastructure/api/restaurant/delete-restaurant.fetch'
 import { useAdminItemList } from '@client/infrastructure/hooks/use-admin-list'
-import { RestaurantService } from '@server/domain/services/restaurant.service'
+import { AdminMyRestaurantsPageGSSP } from '@server/application/gssp/admin-my-restaurants-page.gssp'
 import { requireAuth } from '@server/infrastructure/gssp/require-auth.gssp'
-import { InMemoryRestaurantService } from '@server/infrastructure/services/inmemory/inmemory-restaurant.service'
 import { Restaurant } from '@shared/domain/entities/restaurant'
 
-export type ListOfRestaurantsPageProps = {
+export type AdminMyRestaurantsPageProps = {
   restaurants: Restaurant[]
 }
 
-export default function ListOfRestaurantsPage({
+export default function AdminMyRestaurantsPage({
   restaurants: initialRestaurants,
-}: ListOfRestaurantsPageProps) {
+}: AdminMyRestaurantsPageProps) {
   const { items, onAdd, onEdit, onDelete, closeModal, showModal, formToRender } =
     useAdminItemList<Restaurant>(initialRestaurants, deleteRestaurant, RestaurantForm)
 
@@ -35,24 +34,6 @@ export default function ListOfRestaurantsPage({
   )
 }
 
-export const getServerSideProps = requireAuth<ListOfRestaurantsPageProps>(async (context, auth) => {
-  const RestaurantService: RestaurantService = new InMemoryRestaurantService()
-
-  try {
-    const restaurants: Restaurant[] = await RestaurantService.getMyRestaurants(auth.token as string)
-
-    return {
-      props: {
-        restaurants,
-        auth,
-      },
-    }
-  } catch (error) {
-    return {
-      props: {
-        restaurants: [],
-        auth,
-      },
-    }
-  }
-})
+export const getServerSideProps = requireAuth<AdminMyRestaurantsPageProps>(
+  AdminMyRestaurantsPageGSSP
+)

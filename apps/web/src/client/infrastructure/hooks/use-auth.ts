@@ -3,8 +3,8 @@ import { AuthProps } from '@shared/types/next'
 import { useRef, useState } from 'react'
 
 export const useAuth = ({ token, profile }: AuthProps) => {
-  const tokenRef = useRef<string>()
-  const profileRef = useRef<UserData>()
+  const tokenRef = useRef<string | null>(null)
+  const profileRef = useRef<UserData | null>(null)
   const [, setDummy] = useState(true)
 
   const updateAuth = (newToken?: string, newProfile?: UserData) => {
@@ -14,8 +14,8 @@ export const useAuth = ({ token, profile }: AuthProps) => {
     )
       return
 
-    tokenRef.current = newToken
-    profileRef.current = newProfile
+    tokenRef.current = newToken ?? null
+    profileRef.current = newProfile ?? null
     setDummy(prev => !prev)
   }
 

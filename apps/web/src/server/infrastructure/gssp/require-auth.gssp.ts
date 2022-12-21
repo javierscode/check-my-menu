@@ -33,7 +33,7 @@ export function requireAuth<T extends { [key: string]: any }>(
 
     if (!token) return REDIRECT
     if (!isSSR(context)) {
-      const auth = { token }
+      const auth = { token, profile: null }
       if (!gssp) return { props: { auth } }
       return await gssp(context, auth)
     }

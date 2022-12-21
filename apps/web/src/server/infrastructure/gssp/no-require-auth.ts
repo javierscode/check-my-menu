@@ -26,7 +26,7 @@ export function noRequireAuth<T extends { [key: string]: any }>(
     const token = req.cookies[COOKIE_AUTH_KEY]
 
     if (!isSSR(context)) {
-      const auth = { token }
+      const auth = { token: token ?? null, profile: null }
       if (!gssp) return { props: { auth } }
       return await gssp(context, auth)
     }

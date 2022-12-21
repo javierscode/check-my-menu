@@ -5,24 +5,20 @@ import { Modal } from '@client/application/components/molecules/Modal'
 import { AdminList } from '@client/application/components/organism/AdminList'
 import { deleteDish } from '@client/infrastructure/api/dish/delete-dish.fetch'
 import { useAdminItemList } from '@client/infrastructure/hooks/use-admin-list'
-import { DishService } from '@server/domain/services/dish.service'
-import { RestaurantService } from '@server/domain/services/restaurant.service'
+import { AdminMyDishesPageGSSP } from '@server/application/gssp/admin-my-dishes-page.gssp'
 import { requireAuth } from '@server/infrastructure/gssp/require-auth.gssp'
-import { InMemoryDishService } from '@server/infrastructure/services/inmemory/inmemory-dish.service'
-import { InMemoryRestaurantService } from '@server/infrastructure/services/inmemory/inmemory-restaurant.service'
 import { Dish } from '@shared/domain/entities/dish'
 import { Restaurant } from '@shared/domain/entities/restaurant'
-import { pageRedirect404 } from '@shared/infrastructure/constants'
 
-type ListOfDishesPageProps = {
+export type AdminMyDishesPageProps = {
   dishes: Dish[]
   restaurant: Restaurant
 }
 
-export default function ListOfDishesPage({
+export default function AdminMyDishesPage({
   dishes: InitialDishes,
   restaurant,
-}: ListOfDishesPageProps) {
+}: AdminMyDishesPageProps) {
   const { items, onAdd, onEdit, onDelete, closeModal, showModal, formToRender } =
     useAdminItemList<Dish>(InitialDishes, deleteDish, DishForm)
   return (
@@ -44,25 +40,4 @@ export default function ListOfDishesPage({
   )
 }
 
-export const getServerSideProps = requireAuth<ListOfDishesPageProps>(async (context, auth) => {
-  const { restaurantId } = context.query
-
-  if (!restaurantId || typeof restaurantId !== 'string') return pageRedirect404
-
-  const DishesService: DishService = new InMemoryDishService()
-  const RestaurantService: RestaurantService = new InMemoryRestaurantService()
-
-  if (!auth.token) return pageRedirect404
-
-  const restaurant = await RestaurantService.getRestaurantById(auth.token, restaurantId)
-
-  const dishes: Dish[] = await DishesService.getDishesByRestaurantId(restaurantId, auth.token)
-
-  return {
-    props: {
-      dishes,
-      restaurant,
-      auth,
-    },
-  }
-})
+export const getServerSideProps = requireAuth<AdminMyDishesPageProps>(AdminMyDishesPageGSSP)
