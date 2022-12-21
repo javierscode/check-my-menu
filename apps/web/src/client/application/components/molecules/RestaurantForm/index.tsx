@@ -1,20 +1,9 @@
-import { createRestaurant } from '@client/infrastructure/api/restaurant/create-restaurant.fetch'
-import { editRestaurant } from '@client/infrastructure/api/restaurant/edit-restaurant.fetch'
-import { yupResolver } from '@hookform/resolvers/yup'
+import { useRestaurantForm } from '@client/infrastructure/hooks/use-restaurant-form'
 import { Restaurant } from '@shared/domain/entities/restaurant'
-import { SubmitHandler, useForm } from 'react-hook-form'
 
 import { Input } from '../../atoms/Input'
 import { TextArea } from '../../atoms/TextArea'
 import styles from './RestaurantForm.module.css'
-import { RestaurantSchema } from './schema'
-
-type Inputs = {
-  name: string
-  domain: string
-  location: string
-  description: string
-}
 
 type Props = {
   item?: Restaurant
@@ -22,40 +11,10 @@ type Props = {
 }
 
 export function RestaurantForm({ item: restaurant, onCloseForm }: Props) {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<Inputs>({
-    defaultValues: {
-      name: restaurant?.name,
-      domain: restaurant?.domain,
-      location: restaurant?.location,
-      description: restaurant?.description,
-    },
-    resolver: yupResolver(RestaurantSchema),
-  })
-
-  const editingMode = !!restaurant
-
-  const onSubmit: SubmitHandler<Inputs> = async ({ name, domain, location, description }) => {
-    let newRestaurant: Restaurant | undefined
-    if (editingMode) {
-      newRestaurant = await editRestaurant({
-        id: restaurant?.id,
-        name,
-        domain,
-        location,
-        description,
-      })
-    } else {
-      newRestaurant = await createRestaurant({ name, domain, location, description })
-    }
-    onCloseForm?.(newRestaurant)
-  }
+  const { handleSubmit, editingMode, register, errors } = useRestaurantForm(restaurant, onCloseForm)
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
+    <form onSubmit={handleSubmit} className={styles.form}>
       <h1 className={styles.title}>{editingMode ? 'Edit' : 'Create'} Restaurant</h1>
       <Input
         id='name'
