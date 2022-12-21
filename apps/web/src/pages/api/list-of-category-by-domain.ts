@@ -1,7 +1,7 @@
-import { CategoryService } from '@domain/services/category.service'
-import { RestaurantService } from '@domain/services/restaurant.service'
-import { MockCategoryService } from '@test/infrastructure/services/mock-category.service'
-import { MockRestaurantService } from '@test/infrastructure/services/mock-restaurant.service'
+import { CategoryService } from '@server/domain/services/category.service'
+import { RestaurantService } from '@server/domain/services/restaurant.service'
+import { InMemoryCategoryService } from '@server/infrastructure/services/inmemory/inmemory-category.service'
+import { InMemoryRestaurantService } from '@server/infrastructure/services/inmemory/inmemory-restaurant.service'
 import { NextApiRequest, NextApiResponse } from 'next'
 
 import { ListOfCategoryPageProps } from '../[domain]'
@@ -12,8 +12,8 @@ export default async function listOfCategoryByDomainHandler(
 ) {
   if (req.method !== 'GET') return res.status(405).send('Method not allowed')
 
-  const RestaurantService: RestaurantService = new MockRestaurantService()
-  const CategoryService: CategoryService = new MockCategoryService()
+  const RestaurantService: RestaurantService = new InMemoryRestaurantService()
+  const CategoryService: CategoryService = new InMemoryCategoryService()
 
   const { domain } = req.query
 

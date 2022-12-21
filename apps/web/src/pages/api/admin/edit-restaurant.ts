@@ -1,6 +1,6 @@
-import { RestaurantService } from '@domain/services/restaurant.service'
-import { COOKIE_AUTH_KEY } from '@infrastructure/constants'
-import { MockRestaurantService } from '@test/infrastructure/services/mock-restaurant.service'
+import { RestaurantService } from '@server/domain/services/restaurant.service'
+import { InMemoryRestaurantService } from '@server/infrastructure/services/inmemory/inmemory-restaurant.service'
+import { COOKIE_AUTH_KEY } from '@shared/infrastructure/constants'
 import { NextApiRequest, NextApiResponse } from 'next'
 
 export default async function editRestaurantHandler(req: NextApiRequest, res: NextApiResponse) {
@@ -24,7 +24,7 @@ export default async function editRestaurantHandler(req: NextApiRequest, res: Ne
   }
   if (Object.keys(rest).length !== 0) return res.status(400).send('Invalid body')
 
-  const RestaurantService: RestaurantService = new MockRestaurantService()
+  const RestaurantService: RestaurantService = new InMemoryRestaurantService()
 
   try {
     const restaurant = await RestaurantService.editRestaurant(token, {

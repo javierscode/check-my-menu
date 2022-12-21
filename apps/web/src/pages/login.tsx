@@ -1,6 +1,6 @@
-import { LoginForm } from '@application/components/LoginForm'
-import { UserAccessLayout } from '@application/components/UserAccessLayout'
-import { requireNoAuth } from '@infrastructure/gssp/require-no-auth.gssp'
+import { UserAccessLayout } from '@client/application/components/atoms/UserAccessLayout'
+import { LoginForm } from '@client/application/components/molecules/LoginForm'
+import { requireNoAuth } from '@server/infrastructure/gssp/require-no-auth.gssp'
 
 export default function LoginPage() {
   return (

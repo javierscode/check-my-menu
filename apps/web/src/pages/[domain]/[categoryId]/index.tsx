@@ -1,10 +1,10 @@
-import { Banner } from '@application/components/Banner'
-import { DishCard } from '@application/components/DishCard'
-import { Navbar } from '@application/components/Navbar'
-import { Dish } from '@domain/entities/dish'
-import { FRONTEND_URL, pageRedirect404 } from '@infrastructure/constants'
-import { noRequireAuth } from '@infrastructure/gssp/no-require-auth'
-import { Fetcher } from '@infrastructure/services/fetcher'
+import { Banner } from '@client/application/components/atoms/Banner'
+import { DishCard } from '@client/application/components/atoms/DishCard'
+import { Navbar } from '@client/application/components/molecules/Navbar'
+import { noRequireAuth } from '@server/infrastructure/gssp/no-require-auth'
+import { Dish } from '@shared/domain/entities/dish'
+import { FRONTEND_URL, pageRedirect404 } from '@shared/infrastructure/constants'
+import { Fetcher } from '@shared/infrastructure/fetcher'
 
 export type ListOfDishesPageProps = {
   restaurantTitle: string

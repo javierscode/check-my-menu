@@ -1,4 +1,4 @@
-import { COOKIE_AUTH_KEY } from '@infrastructure/constants'
+import { COOKIE_AUTH_KEY } from '@shared/infrastructure/constants'
 import { NextApiRequest, NextApiResponse } from 'next'
 
 export default function refreshHandler(req: NextApiRequest, res: NextApiResponse) {

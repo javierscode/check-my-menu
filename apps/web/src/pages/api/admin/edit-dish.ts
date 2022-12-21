@@ -1,6 +1,6 @@
-import { DishService } from '@domain/services/dish.service'
-import { COOKIE_AUTH_KEY } from '@infrastructure/constants'
-import { MockDishService } from '@test/infrastructure/services/mock-dish.service'
+import { DishService } from '@server/domain/services/dish.service'
+import { InMemoryDishService } from '@server/infrastructure/services/inmemory/inmemory-dish.service'
+import { COOKIE_AUTH_KEY } from '@shared/infrastructure/constants'
 import { NextApiRequest, NextApiResponse } from 'next'
 
 export default async function editDishHandler(req: NextApiRequest, res: NextApiResponse) {
@@ -32,7 +32,7 @@ export default async function editDishHandler(req: NextApiRequest, res: NextApiR
   }
   if (Object.keys(rest).length !== 0) return res.status(400).send('Invalid body')
 
-  const DishService: DishService = new MockDishService()
+  const DishService: DishService = new InMemoryDishService()
 
   try {
     const dish = await DishService.editDish(token, {

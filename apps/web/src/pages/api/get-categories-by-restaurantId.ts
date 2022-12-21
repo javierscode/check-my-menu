@@ -1,5 +1,5 @@
-import { CategoryService } from '@domain/services/category.service'
-import { MockCategoryService } from '@test/infrastructure/services/mock-category.service'
+import { CategoryService } from '@server/domain/services/category.service'
+import { InMemoryCategoryService } from '@server/infrastructure/services/inmemory/inmemory-category.service'
 import { NextApiRequest, NextApiResponse } from 'next'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -13,7 +13,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(400).send('Missing restaurantId')
   }
 
-  const CategoryService: CategoryService = new MockCategoryService()
+  const CategoryService: CategoryService = new InMemoryCategoryService()
 
   try {
     const categories = await CategoryService.getCategoriesByRestaurantId(restaurantId)

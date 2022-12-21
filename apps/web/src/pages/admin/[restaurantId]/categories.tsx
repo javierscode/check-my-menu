@@ -1,18 +1,18 @@
-import { AdminAside } from '@application/components/AdminAside'
-import { AdminList } from '@application/components/AdminList'
-import { AdminNavbar } from '@application/components/AdminNavbar'
-import { CategoryForm } from '@application/components/CategoryForm'
-import { Modal } from '@application/components/Modal'
-import { Category } from '@domain/entities/category'
-import { Restaurant } from '@domain/entities/restaurant'
-import { CategoryService } from '@domain/services/category.service'
-import { RestaurantService } from '@domain/services/restaurant.service'
-import { deleteCategory } from '@infrastructure/api/delete-category'
-import { pageRedirect404 } from '@infrastructure/constants'
-import { requireAuth } from '@infrastructure/gssp/require-auth.gssp'
-import { useAdminItemList } from '@infrastructure/hooks/useAdminItemList'
-import { MockCategoryService } from '@test/infrastructure/services/mock-category.service'
-import { MockRestaurantService } from '@test/infrastructure/services/mock-restaurant.service'
+import { AdminAside } from '@client/application/components/atoms/AdminAside'
+import { AdminNavbar } from '@client/application/components/molecules/AdminNavbar'
+import { CategoryForm } from '@client/application/components/molecules/CategoryForm'
+import { Modal } from '@client/application/components/molecules/Modal'
+import { AdminList } from '@client/application/components/organism/AdminList'
+import { deleteCategory } from '@client/infrastructure/api/category/delete-category.fetch'
+import { useAdminItemList } from '@client/infrastructure/hooks/use-admin-list'
+import { CategoryService } from '@server/domain/services/category.service'
+import { RestaurantService } from '@server/domain/services/restaurant.service'
+import { requireAuth } from '@server/infrastructure/gssp/require-auth.gssp'
+import { InMemoryCategoryService } from '@server/infrastructure/services/inmemory/inmemory-category.service'
+import { InMemoryRestaurantService } from '@server/infrastructure/services/inmemory/inmemory-restaurant.service'
+import { Category } from '@shared/domain/entities/category'
+import { Restaurant } from '@shared/domain/entities/restaurant'
+import { pageRedirect404 } from '@shared/infrastructure/constants'
 
 type ListOfCategoriesPageProps = {
   categories: Category[]
@@ -48,8 +48,8 @@ export const getServerSideProps = requireAuth<ListOfCategoriesPageProps>(async (
 
   if (!restaurantId || typeof restaurantId !== 'string') return pageRedirect404
 
-  const CategoryService: CategoryService = new MockCategoryService()
-  const RestaurantService: RestaurantService = new MockRestaurantService()
+  const CategoryService: CategoryService = new InMemoryCategoryService()
+  const RestaurantService: RestaurantService = new InMemoryRestaurantService()
 
   if (!auth.token) return pageRedirect404
 

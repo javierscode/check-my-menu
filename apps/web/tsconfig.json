@@ -3,20 +3,20 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-        "@application/*": [
-            "src/application/*"
+        "@client/*": [
+            "src/client/*"
         ],
-        "@domain/*": [
-            "src/domain/*"
+        "@server/*": [
+            "src/server/*"
         ],
-        "@infrastructure/*": [
-            "src/infrastructure/*"
-        ],
+        "@shared/*": [
+          "src/shared/*"
+      ],
         "@test/*":[
             "test/*"
         ]
     },
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "**/*.js", "src/application/components/DishForm/edit-dish.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "**/*.js",".eslintrc.js"],
   "exclude": ["node_modules"]
 }

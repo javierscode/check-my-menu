@@ -1,10 +1,10 @@
-import { CategoryCard } from '@application/components/CategoryCard'
-import { GridList } from '@application/components/GridList'
-import { Navbar } from '@application/components/Navbar'
-import { Category } from '@domain/entities/category'
-import { FRONTEND_URL, pageRedirect404 } from '@infrastructure/constants'
-import { noRequireAuth } from '@infrastructure/gssp/no-require-auth'
-import { Fetcher } from '@infrastructure/services/fetcher'
+import { CategoryCard } from '@client/application/components/atoms/CategoryCard'
+import { GridList } from '@client/application/components/atoms/GridList'
+import { Navbar } from '@client/application/components/molecules/Navbar'
+import { noRequireAuth } from '@server/infrastructure/gssp/no-require-auth'
+import { Category } from '@shared/domain/entities/category'
+import { FRONTEND_URL, pageRedirect404 } from '@shared/infrastructure/constants'
+import { Fetcher } from '@shared/infrastructure/fetcher'
 
 export type ListOfCategoryPageProps = {
   restaurantTitle: string

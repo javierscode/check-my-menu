@@ -1,6 +1,6 @@
-import { RegisterForm } from '@application/components/RegisterForm'
-import { UserAccessLayout } from '@application/components/UserAccessLayout'
-import { requireNoAuth } from '@infrastructure/gssp/require-no-auth.gssp'
+import { UserAccessLayout } from '@client/application/components/atoms/UserAccessLayout'
+import { RegisterForm } from '@client/application/components/molecules/RegisterForm'
+import { requireNoAuth } from '@server/infrastructure/gssp/require-no-auth.gssp'
 
 export default function RegisterPage() {
   return (

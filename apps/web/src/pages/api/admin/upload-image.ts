@@ -40,7 +40,7 @@ const handler: NextApiHandler = async (req, res) => {
 
   const options: formidable.Options = {}
   options.uploadDir = uploadDir
-  options.filename = (name, ext, path, form) => {
+  options.filename = (name, ext, path, _) => {
     return Date.now().toString() + '_' + path.originalFilename
   }
   options.maxFileSize = 4000 * 1024 * 1024

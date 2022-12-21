@@ -1,7 +1,7 @@
-import { UserService } from '@domain/services/user.service'
-import { setAuthCookie } from '@infrastructure/utils/cookie'
-import { MockUserService } from '@test/infrastructure/services/mock-user.service'
+import { UserService } from '@server/domain/services/user.service'
+import { InMemoryUserService } from '@server/infrastructure/services/inmemory/inmemory-user.service'
 import { NextApiRequest, NextApiResponse } from 'next'
+import { setAuthCookie } from 'src/server/infrastructure/utils/cookie'
 
 export default async function registerHandler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'POST') return res.status(405).send('Method not allowed')
@@ -22,7 +22,7 @@ export default async function registerHandler(req: NextApiRequest, res: NextApiR
 
   if (Object.keys(rest).length !== 0) return res.status(400).send('Invalid body')
 
-  const UserService: UserService = new MockUserService()
+  const UserService: UserService = new InMemoryUserService()
 
   try {
     await UserService.register(name, lastname, email, password)

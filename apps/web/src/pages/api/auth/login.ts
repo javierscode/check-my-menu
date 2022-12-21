@@ -1,6 +1,6 @@
-import { UserService } from '@domain/services/user.service'
-import { setAuthCookie } from '@infrastructure/utils/cookie'
-import { MockUserService } from '@test/infrastructure/services/mock-user.service'
+import { UserService } from '@server/domain/services/user.service'
+import { InMemoryUserService } from '@server/infrastructure/services/inmemory/inmemory-user.service'
+import { setAuthCookie } from '@server/infrastructure/utils/cookie'
 import { NextApiRequest, NextApiResponse } from 'next'
 
 export default async function loginHandler(req: NextApiRequest, res: NextApiResponse) {
@@ -12,7 +12,7 @@ export default async function loginHandler(req: NextApiRequest, res: NextApiResp
     return res.status(400).send('Missing email or password')
   if (Object.keys(rest).length !== 0) return res.status(400).send('Invalid body')
 
-  const UserService: UserService = new MockUserService()
+  const UserService: UserService = new InMemoryUserService()
 
   try {
     const { token } = await UserService.login(email, password)

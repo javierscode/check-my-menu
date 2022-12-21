@@ -1,12 +1,12 @@
-import { Banner } from '@application/components/Banner'
-import { DishDetail } from '@application/components/DishDetail'
-import { Navbar } from '@application/components/Navbar'
-import { RelatedDishes } from '@application/components/RelatedDishes'
-import { Category } from '@domain/entities/category'
-import { Dish } from '@domain/entities/dish'
-import { FRONTEND_URL, pageRedirect404 } from '@infrastructure/constants'
-import { noRequireAuth } from '@infrastructure/gssp/no-require-auth'
-import { Fetcher } from '@infrastructure/services/fetcher'
+import { Banner } from '@client/application/components/atoms/Banner'
+import { DishDetail } from '@client/application/components/molecules/DishDetail'
+import { Navbar } from '@client/application/components/molecules/Navbar'
+import { RelatedDishes } from '@client/application/components/organism/RelatedDishes'
+import { noRequireAuth } from '@server/infrastructure/gssp/no-require-auth'
+import { Category } from '@shared/domain/entities/category'
+import { Dish } from '@shared/domain/entities/dish'
+import { FRONTEND_URL, pageRedirect404 } from '@shared/infrastructure/constants'
+import { Fetcher } from '@shared/infrastructure/fetcher'
 
 export type DishDetailPageProps = {
   restaurantTitle: string

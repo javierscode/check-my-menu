@@ -1,19 +1,18 @@
-import { AdminAside } from '@application/components/AdminAside'
-import { AdminList } from '@application/components/AdminList'
-import { AdminNavbar } from '@application/components/AdminNavbar'
-import { DishForm } from '@application/components/DishForm'
-import { Modal } from '@application/components/Modal'
-import { Dish } from '@domain/entities/dish'
-import { Restaurant } from '@domain/entities/restaurant'
-import { DishService } from '@domain/services/dish.service'
-import { RestaurantService } from '@domain/services/restaurant.service'
-import { deleteDish } from '@infrastructure/api/delete-dish'
-import { pageRedirect404 } from '@infrastructure/constants'
-import { useAuthContext } from '@infrastructure/contexts/auth.context'
-import { requireAuth } from '@infrastructure/gssp/require-auth.gssp'
-import { useAdminItemList } from '@infrastructure/hooks/useAdminItemList'
-import { MockDishService } from '@test/infrastructure/services/mock-dish.service'
-import { MockRestaurantService } from '@test/infrastructure/services/mock-restaurant.service'
+import { AdminAside } from '@client/application/components/atoms/AdminAside'
+import { AdminNavbar } from '@client/application/components/molecules/AdminNavbar'
+import { DishForm } from '@client/application/components/molecules/DishForm'
+import { Modal } from '@client/application/components/molecules/Modal'
+import { AdminList } from '@client/application/components/organism/AdminList'
+import { deleteDish } from '@client/infrastructure/api/dish/delete-dish.fetch'
+import { useAdminItemList } from '@client/infrastructure/hooks/use-admin-list'
+import { DishService } from '@server/domain/services/dish.service'
+import { RestaurantService } from '@server/domain/services/restaurant.service'
+import { requireAuth } from '@server/infrastructure/gssp/require-auth.gssp'
+import { InMemoryDishService } from '@server/infrastructure/services/inmemory/inmemory-dish.service'
+import { InMemoryRestaurantService } from '@server/infrastructure/services/inmemory/inmemory-restaurant.service'
+import { Dish } from '@shared/domain/entities/dish'
+import { Restaurant } from '@shared/domain/entities/restaurant'
+import { pageRedirect404 } from '@shared/infrastructure/constants'
 
 type ListOfDishesPageProps = {
   dishes: Dish[]
@@ -50,8 +49,8 @@ export const getServerSideProps = requireAuth<ListOfDishesPageProps>(async (cont
 
   if (!restaurantId || typeof restaurantId !== 'string') return pageRedirect404
 
-  const DishesService: DishService = new MockDishService()
-  const RestaurantService: RestaurantService = new MockRestaurantService()
+  const DishesService: DishService = new InMemoryDishService()
+  const RestaurantService: RestaurantService = new InMemoryRestaurantService()
 
   if (!auth.token) return pageRedirect404
 

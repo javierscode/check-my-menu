@@ -1,6 +1,6 @@
-import { CategoryService } from '@domain/services/category.service'
-import { COOKIE_AUTH_KEY } from '@infrastructure/constants'
-import { MockCategoryService } from '@test/infrastructure/services/mock-category.service'
+import { CategoryService } from '@server/domain/services/category.service'
+import { InMemoryCategoryService } from '@server/infrastructure/services/inmemory/inmemory-category.service'
+import { COOKIE_AUTH_KEY } from '@shared/infrastructure/constants'
 import { NextApiRequest, NextApiResponse } from 'next'
 
 export default async function editCategoryHandler(req: NextApiRequest, res: NextApiResponse) {
@@ -27,7 +27,7 @@ export default async function editCategoryHandler(req: NextApiRequest, res: Next
   }
   if (Object.keys(rest).length !== 0) return res.status(400).send('Invalid body')
 
-  const CategoryService: CategoryService = new MockCategoryService()
+  const CategoryService: CategoryService = new InMemoryCategoryService()
 
   try {
     const category = await CategoryService.editCategory(token, {

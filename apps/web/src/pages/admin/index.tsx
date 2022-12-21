@@ -1,14 +1,13 @@
-/* eslint-disable @typescript-eslint/no-empty-function */
-import { AdminList } from '@application/components/AdminList'
-import { AdminNavbar } from '@application/components/AdminNavbar'
-import { Modal } from '@application/components/Modal'
-import { RestaurantForm } from '@application/components/RestaurantForm'
-import { Restaurant } from '@domain/entities/restaurant'
-import { RestaurantService } from '@domain/services/restaurant.service'
-import { deleteRestaurant } from '@infrastructure/api/delete-restaurant'
-import { requireAuth } from '@infrastructure/gssp/require-auth.gssp'
-import { useAdminItemList } from '@infrastructure/hooks/useAdminItemList'
-import { MockRestaurantService } from '@test/infrastructure/services/mock-restaurant.service'
+import { AdminNavbar } from '@client/application/components/molecules/AdminNavbar'
+import { Modal } from '@client/application/components/molecules/Modal'
+import { RestaurantForm } from '@client/application/components/molecules/RestaurantForm'
+import { AdminList } from '@client/application/components/organism/AdminList'
+import { deleteRestaurant } from '@client/infrastructure/api/restaurant/delete-restaurant.fetch'
+import { useAdminItemList } from '@client/infrastructure/hooks/use-admin-list'
+import { RestaurantService } from '@server/domain/services/restaurant.service'
+import { requireAuth } from '@server/infrastructure/gssp/require-auth.gssp'
+import { InMemoryRestaurantService } from '@server/infrastructure/services/inmemory/inmemory-restaurant.service'
+import { Restaurant } from '@shared/domain/entities/restaurant'
 
 export type ListOfRestaurantsPageProps = {
   restaurants: Restaurant[]
@@ -37,7 +36,7 @@ export default function ListOfRestaurantsPage({
 }
 
 export const getServerSideProps = requireAuth<ListOfRestaurantsPageProps>(async (context, auth) => {
-  const RestaurantService: RestaurantService = new MockRestaurantService()
+  const RestaurantService: RestaurantService = new InMemoryRestaurantService()
 
   try {
     const restaurants: Restaurant[] = await RestaurantService.getMyRestaurants(auth.token as string)
