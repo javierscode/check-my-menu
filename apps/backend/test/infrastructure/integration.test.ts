@@ -240,7 +240,7 @@ describe('Get Restaurants by Owner - Controller', () => {
 })
 
 describe('Get Restaurant by Domain - Controller', () => {
-  describe('Get /restaurant/:domain', () => {
+  describe('Get /restaurant/domain/:domain', () => {
     describe('When a valid domain is send', () => {
       it('should return a restaurant', async () => {
         const expectedBody = {
@@ -250,7 +250,38 @@ describe('Get Restaurant by Domain - Controller', () => {
         }
 
         await request(app)
-          .get('/restaurant/' + RestaurantToTest.domain.value)
+          .get('/restaurant/domain/' + RestaurantToTest.domain.value)
+          .send()
+          .expect(StatusCodes.OK)
+          .then(response => {
+            expect(response.body).toStrictEqual(expectedBody)
+          })
+      })
+    })
+
+    describe('When a invalid request is sent', () => {
+      it('should return BAD_REQUEST', async () => {
+        await request(app)
+          .get('/restaurant/' + 'invalidDomain')
+          .send()
+          .expect(StatusCodes.BAD_REQUEST)
+      })
+    })
+  })
+})
+
+describe('Get Restaurant by Id - Controller', () => {
+  describe('Get /restaurant/:id', () => {
+    describe('When a valid id is send', () => {
+      it('should return a restaurant', async () => {
+        const expectedBody = {
+          ...RestaurantToTest.toPrimitives(),
+          location: 'Location changed',
+          ownerId: UserToTest.id.value,
+        }
+
+        await request(app)
+          .get('/restaurant/' + RestaurantToTest.id.value)
           .send()
           .expect(StatusCodes.OK)
           .then(response => {
@@ -328,12 +359,9 @@ describe('Edit Category - Controller', () => {
 })
 
 describe('Get Categories by Restaurant - Controller', () => {
-  describe('Get /Category/', () => {
+  describe('Get /category/restaurantId/:restaurantId', () => {
     describe('When a valid userToken is send', () => {
       it('should return an array of categories', async () => {
-        const query: GetCategoriesByRestaurantDTO = {
-          restaurantId: RestaurantToTest.id.value,
-        }
         const expectedBody: Array<Primitives<Category>> = [
           {
             ...CategoryToTest.toPrimitives(),
@@ -343,8 +371,7 @@ describe('Get Categories by Restaurant - Controller', () => {
           },
         ]
         await request(app)
-          .get('/category/')
-          .query(query)
+          .get('/category/restaurantId/' + RestaurantToTest.id.value)
           .send()
           .expect(StatusCodes.OK)
           .then(response => {
@@ -355,7 +382,36 @@ describe('Get Categories by Restaurant - Controller', () => {
 
     describe('When a invalid request is sent', () => {
       it('should return BAD_REQUEST', async () => {
-        await request(app).get('/category/').send().expect(StatusCodes.BAD_REQUEST)
+        await request(app).get('/category/restaurantId/').send().expect(StatusCodes.BAD_REQUEST)
+      })
+    })
+  })
+})
+
+describe('Get Categories by Id - Controller', () => {
+  describe('Get /category/:id', () => {
+    describe('When a valid userToken is send', () => {
+      it('should return a category', async () => {
+        const expectedBody: Primitives<Category> = {
+          ...CategoryToTest.toPrimitives(),
+          description: 'Description changed for test',
+          ownerId: UserToTest.id.value,
+          restaurantId: RestaurantToTest.id.value,
+        }
+
+        await request(app)
+          .get('/category/' + CategoryToTest.id.value)
+          .send()
+          .expect(StatusCodes.OK)
+          .then(response => {
+            expect(response.body).toStrictEqual(expectedBody)
+          })
+      })
+    })
+
+    describe('When a invalid request is sent', () => {
+      it('should return BAD_REQUEST', async () => {
+        await request(app).get('/category/').send().expect(StatusCodes.NOT_FOUND)
       })
     })
   })
@@ -424,12 +480,9 @@ describe('Edit Dish - Controller', () => {
 })
 
 describe('Get Dishes by Category - Controller', () => {
-  describe('Get /dish/', () => {
+  describe('Get /dish/categoryId/:categoryId', () => {
     describe('When a valid userToken is send', () => {
       it('should return an array of dishes', async () => {
-        const query: GetDishesByCategoryDTO = {
-          categoryId: CategoryToTest.id.value,
-        }
         const expectedBody: Array<Primitives<Dish>> = [
           {
             ...DishToTest.toPrimitives(),
@@ -440,8 +493,7 @@ describe('Get Dishes by Category - Controller', () => {
           },
         ]
         await request(app)
-          .get('/dish/')
-          .query(query)
+          .get('/dish/categoryId/' + CategoryToTest.id.value)
           .send()
           .expect(StatusCodes.OK)
           .then(response => {
@@ -452,19 +504,16 @@ describe('Get Dishes by Category - Controller', () => {
 
     describe('When a invalid request is sent', () => {
       it('should return BAD_REQUEST', async () => {
-        await request(app).get('/category/').send().expect(StatusCodes.BAD_REQUEST)
+        await request(app).get('/category/categoryId/').send().expect(StatusCodes.BAD_REQUEST)
       })
     })
   })
 })
 
 describe('Get Dishes by Restaurant - Controller', () => {
-  describe('Get /dish/', () => {
+  describe('Get /dish/restaurantId/:restaurantId', () => {
     describe('When a valid userToken is send', () => {
       it('should return an array of dishes', async () => {
-        const query: GetDishesByRestaurantDTO = {
-          restaurantId: RestaurantToTest.id.value,
-        }
         const expectedBody: Array<Primitives<Dish>> = [
           {
             ...DishToTest.toPrimitives(),
@@ -475,8 +524,8 @@ describe('Get Dishes by Restaurant - Controller', () => {
           },
         ]
         await request(app)
-          .get('/dish/')
-          .query(query)
+          .get('/dish/restaurantId/' + RestaurantToTest.id.value)
+          .set('Authorization', `Bearer ${UserToken}`)
           .send()
           .expect(StatusCodes.OK)
           .then(response => {
@@ -487,7 +536,37 @@ describe('Get Dishes by Restaurant - Controller', () => {
 
     describe('When a invalid request is sent', () => {
       it('should return BAD_REQUEST', async () => {
-        await request(app).get('/category/').send().expect(StatusCodes.BAD_REQUEST)
+        await request(app).get('/category/restaurantId/').send().expect(StatusCodes.BAD_REQUEST)
+      })
+    })
+  })
+})
+
+describe('Get Dish by Id - Controller', () => {
+  describe('Get /dish/:Id', () => {
+    describe('When a valid id is send', () => {
+      it('should return a dish', async () => {
+        const expectedBody: Primitives<Dish> = {
+          ...DishToTest.toPrimitives(),
+          description: 'Description changed for test',
+          categoryIds: [CategoryToTest.id.value],
+          restaurantId: RestaurantToTest.id.value,
+          ownerId: UserToTest.id.value,
+        }
+
+        await request(app)
+          .get('/dish/' + DishToTest.id.value)
+          .send()
+          .expect(StatusCodes.OK)
+          .then(response => {
+            expect(response.body).toStrictEqual(expectedBody)
+          })
+      })
+    })
+
+    describe('When a invalid request is sent', () => {
+      it('should return BAD_REQUEST', async () => {
+        await request(app).get('/dish/').send().expect(StatusCodes.NOT_FOUND)
       })
     })
   })

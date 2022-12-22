@@ -19,6 +19,7 @@ const UseCases = {
   EditRestaurantUsecase: Symbol.for('EditRestaurantUsecase'),
   GetRestaurantsByOwnerUsecase: Symbol.for('GetRestaurantsByOwnerUsecase'),
   GetRestaurantByDomainUsecase: Symbol.for('GetRestaurantByDomainUsecase'),
+  GetRestaurantByIdUsecase: Symbol.for('GetRestaurantByIdUsecase'),
   CheckRestaurantOwnerUsecase: Symbol.for('CheckRestaurantOwnerUsecase'),
 
   // Category
@@ -26,6 +27,7 @@ const UseCases = {
   DeleteCategoryUsecase: Symbol.for('DeleteCategoryUsecase'),
   EditCategoryUsecase: Symbol.for('EditCategoryUsecase'),
   GetCategoriesByRestaurantUsecase: Symbol.for('GetCategoriesByRestaurantUsecase'),
+  GetCategoryByIdUsecase: Symbol.for('GetCategoryByIdUsecase'),
   CheckCategoryOwnerUsecase: Symbol.for('CheckCategoryOwnerUsecase'),
   CheckCategoryOfRestaurantUsecase: Symbol.for('CheckCategoryOfRestaurantUsecase'),
 
@@ -35,6 +37,7 @@ const UseCases = {
   EditDishUsecase: Symbol.for('EditDishUsecase'),
   GetDishesByCategoryUsecase: Symbol.for('GetDishesByCategoryUsecase'),
   GetDishesByRestaurantUsecase: Symbol.for('GetDishesByRestaurantUsecase'),
+  GetDishByIdUsecase: Symbol.for('GetDishByIdUsecase'),
   CheckDishOwnerUsecase: Symbol.for('CheckDishOwnerUsecase'),
 }
 
@@ -50,12 +53,14 @@ const Controllers = {
   EditRestaurantController: Symbol.for('EditRestaurantController'),
   GetRestaurantsByOwnerController: Symbol.for('GetRestaurantsByOwnerController'),
   GetRestaurantByDomainController: Symbol.for('GetRestaurantByDomainController'),
+  GetRestaurantByIdController: Symbol.for('GetRestaurantByIdController'),
 
   // Category
   CreateCategoryController: Symbol.for('CreateCategoryController'),
   DeleteCategoryController: Symbol.for('DeleteCategoryController'),
   EditCategoryController: Symbol.for('EditCategoryController'),
   GetCategoriesByRestaurantController: Symbol.for('GetCategoriesByRestaurantController'),
+  GetCategoryByIdController: Symbol.for('GetCategoryByIdController'),
 
   // Dish
   CreateDishController: Symbol.for('CreateDishController'),
@@ -63,6 +68,7 @@ const Controllers = {
   EditDishController: Symbol.for('EditDishController'),
   GetDishesByCategoryController: Symbol.for('GetDishesByCategoryController'),
   GetDishesByRestaurantController: Symbol.for('GetDishesByRestaurantController'),
+  GetDishByIdController: Symbol.for('GetDishByIdController'),
 }
 
 const ContainerSymbols = {
