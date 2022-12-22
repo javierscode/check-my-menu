@@ -1,5 +1,5 @@
 import { UserService } from '@server/domain/services/user.service'
-import { InMemoryUserService } from '@server/infrastructure/services/inmemory/inmemory-user.service'
+import { FetchUserService } from '@server/infrastructure/services/fetch/fetch-user.service'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { setAuthCookie } from 'src/server/infrastructure/utils/cookie'
 
@@ -15,7 +15,7 @@ export default async function registerHandler(req: NextApiRequest, res: NextApiR
 
   const { name, lastname, email, password } = req.body as TypedBody
 
-  const UserService: UserService = new InMemoryUserService()
+  const UserService: UserService = new FetchUserService()
 
   try {
     await UserService.register(name, lastname, email, password)

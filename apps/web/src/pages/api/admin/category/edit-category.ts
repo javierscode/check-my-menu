@@ -1,5 +1,5 @@
 import { CategoryService } from '@server/domain/services/category.service'
-import { InMemoryCategoryService } from '@server/infrastructure/services/inmemory/inmemory-category.service'
+import { FetchCategoryService } from '@server/infrastructure/services/fetch/fetch-category.service'
 import { Category } from '@shared/domain/entities/category'
 import { COOKIE_AUTH_KEY } from '@shared/infrastructure/constants'
 import { NextApiRequest, NextApiResponse } from 'next'
@@ -13,7 +13,8 @@ export default async function editCategoryHandler(req: NextApiRequest, res: Next
 
   const { id, name, description, image, restaurantId } = req.body as TypedBody
 
-  const CategoryService: CategoryService = new InMemoryCategoryService()
+  console.log({ id, name, description, image, restaurantId })
+  const CategoryService: CategoryService = new FetchCategoryService()
 
   try {
     const category = await CategoryService.editCategory(token, {

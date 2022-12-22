@@ -6,7 +6,7 @@ import styles from './RelatedDishes.module.css'
 type Props = {
   restaurantSlug: string
   categoryId: string
-  relatedDishes: [Dish, Dish]
+  relatedDishes: Dish[]
 }
 
 export function RelatedDishes({ restaurantSlug, categoryId, relatedDishes }: Props) {

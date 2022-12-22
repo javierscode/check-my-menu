@@ -1,7 +1,7 @@
 import { CategoryService } from '@server/domain/services/category.service'
 import { RestaurantService } from '@server/domain/services/restaurant.service'
-import { InMemoryCategoryService } from '@server/infrastructure/services/inmemory/inmemory-category.service'
-import { InMemoryRestaurantService } from '@server/infrastructure/services/inmemory/inmemory-restaurant.service'
+import { FetchCategoryService } from '@server/infrastructure/services/fetch/fetch-category.service'
+import { FetchRestaurantService } from '@server/infrastructure/services/fetch/fetch-restaurant.service'
 import { Category } from '@shared/domain/entities/category'
 import { pageRedirect404 } from '@shared/infrastructure/constants'
 import { AuthProps, CustomGetServerSideProps } from '@shared/types/next'
@@ -18,8 +18,8 @@ export const AdminMyCategoriesPageGSSP: CustomGetServerSideProps<
 
   if (!restaurantId || typeof restaurantId !== 'string') return pageRedirect404
 
-  const CategoryService: CategoryService = new InMemoryCategoryService()
-  const RestaurantService: RestaurantService = new InMemoryRestaurantService()
+  const CategoryService: CategoryService = new FetchCategoryService()
+  const RestaurantService: RestaurantService = new FetchRestaurantService()
 
   if (!auth.token) return pageRedirect404
 

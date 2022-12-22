@@ -1,5 +1,5 @@
 import { CategoryService } from '@server/domain/services/category.service'
-import { InMemoryCategoryService } from '@server/infrastructure/services/inmemory/inmemory-category.service'
+import { FetchCategoryService } from '@server/infrastructure/services/fetch/fetch-category.service'
 import { NextApiRequest, NextApiResponse } from 'next'
 
 type TypedQuery = {
@@ -14,7 +14,7 @@ export default async function getCategoriesByRestaurantIdHandler(
 
   const { restaurantId } = req.query as TypedQuery
 
-  const CategoryService: CategoryService = new InMemoryCategoryService()
+  const CategoryService: CategoryService = new FetchCategoryService()
 
   try {
     const categories = await CategoryService.getCategoriesByRestaurantId(restaurantId)

@@ -1,5 +1,5 @@
 import { UserService } from '@server/domain/services/user.service'
-import { InMemoryUserService } from '@server/infrastructure/services/inmemory/inmemory-user.service'
+import { FetchUserService } from '@server/infrastructure/services/fetch/fetch-user.service'
 import { setAuthCookie } from '@server/infrastructure/utils/cookie'
 import { NextApiRequest, NextApiResponse } from 'next'
 
@@ -13,7 +13,7 @@ export default async function loginHandler(req: NextApiRequest, res: NextApiResp
 
   const { email, password } = req.body as TypedBody
 
-  const UserService: UserService = new InMemoryUserService()
+  const UserService: UserService = new FetchUserService()
 
   try {
     const { token } = await UserService.login(email, password)

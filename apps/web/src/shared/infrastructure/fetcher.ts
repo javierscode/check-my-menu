@@ -4,7 +4,8 @@ const defaultHeaders = {
 
 type fetchOptions = {
   authToken?: string
-  body?: Record<string, unknown>
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  body?: Record<any, any>
 }
 
 type fetchResponse<T> =

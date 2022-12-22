@@ -1,7 +1,7 @@
 import { DishService } from '@server/domain/services/dish.service'
 import { RestaurantService } from '@server/domain/services/restaurant.service'
-import { InMemoryDishService } from '@server/infrastructure/services/inmemory/inmemory-dish.service'
-import { InMemoryRestaurantService } from '@server/infrastructure/services/inmemory/inmemory-restaurant.service'
+import { FetchDishService } from '@server/infrastructure/services/fetch/fetch-dish.service'
+import { FetchRestaurantService } from '@server/infrastructure/services/fetch/fetch-restaurant.service'
 import { Dish } from '@shared/domain/entities/dish'
 import { pageRedirect404 } from '@shared/infrastructure/constants'
 import { AuthProps, CustomGetServerSideProps } from '@shared/types/next'
@@ -16,8 +16,8 @@ export const AdminMyDishesPageGSSP: CustomGetServerSideProps<AdminMyDishesPagePr
 
   if (!restaurantId || typeof restaurantId !== 'string') return pageRedirect404
 
-  const DishesService: DishService = new InMemoryDishService()
-  const RestaurantService: RestaurantService = new InMemoryRestaurantService()
+  const DishesService: DishService = new FetchDishService()
+  const RestaurantService: RestaurantService = new FetchRestaurantService()
 
   if (!auth.token) return pageRedirect404
 

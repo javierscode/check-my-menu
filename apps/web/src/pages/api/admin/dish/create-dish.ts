@@ -1,5 +1,5 @@
 import { DishService } from '@server/domain/services/dish.service'
-import { InMemoryDishService } from '@server/infrastructure/services/inmemory/inmemory-dish.service'
+import { FetchDishService } from '@server/infrastructure/services/fetch/fetch-dish.service'
 import { Allergen } from '@shared/domain/entities/allergen'
 import { COOKIE_AUTH_KEY } from '@shared/infrastructure/constants'
 import { NextApiRequest, NextApiResponse } from 'next'
@@ -21,7 +21,7 @@ export default async function createDishHandler(req: NextApiRequest, res: NextAp
   const { name, description, price, image, allergens, categoryIds, restaurantId } =
     req.body as TypedBody
 
-  const DishService: DishService = new InMemoryDishService()
+  const DishService: DishService = new FetchDishService()
 
   try {
     const dish = await DishService.createDish(token, {

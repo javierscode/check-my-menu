@@ -6,7 +6,7 @@ import { COOKIE_AUTH_KEY } from '@shared/infrastructure/constants'
 import { AuthProps, CustomGetServerSideProps } from '@shared/types/next'
 import { GetServerSideProps } from 'next'
 
-import { InMemoryUserService } from '../services/inmemory/inmemory-user.service'
+import { FetchUserService } from '../services/fetch/fetch-user.service'
 import { removeAuthCookie } from '../utils/cookie'
 import { isSSR } from '../utils/gssp'
 
@@ -37,7 +37,7 @@ export function requireAuth<T extends { [key: string]: any }>(
       if (!gssp) return { props: { auth } }
       return await gssp(context, auth)
     }
-    const UserService: UserService = new InMemoryUserService()
+    const UserService: UserService = new FetchUserService()
 
     try {
       const profile = await UserService.getProfile(token)

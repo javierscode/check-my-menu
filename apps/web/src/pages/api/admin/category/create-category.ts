@@ -1,5 +1,5 @@
 import { CategoryService } from '@server/domain/services/category.service'
-import { InMemoryCategoryService } from '@server/infrastructure/services/inmemory/inmemory-category.service'
+import { FetchCategoryService } from '@server/infrastructure/services/fetch/fetch-category.service'
 import { COOKIE_AUTH_KEY } from '@shared/infrastructure/constants'
 import { NextApiRequest, NextApiResponse } from 'next'
 
@@ -16,7 +16,7 @@ export default async function createCategoryHandler(req: NextApiRequest, res: Ne
   const token = req.cookies[COOKIE_AUTH_KEY] as string
   const { name, description, image, restaurantId } = req.body as TypedBody
 
-  const CategoryService: CategoryService = new InMemoryCategoryService()
+  const CategoryService: CategoryService = new FetchCategoryService()
 
   try {
     const category = await CategoryService.createCategory(token, {

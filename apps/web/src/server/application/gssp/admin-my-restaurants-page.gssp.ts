@@ -1,5 +1,5 @@
 import { RestaurantService } from '@server/domain/services/restaurant.service'
-import { InMemoryRestaurantService } from '@server/infrastructure/services/inmemory/inmemory-restaurant.service'
+import { FetchRestaurantService } from '@server/infrastructure/services/fetch/fetch-restaurant.service'
 import { Restaurant } from '@shared/domain/entities/restaurant'
 import { pageRedirect404 } from '@shared/infrastructure/constants'
 import { AuthProps, CustomGetServerSideProps } from '@shared/types/next'
@@ -12,7 +12,7 @@ export const AdminMyRestaurantsPageGSSP: CustomGetServerSideProps<
   _: GetServerSidePropsContext,
   auth: AuthProps
 ): Promise<GetServerSidePropsResult<AdminMyRestaurantsPageProps & { auth: AuthProps }>> => {
-  const RestaurantService: RestaurantService = new InMemoryRestaurantService()
+  const RestaurantService: RestaurantService = new FetchRestaurantService()
 
   try {
     const restaurants: Restaurant[] = await RestaurantService.getMyRestaurants(auth.token as string)

@@ -1,5 +1,5 @@
-import { InMemoryCategoryService } from '@server/infrastructure/services/inmemory/inmemory-category.service'
-import { InMemoryRestaurantService } from '@server/infrastructure/services/inmemory/inmemory-restaurant.service'
+import { FetchCategoryService } from '@server/infrastructure/services/fetch/fetch-category.service'
+import { FetchRestaurantService } from '@server/infrastructure/services/fetch/fetch-restaurant.service'
 import { pageRedirect404 } from '@shared/infrastructure/constants'
 import { AuthProps, CustomGetServerSideProps } from '@shared/types/next'
 import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next'
@@ -12,8 +12,8 @@ export const ListOfCategoryPageGSSP: CustomGetServerSideProps<ListOfCategoryPage
   const { domain } = context.query
   if (!domain || typeof domain !== 'string') return pageRedirect404
 
-  const RestaurantService = new InMemoryRestaurantService()
-  const CategoryService = new InMemoryCategoryService()
+  const RestaurantService = new FetchRestaurantService()
+  const CategoryService = new FetchCategoryService()
 
   try {
     const restaurant = await RestaurantService.getRestaurantByDomain(domain)

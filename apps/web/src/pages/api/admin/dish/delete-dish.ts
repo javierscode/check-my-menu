@@ -1,5 +1,5 @@
 import { DishService } from '@server/domain/services/dish.service'
-import { InMemoryDishService } from '@server/infrastructure/services/inmemory/inmemory-dish.service'
+import { FetchDishService } from '@server/infrastructure/services/fetch/fetch-dish.service'
 import { COOKIE_AUTH_KEY } from '@shared/infrastructure/constants'
 import { NextApiRequest, NextApiResponse } from 'next'
 
@@ -11,7 +11,7 @@ export default async function deleteDishHandler(req: NextApiRequest, res: NextAp
   const token = req.cookies[COOKIE_AUTH_KEY] as string
   const { id } = req.body as TypedBody
 
-  const DishService: DishService = new InMemoryDishService()
+  const DishService: DishService = new FetchDishService()
   try {
     await DishService.deleteDish(token, id)
 

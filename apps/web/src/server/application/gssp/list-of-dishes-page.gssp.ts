@@ -1,9 +1,9 @@
 import { CategoryService } from '@server/domain/services/category.service'
 import { DishService } from '@server/domain/services/dish.service'
 import { RestaurantService } from '@server/domain/services/restaurant.service'
-import { InMemoryCategoryService } from '@server/infrastructure/services/inmemory/inmemory-category.service'
-import { InMemoryDishService } from '@server/infrastructure/services/inmemory/inmemory-dish.service'
-import { InMemoryRestaurantService } from '@server/infrastructure/services/inmemory/inmemory-restaurant.service'
+import { FetchCategoryService } from '@server/infrastructure/services/fetch/fetch-category.service'
+import { FetchDishService } from '@server/infrastructure/services/fetch/fetch-dish.service'
+import { FetchRestaurantService } from '@server/infrastructure/services/fetch/fetch-restaurant.service'
 import { pageRedirect404 } from '@shared/infrastructure/constants'
 import { AuthProps, CustomGetServerSideProps } from '@shared/types/next'
 import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next'
@@ -18,9 +18,9 @@ export const ListOfDishesPageGSSP: CustomGetServerSideProps<ListOfDishesPageProp
   if (!domain || typeof domain !== 'string') return pageRedirect404
   if (!categoryId || typeof categoryId !== 'string') return pageRedirect404
 
-  const RestaurantService: RestaurantService = new InMemoryRestaurantService()
-  const CategoryService: CategoryService = new InMemoryCategoryService()
-  const DishService: DishService = new InMemoryDishService()
+  const RestaurantService: RestaurantService = new FetchRestaurantService()
+  const CategoryService: CategoryService = new FetchCategoryService()
+  const DishService: DishService = new FetchDishService()
 
   try {
     const restaurant = await RestaurantService.getRestaurantByDomain(domain)

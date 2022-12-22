@@ -1,5 +1,5 @@
 import { CategoryService } from '@server/domain/services/category.service'
-import { InMemoryCategoryService } from '@server/infrastructure/services/inmemory/inmemory-category.service'
+import { FetchCategoryService } from '@server/infrastructure/services/fetch/fetch-category.service'
 import { COOKIE_AUTH_KEY } from '@shared/infrastructure/constants'
 import { NextApiRequest, NextApiResponse } from 'next'
 
@@ -13,7 +13,7 @@ export default async function deleteCategoryHandler(req: NextApiRequest, res: Ne
   const token = req.cookies[COOKIE_AUTH_KEY] as string
   const { id } = req.body as TypedBody
 
-  const CategoryService: CategoryService = new InMemoryCategoryService()
+  const CategoryService: CategoryService = new FetchCategoryService()
 
   try {
     await CategoryService.deleteCategory(token, id)

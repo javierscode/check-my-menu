@@ -13,7 +13,7 @@ export type DishDetailPageProps = {
   previousCategory: string
   dish: Dish
   relatedCategories: Category[]
-  relatedDishes: [Dish, Dish]
+  relatedDishes: Dish[]
 }
 
 export default function DishDetailPage({
@@ -39,11 +39,13 @@ export default function DishDetailPage({
             relatedCategories={relatedCategories}
             restaurantSlug={restaurantSlug}
           />
-          <RelatedDishes
-            relatedDishes={relatedDishes}
-            restaurantSlug={restaurantSlug}
-            categoryId={previousCategory}
-          />
+          {relatedDishes.length > 0 && (
+            <RelatedDishes
+              relatedDishes={relatedDishes}
+              restaurantSlug={restaurantSlug}
+              categoryId={previousCategory}
+            />
+          )}
         </div>
       </main>
     </>

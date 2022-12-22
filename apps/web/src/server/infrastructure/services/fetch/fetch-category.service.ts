@@ -1,30 +1,53 @@
 import { CategoryService } from '@server/domain/services/category.service'
 import { Category } from '@shared/domain/entities/category'
+import { BACKEND_URL } from '@shared/infrastructure/constants'
 import { Fetcher } from '@shared/infrastructure/fetcher'
+import uuid from 'uuid-random'
 
 export class FetchCategoryService implements CategoryService {
-  private fetcher: typeof Fetcher
-  constructor() {
-    this.fetcher = Fetcher
+  async getCategoriesByRestaurantId(restaurantId: string): Promise<Category[]> {
+    const { error, data } = await Fetcher.get<Category[]>(
+      BACKEND_URL + `/category/restaurantId/${restaurantId}`
+    )
+    if (error || !data) throw new Error('Error fetching categories')
+    return data
   }
 
-  getCategoriesByRestaurantId(restaurantId: string): Promise<Category[]> {
-    throw new Error('Method not implemented.')
+  async getCategoryById(categoryId: string): Promise<Category | null> {
+    const { error, data } = await Fetcher.get<Category>(BACKEND_URL + `/category/${categoryId}`)
+    if (error || !data) throw new Error('Error fetching category')
+    return data
   }
 
-  getCategoryById(categoryId: string): Promise<Category | null> {
-    throw new Error('Method not implemented.')
+  async createCategory(token: string, category: Omit<Category, 'id'>): Promise<Category> {
+    const newCategory = {
+      ...category,
+      id: uuid(),
+    }
+    const { error } = await Fetcher.post<void>(BACKEND_URL + `/category/`, {
+      body: newCategory,
+      authToken: token,
+    })
+    if (error) throw new Error('Error creating category')
+    return newCategory
   }
 
-  createCategory(token: string, category: Omit<Category, 'id'>): Promise<Category> {
-    throw new Error('Method not implemented.')
+  async editCategory(token: string, category: Category): Promise<Category> {
+    const { restaurantId: _, ...rest } = category
+    const { error } = await Fetcher.put<void>(BACKEND_URL + `/category/`, {
+      body: rest,
+      authToken: token,
+    })
+    console.log('error', error)
+
+    if (error) throw new Error('Error editing category')
+    return category
   }
 
-  editCategory(token: string, category: Category): Promise<Category> {
-    throw new Error('Method not implemented.')
-  }
-
-  deleteCategory(token: string, categoryId: string): Promise<void> {
-    throw new Error('Method not implemented.')
+  async deleteCategory(token: string, categoryId: string): Promise<void> {
+    const { error } = await Fetcher.delete<void>(BACKEND_URL + `/category/${categoryId}`, {
+      authToken: token,
+    })
+    if (error) throw new Error('Error deleting category')
   }
 }

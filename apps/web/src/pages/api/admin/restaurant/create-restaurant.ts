@@ -1,5 +1,5 @@
 import { RestaurantService } from '@server/domain/services/restaurant.service'
-import { InMemoryRestaurantService } from '@server/infrastructure/services/inmemory/inmemory-restaurant.service'
+import { FetchRestaurantService } from '@server/infrastructure/services/fetch/fetch-restaurant.service'
 import { Restaurant } from '@shared/domain/entities/restaurant'
 import { COOKIE_AUTH_KEY } from '@shared/infrastructure/constants'
 import { NextApiRequest, NextApiResponse } from 'next'
@@ -12,7 +12,7 @@ export default async function createRestaurantHandler(req: NextApiRequest, res: 
   const token = req.cookies[COOKIE_AUTH_KEY] as string
   const { name, domain, location, description } = req.body as TypedBody
 
-  const RestaurantService: RestaurantService = new InMemoryRestaurantService()
+  const RestaurantService: RestaurantService = new FetchRestaurantService()
 
   try {
     const restaurant = await RestaurantService.createRestaurant(token, {

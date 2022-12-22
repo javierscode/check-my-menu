@@ -1,9 +1,9 @@
 import { CategoryService } from '@server/domain/services/category.service'
 import { DishService } from '@server/domain/services/dish.service'
 import { RestaurantService } from '@server/domain/services/restaurant.service'
-import { InMemoryCategoryService } from '@server/infrastructure/services/inmemory/inmemory-category.service'
-import { InMemoryDishService } from '@server/infrastructure/services/inmemory/inmemory-dish.service'
-import { InMemoryRestaurantService } from '@server/infrastructure/services/inmemory/inmemory-restaurant.service'
+import { FetchCategoryService } from '@server/infrastructure/services/fetch/fetch-category.service'
+import { FetchDishService } from '@server/infrastructure/services/fetch/fetch-dish.service'
+import { FetchRestaurantService } from '@server/infrastructure/services/fetch/fetch-restaurant.service'
 import { randomIntFromInterval } from '@server/infrastructure/utils/math'
 import { Category } from '@shared/domain/entities/category'
 import { Dish } from '@shared/domain/entities/dish'
@@ -22,9 +22,9 @@ export const DishDetailPageGSSP: CustomGetServerSideProps<DishDetailPageProps> =
   if (!categoryId || typeof categoryId !== 'string') return pageRedirect404
   if (!dishId || typeof dishId !== 'string') return pageRedirect404
 
-  const RestaurantService: RestaurantService = new InMemoryRestaurantService()
-  const CategoryService: CategoryService = new InMemoryCategoryService()
-  const DishService: DishService = new InMemoryDishService()
+  const RestaurantService: RestaurantService = new FetchRestaurantService()
+  const CategoryService: CategoryService = new FetchCategoryService()
+  const DishService: DishService = new FetchDishService()
 
   try {
     const restaurant = await RestaurantService.getRestaurantByDomain(domain)
@@ -43,10 +43,13 @@ export const DishDetailPageGSSP: CustomGetServerSideProps<DishDetailPageProps> =
       dish => dish.id !== dishId
     )
 
-    const relatedDishes: [Dish, Dish] = [
-      draftDishes[randomIntFromInterval(0, draftDishes.length - 1)],
-      draftDishes[randomIntFromInterval(0, draftDishes.length - 1)],
-    ]
+    const relatedDishes: Dish[] = []
+
+    for (let i = 0; i < draftDishes.length && i < 2; i++) {
+      const randomDish = draftDishes[randomIntFromInterval(0, draftDishes.length - 1)]
+      draftDishes.splice(draftDishes.indexOf(randomDish), 1)
+      relatedDishes.push(randomDish)
+    }
 
     const props: DishDetailPageProps = {
       restaurantTitle: restaurant.name,
@@ -54,7 +57,7 @@ export const DishDetailPageGSSP: CustomGetServerSideProps<DishDetailPageProps> =
       previousCategory: categoryId,
       dish,
       relatedCategories,
-      relatedDishes: relatedDishes as [Dish, Dish],
+      relatedDishes,
     }
 
     return {
