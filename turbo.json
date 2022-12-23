@@ -5,6 +5,9 @@
     "backend#docker:up": {
       "inputs": ["backend/docker-compose.yml", "backend/package.json"]
     },
+    "backend#prisma:generate": {
+      "inputs": ["backend/src/infrastructure/persistence/schema.prisma"]
+    },
     "build": {
       "dependsOn": ["^build"],
       "outputs": ["dist/**", ".next/**"]
@@ -17,11 +20,11 @@
       "outputs": [] 
     },
     "dev": {
-      "dependsOn": ["backend#docker:up"],
+      "dependsOn": ["backend#docker:up", "backend#prisma:generate"],
       "cache": false
     },
     "start":{
-      "dependsOn": ["backend#docker:up","build"],
+      "dependsOn": ["backend#docker:up","backend#prisma:generate","build"],
       "cache": false
     }
   }
