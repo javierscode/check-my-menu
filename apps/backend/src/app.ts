@@ -10,7 +10,9 @@ import express from 'express'
 
 const app = express()
 
-const allowedOrigins = ['http://localhost:3000']
+const origin = (process.env.ALLOWED_ORIGIN as string) || 'http://localhost:3000'
+
+const allowedOrigins = [origin]
 
 const options: cors.CorsOptions = {
   origin: allowedOrigins,
