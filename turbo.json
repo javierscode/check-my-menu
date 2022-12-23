@@ -1,15 +1,27 @@
 {
   "$schema": "https://turborepo.org/schema.json",
-  "globalDependencies": ["$NODE_ENV", "$POSTGRES_USER", "$POSTGRES_PASSWORD", "$POSTGRES_DB", "$BACKEND_URL","$FRONTEND_URL", "$COOKIE_AUTH_KEY"],
+  "globalEnv": ["NODE_ENV", "POSTGRES_USER", "POSTGRES_PASSWORD", "POSTGRES_DB", "BACKEND_URL","FRONTEND_URL", "COOKIE_AUTH_KEY"],
   "pipeline": {
+    "backend#docker:up": {
+      "inputs": ["backend/docker-compose.yml", "backend/package.json"]
+    },
     "build": {
       "dependsOn": ["^build"],
       "outputs": ["dist/**", ".next/**"]
     },
+    "test": {
+      "outputs": [], 
+      "inputs": ["src/**/*.tsx", "src/**/*.ts", "test/**/*.ts"]
+    },
     "lint": {
-      "outputs": []
+      "outputs": [] 
     },
     "dev": {
+      "dependsOn": ["backend#docker:up"],
+      "cache": false
+    },
+    "start":{
+      "dependsOn": ["backend#docker:up","build"],
       "cache": false
     }
   }
