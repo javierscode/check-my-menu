@@ -24,7 +24,7 @@ app.use('/category', CategoryRoutes)
 app.use('/dish', DishRoutes)
 
 app.get('/', (_, res) => {
-  res.send('Express + TypeScript Server')
+  res.send('Check My Menu | Express + TypeScript Server')
 })
 app.use(errorMiddleWare)
 

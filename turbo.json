@@ -1,6 +1,6 @@
 {
   "$schema": "https://turborepo.org/schema.json",
-  "globalEnv": ["NODE_ENV", "POSTGRES_USER", "POSTGRES_PASSWORD", "POSTGRES_DB", "BACKEND_URL","FRONTEND_URL", "COOKIE_AUTH_KEY"],
+  "globalEnv": ["PORT","NODE_ENV", "POSTGRES_USER", "POSTGRES_PASSWORD", "POSTGRES_DB", "BACKEND_URL","FRONTEND_URL", "COOKIE_AUTH_KEY"],
   "pipeline": {
     "backend#docker:up": {
       "inputs": ["backend/docker-compose.yml", "backend/package.json"]
