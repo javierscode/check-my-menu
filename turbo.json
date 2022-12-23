@@ -9,7 +9,7 @@
       "inputs": ["backend/src/infrastructure/persistence/schema.prisma"]
     },
     "build": {
-      "dependsOn": ["^build"],
+      "dependsOn": ["backend#prisma:generate","^build"],
       "outputs": ["dist/**", ".next/**"]
     },
     "test": {
@@ -24,7 +24,7 @@
       "cache": false
     },
     "start":{
-      "dependsOn": ["backend#docker:up","backend#prisma:generate","build"],
+      "dependsOn": ["backend#docker:up","build"],
       "cache": false
     }
   }

@@ -1,0 +1,16 @@
+{
+    "extends": "./tsconfig.json",
+    "compilerOptions": {
+        "rootDir": "src",
+    },
+    "include": [
+        "**/*.ts",
+        "**/*.d.ts",
+        "**/*.js",
+        ".eslintrc.js"
+    ],
+    "exclude": [
+        "node_modules",
+        "test/**/*.ts"
+    ]
+}

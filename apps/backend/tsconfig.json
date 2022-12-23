@@ -5,9 +5,14 @@
         "lib": ["es6"],
         "module": "commonjs",
         "types": ["reflect-metadata", "jest"],
+        "strict": true,
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "forceConsistentCasingInFileNames": true,
+        "moduleResolution": "node",
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true,
-        "baseUrl": ".",
+        "baseUrl": "./",
         "paths": {
             "@application/*": [
                 "src/application/*"
@@ -30,6 +35,7 @@
         ".eslintrc.js"
     ],
     "exclude": [
-        "node_modules"
+        "node_modules",
+        "dist"
     ]
 }
