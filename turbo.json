@@ -8,8 +8,12 @@
     "backend#prisma:generate": {
       "inputs": ["backend/src/infrastructure/persistence/schema.prisma"]
     },
+    "backend#build": {
+      "dependsOn": ["backend#prisma:generate"],
+      "outputs": ["backend/dist/**"]
+    },
     "build": {
-      "dependsOn": ["backend#prisma:generate","^build"],
+      "dependsOn": ["^build"],
       "outputs": ["dist/**", ".next/**"]
     },
     "test": {
