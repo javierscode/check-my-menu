@@ -1,0 +1,28 @@
+name: Backend - Preview Deployment
+env:
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID_BACKEND }}
+
+on:
+  pull_request:
+    branches:
+    - main
+    paths:
+    - apps/backend/**
+    
+jobs:
+    Deploy-Production:
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v3
+        - uses: actions/setup-node@v3
+          with:
+            node-version: 18
+        - name: Install dependencies
+          run: npm install
+        - name: build
+          run: npm run build:backend
+        - name: Install Vercel CLI
+          run: npm install --global vercel@latest
+        - name: Deploy Project Artifacts to Vercel
+          run: cd apps/backend && vercel deploy --token=${{ secrets.VERCEL_TOKEN }}
