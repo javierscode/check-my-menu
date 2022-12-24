@@ -7,11 +7,11 @@ on:
   push:
     branches:
     - main
-#     paths:
-#     - apps/web/**
+    paths:
+    - apps/web/**
     
 jobs:
-    deploy:
+    Deploy-Production:
       runs-on: ubuntu-latest
       steps:
         - uses: actions/checkout@v3
