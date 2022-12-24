@@ -11,7 +11,7 @@ on:
     - apps/backend/**
     
 jobs:
-    deploy:
+    Deploy-Production:
       runs-on: ubuntu-latest
       steps:
         - uses: actions/checkout@v3
