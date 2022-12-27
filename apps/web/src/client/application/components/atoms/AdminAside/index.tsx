@@ -4,15 +4,14 @@ import { useRouter } from 'next/router'
 
 import styles from './AdminAside.module.css'
 
-type Props = {
+export type AdminAsideProps = {
+  restaurantId: string
   restaurantName: string
   restaurantDomain: string
 }
 
-export function AdminAside({ restaurantName, restaurantDomain }: Props) {
+export function AdminAside({ restaurantId, restaurantName, restaurantDomain }: AdminAsideProps) {
   const router = useRouter()
-
-  const restaurantId = router.query.restaurantId as string
   const currentPath = router.asPath
 
   const pathToCategories = `/admin/${restaurantId}/categories`
@@ -30,13 +29,13 @@ export function AdminAside({ restaurantName, restaurantDomain }: Props) {
   }
 
   return (
-    <aside className={styles.aside}>
+    <aside className={styles.aside} role='menu'>
       <div className={styles.title}>
         <h2>{restaurantName}</h2>
         <hr />
       </div>
 
-      <div className={styles.links}>
+      <div className={styles.links} role='navigation'>
         <Link
           href={pathToCategories}
           className={currentPath === pathToCategories ? styles.selected : ''}
@@ -48,7 +47,7 @@ export function AdminAside({ restaurantName, restaurantDomain }: Props) {
         </Link>
       </div>
 
-      <div className={styles.footer}>
+      <div className={styles.footer} role='complementary'>
         <Link href={pathToRestaurants}>Back to restaurants</Link>
         <Link href={pathToPreview} target='_blank'>
           <button>See Preview</button>

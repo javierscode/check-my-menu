@@ -25,7 +25,11 @@ export default function AdminMyDishesPage({
     <>
       <AdminNavbar />
       <main className='admin-layout'>
-        <AdminAside restaurantName={restaurant.name} restaurantDomain={restaurant.domain} />
+        <AdminAside
+          restaurantId={restaurant.id}
+          restaurantName={restaurant.name}
+          restaurantDomain={restaurant.domain}
+        />
         <AdminList
           title='My Dishes'
           items={items}
