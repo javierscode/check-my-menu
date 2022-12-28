@@ -1,12 +1,12 @@
 import styles from './ConfirmationForm.module.css'
 
-type Props = {
+export type ConfirmationFormProps = {
   title: string
   onConfirm: () => void
   onCancel: () => void
 }
 
-export function ConfirmationForm({ title, onConfirm, onCancel }: Props) {
+export function ConfirmationForm({ title, onConfirm, onCancel }: ConfirmationFormProps) {
   return (
     <div className={styles.confirmation}>
       <h1 className={styles.title}>{title}</h1>
