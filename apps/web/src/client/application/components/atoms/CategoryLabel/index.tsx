@@ -3,19 +3,19 @@ import Link from 'next/link'
 
 import styles from './CategoryLabel.module.css'
 
-type Props = {
+export type CategoryLabelProps = {
   categoryName: Category['name']
   href: string
 }
 
-export function CategoryLabel({ categoryName, href }: Props) {
+export function CategoryLabel({ categoryName, href }: CategoryLabelProps) {
   const hashTag = categoryName.split(' ').map(word => {
     return word.charAt(0).toUpperCase() + word.slice(1)
   })
 
   return (
-    <Link className={styles.label} href={href}>
-      #{hashTag}
+    <Link href={href} legacyBehavior>
+      <a className={styles.label}>#{hashTag}</a>
     </Link>
   )
 }
