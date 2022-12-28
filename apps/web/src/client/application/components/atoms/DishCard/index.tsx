@@ -4,14 +4,14 @@ import Link from 'next/link'
 
 import styles from './DishCard.module.css'
 
-type Props = {
+export type DishCardProps = {
   dish: Dish
   href: string
 }
 
-export function DishCard({ dish, href }: Props) {
+export function DishCard({ dish, href }: DishCardProps) {
   return (
-    <div className={styles.card}>
+    <div className={styles.card} role='article'>
       <div className={styles.picture}>
         <Image src={dish.image} alt={dish.name} fill />
       </div>
