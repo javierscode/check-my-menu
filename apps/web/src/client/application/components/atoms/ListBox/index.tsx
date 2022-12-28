@@ -5,7 +5,7 @@ import { Category } from 'src/shared/domain/entities/category'
 
 import styles from './ListBox.module.css'
 
-type Props = {
+export type ListboxProps = {
   items: Category[] | Allergen[]
   value: string[]
   onChange: (value: string[]) => void
@@ -13,9 +13,16 @@ type Props = {
   error?: string
 }
 
-export const Listbox = ({ items, value, onChange, title, error }: Props) => {
+export const Listbox = ({ items, value, onChange, title, error }: ListboxProps) => {
   return (
-    <ListBox value={value} onChange={onChange} multiple as={'div'} className={styles.box}>
+    <ListBox
+      value={value}
+      onChange={onChange}
+      multiple
+      as={'div'}
+      className={styles.box}
+      role='listbox'
+    >
       {title && <p className={styles.title}>{title}</p>}
       <ListBox.Button
         className={styles.button}
