@@ -2,17 +2,19 @@ import { Allergen } from '@shared/domain/entities/allergen'
 
 import styles from './AllergenBullet.module.css'
 
-type Props = {
+export type AllergenBulletProps = {
   allergen: Allergen
 }
 
-export function AllergenBullet({ allergen }: Props) {
+export function AllergenBullet({ allergen }: AllergenBulletProps) {
   const firstLetter = allergen.charAt(0).toUpperCase()
 
   return (
-    <div className={styles.bullet}>
+    <div className={styles.bullet} role='contentinfo'>
       {firstLetter}
-      <span className={styles.tooltip}>{allergen}</span>
+      <span role={'tooltip'} className={styles.tooltip}>
+        {allergen}
+      </span>
     </div>
   )
 }
