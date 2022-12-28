@@ -2,7 +2,7 @@ import React from 'react'
 
 import styles from './Input.module.css'
 
-type Props = {
+export type InputProps = {
   id: string
   placeholder?: string
   type: React.InputHTMLAttributes<HTMLInputElement>['type']
@@ -10,11 +10,11 @@ type Props = {
   error?: string
 } & React.InputHTMLAttributes<HTMLInputElement>
 function BaseInput(
-  { id, placeholder, type, error, title, ...restOfProps }: Props,
+  { id, placeholder, type, error, title, ...restOfProps }: InputProps,
   ref: React.LegacyRef<HTMLInputElement>
 ) {
   return (
-    <label htmlFor={id} className={styles.label}>
+    <label htmlFor={id} className={styles.label} role={'label'}>
       {title && <p className={styles.title}>{title}</p>}
       <input ref={ref} id={id} type={type} placeholder={placeholder} {...restOfProps} />
       <p className={styles.error}>{error}</p>
@@ -22,4 +22,4 @@ function BaseInput(
   )
 }
 
-export const Input = React.forwardRef<HTMLInputElement, Props>(BaseInput)
+export const Input = React.forwardRef<HTMLInputElement, InputProps>(BaseInput)
