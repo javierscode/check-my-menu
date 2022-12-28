@@ -9,5 +9,10 @@ type Props = {
 export function AllergenBullet({ allergen }: Props) {
   const firstLetter = allergen.charAt(0).toUpperCase()
 
-  return <span className={styles.bullet}>{firstLetter}</span>
+  return (
+    <div className={styles.bullet}>
+      {firstLetter}
+      <span className={styles.tooltip}>{allergen}</span>
+    </div>
+  )
 }

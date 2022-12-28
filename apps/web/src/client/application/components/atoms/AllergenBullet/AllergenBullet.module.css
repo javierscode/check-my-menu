@@ -1,4 +1,5 @@
 .bullet{
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center; 
@@ -14,4 +15,38 @@
     padding: 0.85rem;
 
     background-color: gainsboro;
+}
+
+.tooltip{
+    visibility: hidden;
+    position: absolute;
+
+    top: -2rem;
+    left: 0;
+    width: max-content;
+    height: 100%;
+
+    padding: 0.5rem;
+    background-color: #2E2E2E;
+    color: #fff;
+    border-radius: 0.25rem;
+
+    font-size: 0.75rem;
+    text-align: center;
+    z-index: 1;
+}
+
+.tooltip::after{
+    content: "";
+    position: absolute;
+    border-width: 5px;
+    border-style: solid;
+    margin-left: -5px;
+    top: 100%;
+    left: 0.85rem;
+    border-color: #2E2E2E transparent transparent transparent;
+}
+
+.bullet:hover .tooltip{
+    visibility: visible;
 }
