@@ -3,7 +3,7 @@ import Link from 'next/link'
 
 import styles from './UserAccessLayout.module.css'
 
-type UserAccessLayoutProps = {
+export type UserAccessLayoutProps = {
   children: React.ReactNode
   imageUrl: string
   title: string
@@ -23,7 +23,7 @@ export function UserAccessLayout({
   link,
 }: UserAccessLayoutProps) {
   return (
-    <div className={styles.grid}>
+    <div className={styles.grid} role={'grid'}>
       <div className={styles.column}>
         <div className={styles.navigation}>
           <h1>Check My Menu</h1>
