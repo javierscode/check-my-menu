@@ -25,3 +25,7 @@
     width: 100%;
     margin-top: 1rem;
 }
+
+.form button:disabled{
+    opacity: 0.5;
+}

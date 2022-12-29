@@ -11,10 +11,13 @@ type Props = {
 }
 
 export function RestaurantForm({ item: restaurant, onCloseForm }: Props) {
-  const { handleSubmit, editingMode, register, errors } = useRestaurantForm(restaurant, onCloseForm)
+  const { handleSubmit, editingMode, register, errors, isLoading } = useRestaurantForm(
+    restaurant,
+    onCloseForm
+  )
 
   return (
-    <form onSubmit={handleSubmit} className={styles.form}>
+    <form onSubmit={handleSubmit} className={styles.form} role='form'>
       <h1 className={styles.title}>{editingMode ? 'Edit' : 'Create'} Restaurant</h1>
       <Input
         id='name'
@@ -47,7 +50,9 @@ export function RestaurantForm({ item: restaurant, onCloseForm }: Props) {
         {...register('description', { required: true })}
         error={errors.description?.message}
       />
-      <button type='submit'>{editingMode ? 'Update' : 'Create'}</button>
+      <button type='submit' disabled={isLoading}>
+        {isLoading ? 'Loading...' : editingMode ? 'Update' : 'Create'}
+      </button>
     </form>
   )
 }
