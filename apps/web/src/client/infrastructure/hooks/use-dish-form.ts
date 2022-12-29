@@ -2,6 +2,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { Allergen } from '@shared/domain/entities/allergen'
 import { Dish } from '@shared/domain/entities/dish'
 import { useRouter } from 'next/router'
+import { useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import * as yup from 'yup'
 
@@ -10,7 +11,7 @@ import { editDish } from '../api/dish/edit-dish.fetch'
 import { uploadImage } from '../api/upload-image.fetch'
 import { useAvailableCategories } from './use-available-categories'
 
-type Inputs = {
+export type Inputs = {
   name: string
   description: string
   price: number
@@ -48,6 +49,7 @@ export function useDishForm(dish?: Dish, onCloseForm?: (dish?: Dish) => void) {
     },
     resolver: yupResolver(DishSchema),
   })
+  const [isLoading, setIsLoading] = useState(false)
 
   const onSubmit: SubmitHandler<Inputs> = async ({
     name,
@@ -91,12 +93,24 @@ export function useDishForm(dish?: Dish, onCloseForm?: (dish?: Dish) => void) {
     onCloseForm?.(newDish)
   }
 
+  const onSubmitWithLoading = async (data: Inputs) => {
+    setIsLoading(true)
+    try {
+      await onSubmit(data)
+    } catch (error) {
+      console.error(error)
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
   return {
     control,
     register,
-    handleSubmit: handleSubmit(onSubmit),
+    handleSubmit: handleSubmit(onSubmitWithLoading),
     errors,
     availableCategories,
     editingMode,
+    isLoading,
   }
 }
