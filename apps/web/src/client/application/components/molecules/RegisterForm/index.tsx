@@ -1,46 +1,13 @@
-import { registerNewUser } from '@client/infrastructure/api/user/register.fetch'
-import { useAuthContext } from '@client/infrastructure/contexts/auth.context'
-import { yupResolver } from '@hookform/resolvers/yup'
-import { useRouter } from 'next/router'
-import { useState } from 'react'
-import { SubmitHandler, useForm } from 'react-hook-form'
+import { useRegisterForm } from '@client/infrastructure/hooks/use-register-form'
 
 import { Input } from '../../atoms/Input'
 import styles from './RegisterForm.module.css'
-import { RegisterSchema } from './schema'
-
-type Inputs = {
-  name: string
-  lastname: string
-  email: string
-  password: string
-}
 
 export function RegisterForm() {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<Inputs>({
-    resolver: yupResolver(RegisterSchema),
-  })
-  const { updateAuth } = useAuthContext()
-  const router = useRouter()
-  const [registerError, setRegisterError] = useState<boolean>(false)
-
-  const onSubmit: SubmitHandler<Inputs> = ({ name, lastname, email, password }) =>
-    registerNewUser({
-      name,
-      lastname,
-      email,
-      password,
-      updateAuth,
-      setError: setRegisterError,
-      router,
-    })
+  const { register, handleSubmit, errors, registerError, isLoading } = useRegisterForm()
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
+    <form onSubmit={handleSubmit} className={styles.form} role='form'>
       <div className={styles.row}>
         <Input
           id='name'
@@ -71,7 +38,9 @@ export function RegisterForm() {
         {...register('password', { required: true })}
         error={errors.password?.message}
       />
-      <button type='submit'>Sign up</button>
+      <button type='submit' disabled={isLoading}>
+        {isLoading ? 'Loading...' : 'Sign up'}
+      </button>
       {registerError && <p className={styles.error}>Something went wrong</p>}
     </form>
   )
