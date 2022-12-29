@@ -1,6 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Category } from '@shared/domain/entities/category'
 import { useRouter } from 'next/router'
+import { useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import * as yup from 'yup'
 
@@ -38,6 +39,7 @@ export function useCategoryForm(
     },
     resolver: yupResolver(CategorySchema),
   })
+  const [isLoading, setIsLoading] = useState(false)
 
   const onSubmit: SubmitHandler<Inputs> = async ({ name, description, image: ImageFile }) => {
     let image: string | undefined
@@ -63,10 +65,22 @@ export function useCategoryForm(
     onCloseForm?.(newCategory)
   }
 
+  const onSubmitWithLoading = async (data: Inputs) => {
+    setIsLoading(true)
+    try {
+      await onSubmit(data)
+    } catch (error) {
+      console.error(error)
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
   return {
     register,
-    handleSubmit: handleSubmit(onSubmit),
+    handleSubmit: handleSubmit(onSubmitWithLoading),
     errors,
     editingMode,
+    isLoading,
   }
 }
