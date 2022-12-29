@@ -41,6 +41,10 @@
     margin-top: 1rem;
 }
 
+.button:disabled{
+    opacity: 0.5;
+}
+
 .label{
 
     width: 100%;

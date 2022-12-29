@@ -15,13 +15,11 @@ type Props = {
 }
 
 export function DishForm({ item: dish, onCloseForm }: Props) {
-  const { handleSubmit, editingMode, control, register, errors, availableCategories } = useDishForm(
-    dish,
-    onCloseForm
-  )
+  const { handleSubmit, editingMode, control, register, errors, availableCategories, isLoading } =
+    useDishForm(dish, onCloseForm)
 
   return (
-    <form onSubmit={handleSubmit} className={styles.form}>
+    <form onSubmit={handleSubmit} className={styles.form} role='form'>
       <h1 className={styles.title}>{editingMode ? 'Edit' : 'Create'} Dish</h1>
       <div className={styles.row}>
         <div className={styles.col}>
@@ -96,8 +94,8 @@ export function DishForm({ item: dish, onCloseForm }: Props) {
           />
         </div>
       </div>
-      <button className={styles.button} type='submit'>
-        {editingMode ? 'Update' : 'Create'}
+      <button className={styles.button} type='submit' disabled={isLoading}>
+        {isLoading ? 'Loading...' : editingMode ? 'Update' : 'Create'}
       </button>
     </form>
   )
