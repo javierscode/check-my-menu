@@ -12,10 +12,13 @@ type Props = {
 }
 
 export function CategoryForm({ item: category, onCloseForm }: Props) {
-  const { handleSubmit, editingMode, register, errors } = useCategoryForm(category, onCloseForm)
+  const { handleSubmit, editingMode, register, errors, isLoading } = useCategoryForm(
+    category,
+    onCloseForm
+  )
 
   return (
-    <form onSubmit={handleSubmit} className={styles.form}>
+    <form onSubmit={handleSubmit} className={styles.form} role='form'>
       <h1 className={styles.title}>{editingMode ? 'Edit' : 'Create'} Category</h1>
       <Input
         id='name'
@@ -48,7 +51,9 @@ export function CategoryForm({ item: category, onCloseForm }: Props) {
         {...register('image', { required: true })}
         error={errors.image?.message}
       />
-      <button type='submit'>{editingMode ? 'Update' : 'Create'}</button>
+      <button type='submit' disabled={isLoading}>
+        {isLoading ? 'Loading...' : editingMode ? 'Update' : 'Create'}
+      </button>
     </form>
   )
 }
