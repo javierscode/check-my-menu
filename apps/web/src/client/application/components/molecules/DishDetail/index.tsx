@@ -5,13 +5,13 @@ import { AllergenBullet } from '../../atoms/AllergenBullet'
 import { CategoryLabel } from '../../atoms/CategoryLabel'
 import styles from './DishDetail.module.css'
 
-type Props = {
+export type DishDetailProps = {
   dish: Dish
   restaurantSlug: string
   relatedCategories: Category[]
 }
 
-export function DishDetail({ dish, restaurantSlug, relatedCategories }: Props) {
+export function DishDetail({ dish, restaurantSlug, relatedCategories }: DishDetailProps) {
   return (
     <div className={styles.wrapper}>
       <div className={styles.intro}>
