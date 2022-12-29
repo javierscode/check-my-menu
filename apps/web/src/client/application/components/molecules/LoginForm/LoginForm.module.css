@@ -21,6 +21,10 @@
     margin-top: 0.5rem;
 }
 
+.form button:disabled{
+    opacity: 0.5;
+}
+
 .error{
     position: absolute;
     bottom: -1.5rem;
