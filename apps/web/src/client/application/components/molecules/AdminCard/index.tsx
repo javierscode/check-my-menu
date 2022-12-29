@@ -5,31 +5,33 @@ import Link from 'next/link'
 
 import styles from './AdminCard.module.css'
 
-type Props = {
+export type AdminCardProps = {
   title: string
   linkTo?: string
   onEdit: () => void
   onDelete: () => void
 }
 
-export function AdminCard({ title, linkTo, onEdit, onDelete }: Props) {
+export function AdminCard({ title, linkTo, onEdit, onDelete }: AdminCardProps) {
   return (
-    <div className={styles.card}>
+    <div className={styles.card} role={'listitem'}>
       <div className={styles.header}>
         {linkTo ? (
-          <Link href={linkTo}>
-            <EnterIcon />
-            <p>{title}</p>
+          <Link href={linkTo} legacyBehavior>
+            <a>
+              <EnterIcon />
+              <p>{title}</p>
+            </a>
           </Link>
         ) : (
           <p>{title}</p>
         )}
       </div>
       <div className={styles.actions}>
-        <button onClick={onEdit}>
+        <button onClick={onEdit} name='Edit' data-testid='edit-button'>
           <EditIcon />
         </button>
-        <button onClick={onDelete}>
+        <button onClick={onDelete} name='Delete' data-testid='delete-button'>
           <RemoveIcon />
         </button>
       </div>
