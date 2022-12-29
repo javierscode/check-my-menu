@@ -16,7 +16,11 @@ export function AdminNavbar() {
         <h2>
           {profile?.name} {profile?.lastname}
         </h2>
-        <LogoutIcon onClick={() => logout({ updateAuth, router })} />
+        <LogoutIcon
+          name='logout'
+          data-testid='logout-icon'
+          onClick={() => logout({ updateAuth, router })}
+        />
       </div>
     </nav>
   )
