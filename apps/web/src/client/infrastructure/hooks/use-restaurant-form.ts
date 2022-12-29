@@ -1,5 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Restaurant } from '@shared/domain/entities/restaurant'
+import { useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import * as yup from 'yup'
 
@@ -42,6 +43,7 @@ export function useRestaurantForm(
     },
     resolver: yupResolver(RestaurantSchema),
   })
+  const [isLoading, setIsLoading] = useState<boolean>(false)
 
   const onSubmit: SubmitHandler<Inputs> = async ({ name, domain, location, description }) => {
     let newRestaurant: Restaurant | undefined
@@ -59,10 +61,22 @@ export function useRestaurantForm(
     onCloseForm?.(newRestaurant)
   }
 
+  const onSubmitWithLoading = async (data: Inputs) => {
+    setIsLoading(true)
+    try {
+      await onSubmit(data)
+    } catch (error) {
+      console.error(error)
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
   return {
     register,
-    handleSubmit: handleSubmit(onSubmit),
+    handleSubmit: handleSubmit(onSubmitWithLoading),
     editingMode,
     errors,
+    isLoading,
   }
 }
