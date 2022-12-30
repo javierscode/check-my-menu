@@ -3,13 +3,13 @@ import { Dish } from '@shared/domain/entities/dish'
 import { DishCard } from '../../atoms/DishCard'
 import styles from './RelatedDishes.module.css'
 
-type Props = {
+export type RelatedDishesProps = {
   restaurantSlug: string
   categoryId: string
   relatedDishes: Dish[]
 }
 
-export function RelatedDishes({ restaurantSlug, categoryId, relatedDishes }: Props) {
+export function RelatedDishes({ restaurantSlug, categoryId, relatedDishes }: RelatedDishesProps) {
   return (
     <div className={styles.wrapper}>
       <div className={styles.title}>
