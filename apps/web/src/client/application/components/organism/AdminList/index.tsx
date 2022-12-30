@@ -8,7 +8,7 @@ import styles from './AdminList.module.css'
 
 type Item = Restaurant | Category | Dish
 
-type Props = {
+export type AdminListProps = {
   title: string
   items: Item[]
   buttonTitle: string
@@ -25,7 +25,7 @@ const checkLinkTo = (item: Item) => {
   }
 }
 
-export function AdminList({ title, items, buttonTitle, onAdd, onEdit, onDelete }: Props) {
+export function AdminList({ title, items, buttonTitle, onAdd, onEdit, onDelete }: AdminListProps) {
   return (
     <div className={styles.container}>
       <h1>{title}</h1>
