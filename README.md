@@ -1,73 +1,67 @@
-# Turborepo starter
+# Check my nenu
 
-This is an official npm starter turborepo.
+As a result of the COVID-19 pandemic, a great deal of modernisation has come about in all sectors. Telework, contactless, everything has had to adapt to the new technology stream and restaurants are no exception.
 
-## What's inside?
+Check my menu is an open source project that aims to encourage the use of digital menus in restaurants. Thanks to its web application, the restaurant will be able to create its digital menu and I will get a QR to promote it in its sites. 
 
-This turborepo uses [npm](https://www.npmjs.com/) as a package manager. It includes the following packages/apps:
+Check my menu is presented as a free alternative where restaurant customers will be able to check the menu and restaurants themselves will be able to keep it updated by accessing their private area.
 
-### Apps and Packages
+## Demo
 
-- `docs`: a [Next.js](https://nextjs.org) app
-- `web`: another [Next.js](https://nextjs.org) app
-- `ui`: a stub React component library shared by both `web` and `docs` applications
-- `eslint-config-custom`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
+You can see a demo of the project in the following link: [Check my menu](https://check-my-menu.vercel.app/)
+
+## Apps and Packages
+
+- `backend`: a [Express.js](https://expressjs.com/) app with hexagonal architecture
+- `web`: a [Next.js](https://nextjs.org) app with private and public routes
+- `eslint-config-custom`: `eslint` configurations
 - `tsconfig`: `tsconfig.json`s used throughout the monorepo
 
 Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
 
-### Utilities
+## Try it in local
 
-This turborepo has some additional tools already setup for you:
+### Prerequisites
 
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
+- [Node.js](https://nodejs.org/es/) >= 16.0.0 installed
+- [Docker Compose](https://docs.docker.com/compose/) running and ready to create new container
+- Environment variables configured
+- Install dependencies
 
-### Build
+#### Environment Variables
 
-To build all apps and packages, run the following command:
+You will find 2 sample `.env.example` files in each of the apps `backend` & `web`.  If you want to run the project in your local machine, you must create a copy with the name `.env`, the content of each file doesn't have to be modified.
 
+#### Install dependencies
+
+To install all dependencies, run the following command:
+
+```properties
+npm install
 ```
-cd my-turborepo
-npm run build
-```
 
-### Develop
+### Development
 
 To develop all apps and packages, run the following command:
 
-```
-cd my-turborepo
+```properties
 npm run dev
 ```
 
-### Remote Caching
+The `web` application will be running on port [3000](http://localhost:3000/), the `backend` application on port [8080](http://localhost:8080/) and the PostgreSQL `database` on port [54320](http://localhost:54320/check-my-menu). With this command, the code has a hot reload, if you make any changes to the code it will be automatically reflected.
 
-Turborepo can use a technique known as [Remote Caching](https://turborepo.org/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
+### Production
 
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup), then enter the following commands:
+To start all apps and packages, run the following command:
 
-```
-cd my-turborepo
-npx turbo login
-```
-
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
-
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your turborepo:
-
-```
-npx turbo link
+```properties
+npm run start
 ```
 
-## Useful Links
+All applications will run on the same port as in development mode, but with this command, all applications will compile and serve without hot reloading. This is the way to simulate a production mode.
 
-Learn more about the power of Turborepo:
+## Author
+Javier Linares - [@javierscode](https://github.com/javierscode)
 
-- [Pipelines](https://turborepo.org/docs/core-concepts/pipelines)
-- [Caching](https://turborepo.org/docs/core-concepts/caching)
-- [Remote Caching](https://turborepo.org/docs/core-concepts/remote-caching)
-- [Scoped Tasks](https://turborepo.org/docs/core-concepts/scopes)
-- [Configuration Options](https://turborepo.org/docs/reference/configuration)
-- [CLI Usage](https://turborepo.org/docs/reference/command-line-reference)
+## License
+This project is licensed under the GNU General Public License v3.0 - see the [LICENSE](LICENSE) file for details
