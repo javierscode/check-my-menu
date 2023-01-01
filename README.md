@@ -28,13 +28,9 @@ Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
 - Environment variables configured
 - Install dependencies
 
-#### Environment Variables
+**Configure environment variables**: You will find 2 sample `.env.example` files in each of the apps `backend` & `web`.  If you want to run the project in your local machine, you must create a copy with the name `.env`, the content of each file doesn't have to be modified.
 
-You will find 2 sample `.env.example` files in each of the apps `backend` & `web`.  If you want to run the project in your local machine, you must create a copy with the name `.env`, the content of each file doesn't have to be modified.
-
-#### Install dependencies
-
-To install all dependencies, run the following command:
+To **install all dependencies**, run the following command:
 
 ```properties
 npm install
