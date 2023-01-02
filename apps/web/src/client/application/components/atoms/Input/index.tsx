@@ -16,7 +16,14 @@ function BaseInput(
   return (
     <label htmlFor={id} className={styles.label} role={'label'}>
       {title && <p className={styles.title}>{title}</p>}
-      <input ref={ref} id={id} type={type} placeholder={placeholder} {...restOfProps} />
+      <input
+        ref={ref}
+        id={id}
+        type={type}
+        placeholder={placeholder}
+        {...restOfProps}
+        step={type === 'number' ? '.01' : undefined}
+      />
       <p className={styles.error}>{error}</p>
     </label>
   )
