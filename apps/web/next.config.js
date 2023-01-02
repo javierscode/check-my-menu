@@ -4,6 +4,11 @@ const withTM = require('next-transpile-modules')()
 module.exports = withTM({
   reactStrictMode: true,
   images: {
-    domains: ['picsum.photos'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**.supabase.co',
+      },
+    ],
   },
 })

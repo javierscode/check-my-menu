@@ -1,16 +1,23 @@
-export function uploadImage(image: File, type: 'category' | 'dish'): Promise<string | undefined> {
-  const formData = new FormData()
-  formData.append('image', image)
+import { SupabaseClientFactory } from '@server/infrastructure/services/images/supabase'
+const isDevelopment = process.env.NODE_ENV === 'development'
+const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL as string
 
-  return fetch(`/api/admin/upload-image?type=${type}`, {
-    method: 'POST',
-    body: formData,
-  }).then(async response => {
-    try {
-      const data = (await response.json()) as { url: string }
-      return data.url
-    } catch {
-      return undefined
-    }
-  })
+export async function uploadImage(
+  image: File,
+  type: 'category' | 'dish'
+): Promise<string | undefined> {
+  const path = `${type}/${Date.now().toString()}_${image.name}`
+
+  const bucket = isDevelopment ? 'dev-images' : 'images'
+
+  const supabase = SupabaseClientFactory.create()
+
+  const { data, error } = await supabase.storage.from(bucket).upload(path, image)
+
+  if (error) {
+    console.error(error)
+    return undefined
+  }
+
+  return `${SUPABASE_URL}/storage/v1/object/public/${bucket}/${data.path}`
 }
