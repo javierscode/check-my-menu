@@ -35,11 +35,11 @@ export class FetchDishService implements DishService {
       ...dish,
       id: uuid(),
     }
-    const { error, data } = await Fetcher.post<void>(BACKEND_URL + `/dish/`, {
+    const { error } = await Fetcher.post<void>(BACKEND_URL + `/dish/`, {
       body: newDish,
       authToken: token,
     })
-    if (error || !data) throw new Error('Error creating dish')
+    if (error) throw new Error('Error creating dish')
     return newDish
   }
 
