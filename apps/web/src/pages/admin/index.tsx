@@ -7,6 +7,7 @@ import { useAdminItemList } from '@client/infrastructure/hooks/use-admin-list'
 import { AdminMyRestaurantsPageGSSP } from '@server/application/gssp/admin-my-restaurants-page.gssp'
 import { requireAuth } from '@server/infrastructure/gssp/require-auth.gssp'
 import { Restaurant } from '@shared/domain/entities/restaurant'
+import Head from 'next/head'
 
 export type AdminMyRestaurantsPageProps = {
   restaurants: Restaurant[]
@@ -20,6 +21,9 @@ export default function AdminMyRestaurantsPage({
 
   return (
     <>
+      <Head>
+        <title>My restaurants | Check my menu</title>
+      </Head>
       <AdminNavbar />
       <AdminList
         title='My Restaurants'

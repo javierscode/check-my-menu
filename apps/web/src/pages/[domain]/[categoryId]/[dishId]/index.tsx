@@ -6,6 +6,7 @@ import { DishDetailPageGSSP } from '@server/application/gssp/dish-detail-page.gs
 import { noRequireAuth } from '@server/infrastructure/gssp/no-require-auth'
 import { Category } from '@shared/domain/entities/category'
 import { Dish } from '@shared/domain/entities/dish'
+import Head from 'next/head'
 
 export type DishDetailPageProps = {
   restaurantTitle: string
@@ -26,6 +27,11 @@ export default function DishDetailPage({
 }: DishDetailPageProps) {
   return (
     <>
+      <Head>
+        <title>
+          {restaurantTitle} - {dish.name} | Check my menu
+        </title>
+      </Head>
       <Navbar
         restaurantTitle={restaurantTitle}
         currentLocation={dish.name}

@@ -4,6 +4,7 @@ import { Navbar } from '@client/application/components/molecules/Navbar'
 import { ListOfDishesPageGSSP } from '@server/application/gssp/list-of-dishes-page.gssp'
 import { noRequireAuth } from '@server/infrastructure/gssp/no-require-auth'
 import { Dish } from '@shared/domain/entities/dish'
+import Head from 'next/head'
 
 export type ListOfDishesPageProps = {
   restaurantTitle: string
@@ -24,6 +25,11 @@ export default function ListOfDishesPage({
 }: ListOfDishesPageProps) {
   return (
     <>
+      <Head>
+        <title>
+          {restaurantTitle} - {categoryTitle} | Check my menu
+        </title>
+      </Head>
       <Navbar
         restaurantTitle={restaurantTitle}
         currentLocation={categoryTitle}

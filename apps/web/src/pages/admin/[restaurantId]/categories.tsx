@@ -9,6 +9,7 @@ import { AdminMyCategoriesPageGSSP } from '@server/application/gssp/admin-my-cat
 import { requireAuth } from '@server/infrastructure/gssp/require-auth.gssp'
 import { Category } from '@shared/domain/entities/category'
 import { Restaurant } from '@shared/domain/entities/restaurant'
+import Head from 'next/head'
 
 export type AdminMyCategoriesPageProps = {
   categories: Category[]
@@ -23,6 +24,9 @@ export default function AdminMyCategoriesPage({
     useAdminItemList<Category>(initialCategories, deleteCategory, CategoryForm)
   return (
     <>
+      <Head>
+        <title>Categories of {restaurant.name} | Check my menu</title>
+      </Head>
       <AdminNavbar />
       <main className='admin-layout'>
         <AdminAside

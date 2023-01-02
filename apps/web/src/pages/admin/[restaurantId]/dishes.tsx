@@ -9,6 +9,7 @@ import { AdminMyDishesPageGSSP } from '@server/application/gssp/admin-my-dishes-
 import { requireAuth } from '@server/infrastructure/gssp/require-auth.gssp'
 import { Dish } from '@shared/domain/entities/dish'
 import { Restaurant } from '@shared/domain/entities/restaurant'
+import Head from 'next/head'
 
 export type AdminMyDishesPageProps = {
   dishes: Dish[]
@@ -23,6 +24,9 @@ export default function AdminMyDishesPage({
     useAdminItemList<Dish>(InitialDishes, deleteDish, DishForm)
   return (
     <>
+      <Head>
+        <title>Dishes of {restaurant.name} | Check my menu</title>
+      </Head>
       <AdminNavbar />
       <main className='admin-layout'>
         <AdminAside
