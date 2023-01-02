@@ -1,5 +1,5 @@
-import { render, renderHook } from '@testing-library/react'
-import { ReactElement, ReactNode } from 'react'
+import { renderHook } from '@testing-library/react'
+import { ReactNode } from 'react'
 
 import { AuthContextProvider, AuthContextType, useAuthContext } from './auth.context'
 
