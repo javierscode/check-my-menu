@@ -1,0 +1,4 @@
+dist
+.vercel
+.tmp
+node_modules

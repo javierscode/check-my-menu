@@ -8,12 +8,15 @@
   ],
   "scripts": {
     "build": "turbo run build",
+    "test:backend": "turbo run test --filter=backend",
+    "test:web": "turbo run test --filter=web",
     "build:backend": "turbo run build --filter=backend",
     "build:web": "turbo run build --filter=web",
     "start": "turbo run start --parallel",
     "dev": "turbo run dev --parallel",
     "lint": "turbo run lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "lint:backend": "turbo run lint --filter=backend",
+    "lint:web": "turbo run lint --filter=web"
   },
   "devDependencies": {
     "eslint-config-custom": "*",
