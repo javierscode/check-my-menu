@@ -15,7 +15,7 @@ beforeEach(() => {
 
 describe('Edit Category - Use Case', () => {
   describe('When a valid request is sent', () => {
-    it('should create a new Category', async () => {
+    it('should edit edit Category', async () => {
       const expectedCategory = CategoryMother.random()
       CategoryRepository.setExpectedCategory(expectedCategory)
       const request = EditCategoryRequestMother.create(
