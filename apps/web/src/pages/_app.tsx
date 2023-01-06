@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import '../styles/index.css'
+import '@client/styles/index.css'
 
-import { AuthContextProvider } from '@client/infrastructure/contexts/auth.context'
-import { useAuth } from '@client/infrastructure/hooks/use-auth'
+import { AuthContextProvider } from '@client/contexts/auth.context'
+import { useAuth } from '@client/hooks/use-auth'
 import { AuthProps } from '@shared/types/next'
 import { AppProps } from 'next/app'
 

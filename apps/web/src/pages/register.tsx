@@ -1,5 +1,5 @@
-import { UserAccessLayout } from '@client/application/components/atoms/UserAccessLayout'
-import { RegisterForm } from '@client/application/components/molecules/RegisterForm'
+import { UserAccessLayout } from '@client/components/atoms/UserAccessLayout'
+import { RegisterForm } from '@client/components/molecules/RegisterForm'
 import { requireNoAuth } from '@server/infrastructure/gssp/require-no-auth.gssp'
 import Head from 'next/head'
 
