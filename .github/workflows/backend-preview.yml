@@ -28,6 +28,7 @@ jobs:
           run: npm run test:backend
     
     Deploy-Preview:
+      needs: [Linting-And-Testing]
       runs-on: ubuntu-latest
       steps:
         - uses: actions/checkout@v3
