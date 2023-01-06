@@ -20,6 +20,9 @@
       "outputs": [], 
       "inputs": ["src/**/*.tsx", "src/**/*.ts", "test/**/*.ts"]
     },
+    "backend#lint":{
+      "dependsOn": ["backend#prisma:generate"]
+    },
     "lint": {
       "outputs": [] 
     },
