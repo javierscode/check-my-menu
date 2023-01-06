@@ -12,9 +12,6 @@
         "@shared/*": [
           "src/shared/*"
       ],
-        "@test/*":[
-            "test/*"
-        ]
     },
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "**/*.js",".eslintrc.js"],

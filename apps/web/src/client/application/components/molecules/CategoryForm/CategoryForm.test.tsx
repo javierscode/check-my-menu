@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 import { useCategoryForm } from '@client/infrastructure/hooks/use-category-form'
 import { Category } from '@shared/domain/entities/category'
-import { mockOfFunction } from '@test/server/infrastructure/utils/mock'
+import { mockOfFunction } from '@shared/test/utils'
 import { fireEvent, render, screen } from '@testing-library/react'
 import { FormEvent } from 'react'
 

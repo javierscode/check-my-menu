@@ -1,5 +1,5 @@
 import { useLoginForm } from '@client/infrastructure/hooks/use-login-form'
-import { mockOfFunction } from '@test/server/infrastructure/utils/mock'
+import { mockOfFunction } from '@shared/test/utils'
 import { fireEvent, render, screen } from '@testing-library/react'
 import { FormEvent } from 'react'
 

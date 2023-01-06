@@ -1,6 +1,6 @@
 import { useRestaurantForm } from '@client/infrastructure/hooks/use-restaurant-form'
 import { Restaurant } from '@shared/domain/entities/restaurant'
-import { mockOfFunction } from '@test/server/infrastructure/utils/mock'
+import { mockOfFunction } from '@shared/test/utils'
 import { fireEvent, render, screen } from '@testing-library/react'
 import { FormEvent } from 'react'
 
