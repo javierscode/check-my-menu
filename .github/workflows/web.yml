@@ -23,9 +23,9 @@ jobs:
         - name: Install dependencies
           run: npm install
         - name: Run lint
-          run: npm run lint:backend
+          run: npm run lint:web
         - name: Run test
-          run: npm run test:backend
+          run: npm run test:web
           
     Deploy-Production:
       runs-on: ubuntu-latest
