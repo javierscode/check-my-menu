@@ -1,4 +1,4 @@
-# Check my nenu
+# Check my menu
 
 As a result of the COVID-19 pandemic, a great deal of modernisation has come about in all sectors. Telework, contactless, everything has had to adapt to the new technology stream and restaurants are no exception.
 
