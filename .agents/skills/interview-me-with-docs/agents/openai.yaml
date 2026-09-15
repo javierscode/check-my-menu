@@ -1,0 +1,6 @@
+interface:
+  display_name: "Interview Me with Docs"
+  short_description: "Interview that documents itself as it goes"
+
+invocation:
+  allow_implicit_invocation: false

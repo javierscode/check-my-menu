@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "skills": {
+    "commit-work": {
+      "source": "javierscode/skills",
+      "sourceType": "github",
+      "skillPath": "skills/commit-work/SKILL.md",
+      "computedHash": "9eb77b4808aee50ebab2f71663d4120b23f577a12b0dba181e9c3cf4446c387b"
+    },
+    "conventional-commits": {
+      "source": "javierscode/skills",
+      "sourceType": "github",
+      "skillPath": "skills/conventional-commits/SKILL.md",
+      "computedHash": "58d2f5923bbe647144cb0dc990947618b273d28093c5737f229dfee756c5d027"
+    },
+    "domain-modeling": {
+      "source": "javierscode/skills",
+      "sourceType": "github",
+      "skillPath": "skills/domain-modeling/SKILL.md",
+      "computedHash": "a9d8caf561fee967700eef7bb7673733de9be025bcd51b8c845bfe8145e237bc"
+    },
+    "implement-plan": {
+      "source": "javierscode/skills",
+      "sourceType": "github",
+      "skillPath": "skills/implement-plan/SKILL.md",
+      "computedHash": "b569e0737ac3b60b8386aca5b45f8377711bef5fac910e5359689e83516f4989"
+    },
+    "interview-me": {
+      "source": "javierscode/skills",
+      "sourceType": "github",
+      "skillPath": "skills/interview-me/SKILL.md",
+      "computedHash": "66c47f430d74377a5e2cee3baef4ecfe89116e496e0b9acb164c5f80b9be860d"
+    },
+    "interview-me-with-docs": {
+      "source": "javierscode/skills",
+      "sourceType": "github",
+      "skillPath": "skills/interview-me-with-docs/SKILL.md",
+      "computedHash": "01d0eb4706ff25c0f3c4576ee6849ccce88ba8d566b4857e83bbd5705a979931"
+    },
+    "interviewing": {
+      "source": "javierscode/skills",
+      "sourceType": "github",
+      "skillPath": "skills/interviewing/SKILL.md",
+      "computedHash": "809b7d256371c2b8e52a1fda8b51fd52460fcbfb854389aabcb8e07f27360473"
+    },
+    "write-plan": {
+      "source": "javierscode/skills",
+      "sourceType": "github",
+      "skillPath": "skills/write-plan/SKILL.md",
+      "computedHash": "d1498608fe9c9ee341dba32c07a0f06b32645526adbb06406cda1ba9cd4da4f7"
+    }
+  }
+}

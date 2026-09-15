@@ -1,0 +1,6 @@
+interface:
+  display_name: "Interview Me"
+  short_description: "Reach shared understanding before acting"
+
+invocation:
+  allow_implicit_invocation: false

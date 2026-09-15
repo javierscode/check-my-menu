@@ -1,0 +1,6 @@
+interface:
+  display_name: "Commit Work"
+  short_description: "One commit per intent in Conventional Commits, proposed before it runs"
+
+invocation:
+  allow_implicit_invocation: false

@@ -1,0 +1,6 @@
+interface:
+  display_name: "Implement Plan"
+  short_description: "Run a plan's slices as parallel reviewed subagents into one PR"
+
+invocation:
+  allow_implicit_invocation: false
